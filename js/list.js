@@ -68,6 +68,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 180,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.003667,
@@ -148,6 +149,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.002428,
@@ -228,6 +230,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.002055,
@@ -308,6 +311,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.002275,
@@ -428,13 +432,14 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 280,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 4,
             "cpuSocket": "sTRX4",
             "coreClockMultiplier": 0.003832,
             "memChannelsMultiplier": 2.259872,
             "memClockMultiplier": 0.008126,
             "finalAdjustment": -11.9601,
-            "partRankingScore": 0
+            "partRankingScore": 4032
         },
         "AMD Ryzen Threadripper 3970X": {
             "1": {
@@ -548,13 +553,14 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 280,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 4,
             "cpuSocket": "sTRX4",
             "coreClockMultiplier": 0.005529,
             "memChannelsMultiplier": 2.26,
             "memClockMultiplier": 0.006308,
             "finalAdjustment": -16.3069,
-            "partRankingScore": 0
+            "partRankingScore": 3724
         },
         "AMD Ryzen Threadripper 3990X": {
             "1": {
@@ -668,13 +674,14 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 280,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 4,
             "cpuSocket": "sTRX4",
             "coreClockMultiplier": 0.004492,
             "memChannelsMultiplier": 3.459974,
             "memClockMultiplier": 0.006017,
             "finalAdjustment": -16.4578,
-            "partRankingScore": 0
+            "partRankingScore": 3595
         },
         "AMD Ryzen Threadripper Twelve Core 1920X": {
             "1": {
@@ -744,6 +751,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 180,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.00167,
@@ -820,6 +828,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 180,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.005827,
@@ -900,6 +909,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.001467,
@@ -980,6 +990,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.001467,
@@ -1060,6 +1071,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.001259,
@@ -1140,6 +1152,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.004223,
@@ -1220,6 +1233,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 105,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.001259,
@@ -1296,6 +1310,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 250,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.00388,
@@ -1372,6 +1387,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 250,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.001,
@@ -1448,6 +1464,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 180,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.00013,
@@ -1524,6 +1541,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 180,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "TR4",
             "coreClockMultiplier": 0.00013,
@@ -1604,6 +1622,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.003915,
@@ -1684,6 +1703,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.003915,
@@ -1764,6 +1784,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.00427,
@@ -1844,6 +1865,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 105,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.00427,
@@ -1924,6 +1946,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 105,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.004123,
@@ -2004,6 +2027,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.004788,
@@ -2084,6 +2108,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 105,
             "voltage": 1.35,
+            "defaultMemorySpeed": 3200,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.000913,
@@ -2164,6 +2189,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.004404,
@@ -2244,6 +2270,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.001528,
@@ -2324,6 +2351,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.004675,
@@ -2404,6 +2432,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 65,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "AM4",
             "coreClockMultiplier": 0.002428,
@@ -2464,6 +2493,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 91,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.003356,
@@ -2532,6 +2562,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 112,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.004094,
@@ -2600,6 +2631,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 112,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.001886,
@@ -2674,6 +2706,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.005409,
@@ -2748,6 +2781,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.005409,
@@ -2822,6 +2856,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.3,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.003415,
@@ -2896,6 +2931,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.003415,
@@ -2970,6 +3006,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 91,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.002553,
@@ -3030,6 +3067,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.003356,
@@ -3104,6 +3142,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.15,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.002553,
@@ -3164,6 +3203,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 91,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001886,
@@ -3224,6 +3264,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001886,
@@ -3284,6 +3325,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001886,
@@ -3344,6 +3386,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001886,
@@ -3404,6 +3447,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 60,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001814,
@@ -3464,6 +3508,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001814,
@@ -3524,6 +3569,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001814,
@@ -3584,6 +3630,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.001814,
@@ -3644,6 +3691,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.002539,
@@ -3760,6 +3808,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.006234,
@@ -3820,6 +3869,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.002539,
@@ -3880,6 +3930,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 54,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2400,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.002539,
@@ -3940,6 +3991,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.00055,
@@ -4000,6 +4052,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Kaby Lake)",
             "coreClockMultiplier": 0.00055,
@@ -4060,6 +4113,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 91,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.00404,
@@ -4120,6 +4174,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.00404,
@@ -4180,6 +4235,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.002468,
@@ -4240,6 +4296,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 91,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.002468,
@@ -4300,6 +4357,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.002468,
@@ -4360,6 +4418,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 65,
             "voltage": 1.25,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.002468,
@@ -4476,6 +4535,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.005643,
@@ -4536,6 +4596,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.00094,
@@ -4596,6 +4657,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.00094,
@@ -4656,6 +4718,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 35,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.00094,
@@ -4716,6 +4779,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.2,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.00094,
@@ -4776,6 +4840,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.001651,
@@ -4836,6 +4901,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.001651,
@@ -4896,6 +4962,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 54,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.001651,
@@ -4956,6 +5023,7 @@ var data = {
             "canOverclock": "No",
             "wattage": 51,
             "voltage": 1.1,
+            "defaultMemorySpeed": 2133,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Skylake)",
             "coreClockMultiplier": 0.006022,
@@ -5030,6 +5098,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.005409,
@@ -5104,6 +5173,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.005127,
@@ -5220,6 +5290,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.008674,
@@ -5294,6 +5365,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.004427,
@@ -5368,6 +5440,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 95,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.002697,
@@ -5484,6 +5557,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.004677,
@@ -5600,6 +5674,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.00337,
@@ -5716,6 +5791,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.002835,
@@ -5832,6 +5908,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.005134,
@@ -5948,6 +6025,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.008674,
@@ -6064,6 +6142,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.005643,
@@ -6180,6 +6259,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.006234,
@@ -6296,13 +6376,14 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.000135,
             "memChannelsMultiplier": 1.043,
             "memClockMultiplier": 0.005027,
             "finalAdjustment": 17.82015,
-            "partRankingScore": 0
+            "partRankingScore": 3737
         },
         "Intel Core i9-7920X": {
             "1": {
@@ -6412,6 +6493,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 140,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.005134,
@@ -6528,13 +6610,14 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.002584,
             "memChannelsMultiplier": 2.629461,
             "memClockMultiplier": 0.004931,
             "finalAdjustment": 1.171027,
-            "partRankingScore": 0
+            "partRankingScore": 3855
         },
         "Intel Core i9�10940X": {
             "1": {
@@ -6644,13 +6727,14 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 165,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2933,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.000206,
             "memChannelsMultiplier": 3.014958,
             "memClockMultiplier": 0.005794,
             "finalAdjustment": 9.831498,
-            "partRankingScore": 0
+            "partRankingScore": 3987
         },
         "Intel Core i9�9900KS": {
             "1": {
@@ -6718,6 +6802,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 127,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 2,
             "cpuSocket": "LGA 1151 (Coffee Lake)",
             "coreClockMultiplier": 0.005127,
@@ -6834,6 +6919,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 140,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.002835,
@@ -6950,6 +7036,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 140,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.004677,
@@ -7066,6 +7153,7 @@ var data = {
             "canOverclock": "Yes",
             "wattage": 140,
             "voltage": 1.35,
+            "defaultMemorySpeed": 2666,
             "maxMemoryChannels": 4,
             "cpuSocket": "LGA 2066",
             "coreClockMultiplier": 0.004223,
@@ -13650,7 +13738,7 @@ var data = {
             "baseCoreClockFreq": 1770,
             "baseMemClockFreq": 1767,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 8031
         },
         "NVIDIA GeForce GTX 1080 | Alphacool NexXxoS GPX M10": {
             "1": {
@@ -13689,7 +13777,7 @@ var data = {
             "baseCoreClockFreq": 1733,
             "baseMemClockFreq": 1251,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4474
         },
         "NVIDIA GeForce RTX 2080Ti | Alphacool Eisblock GPX-N Plexi M02": {
             "1": {
@@ -13728,7 +13816,7 @@ var data = {
             "baseCoreClockFreq": 1770,
             "baseMemClockFreq": 1767,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 8031
         },
         "NVIDIA GeForce GTX 1070 Ti | EKWB EK-FC Plexi": {
             "1": {
@@ -13767,7 +13855,7 @@ var data = {
             "baseCoreClockFreq": 1683,
             "baseMemClockFreq": 2002,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4138
         },
         "NVIDIA GeForce GTX 1080 | EKWB EK-FC Plexi": {
             "1": {
@@ -13806,7 +13894,7 @@ var data = {
             "baseCoreClockFreq": 1733,
             "baseMemClockFreq": 1251,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4474
         },
         "NVIDIA GeForce GTX 1080 Ti | EKWB EK-FC Plexi": {
             "1": {
@@ -13845,7 +13933,7 @@ var data = {
             "baseCoreClockFreq": 1582,
             "baseMemClockFreq": 1376,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 5394
         },
         "AMD Radeon Vega 56 | EKWB EK-FC Plexi": {
             "1": {
@@ -13884,7 +13972,7 @@ var data = {
             "baseCoreClockFreq": 1474,
             "baseMemClockFreq": 800,
             "multiGPU": "CrossFire",
-            "partRankingScore": 0
+            "partRankingScore": 4367
         },
         "AMD Radeon Vega 64 | EKWB EK-FC Plexi": {
             "1": {
@@ -13923,7 +14011,7 @@ var data = {
             "baseCoreClockFreq": 1536,
             "baseMemClockFreq": 945,
             "multiGPU": "CrossFire",
-            "partRankingScore": 0
+            "partRankingScore": 4787
         },
         "NVIDIA GeForce GTX 1070 | EKWB EK-FC Plexi RGB": {
             "1": {
@@ -13962,7 +14050,7 @@ var data = {
             "baseCoreClockFreq": 1683,
             "baseMemClockFreq": 2002,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 3511
         },
         "NVIDIA GeForce GTX 1070 Ti | EKWB EK-FC Plexi RGB": {
             "1": {
@@ -14001,7 +14089,7 @@ var data = {
             "baseCoreClockFreq": 1683,
             "baseMemClockFreq": 2002,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4138
         },
         "NVIDIA GeForce GTX 1080 | EKWB EK-FC Plexi RGB": {
             "1": {
@@ -14040,7 +14128,7 @@ var data = {
             "baseCoreClockFreq": 1733,
             "baseMemClockFreq": 1251,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4474
         },
         "NVIDIA GeForce GTX 1080 Ti | EKWB EK-FC Plexi RGB": {
             "1": {
@@ -14079,7 +14167,7 @@ var data = {
             "baseCoreClockFreq": 1582,
             "baseMemClockFreq": 1376,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 5394
         },
         "NVIDIA GeForce GTX 1070 | EKWB EK-FC Acetal": {
             "1": {
@@ -14118,7 +14206,7 @@ var data = {
             "baseCoreClockFreq": 1683,
             "baseMemClockFreq": 2002,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 3511
         },
         "AMD Radeon Vega 56 | EKWB EK-FC Plexi RGB": {
             "1": {
@@ -14157,7 +14245,7 @@ var data = {
             "baseCoreClockFreq": 1474,
             "baseMemClockFreq": 800,
             "multiGPU": "CrossFire",
-            "partRankingScore": 0
+            "partRankingScore": 4367
         },
         "AMD Radeon Vega 64 | EKWB EK-FC Plexi RGB": {
             "1": {
@@ -14196,7 +14284,7 @@ var data = {
             "baseCoreClockFreq": 1536,
             "baseMemClockFreq": 945,
             "multiGPU": "CrossFire",
-            "partRankingScore": 0
+            "partRankingScore": 4787
         },
         "NVIDIA GeForce GTX 1070 Ti | EKWB EK-FC Acetal": {
             "1": {
@@ -14235,7 +14323,7 @@ var data = {
             "baseCoreClockFreq": 1683,
             "baseMemClockFreq": 2002,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4138
         },
         "NVIDIA GeForce GTX 1080 | EKWB EK-FC Acetal": {
             "1": {
@@ -14274,7 +14362,7 @@ var data = {
             "baseCoreClockFreq": 1733,
             "baseMemClockFreq": 1251,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 4474
         },
         "NVIDIA GeForce GTX 1080 Ti | EKWB EK-FC Acetal": {
             "1": {
@@ -14313,7 +14401,7 @@ var data = {
             "baseCoreClockFreq": 1582,
             "baseMemClockFreq": 1376,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 5394
         },
         "AMD Radeon Vega 56 | EKWB EK-FC Acetal": {
             "1": {
@@ -14352,7 +14440,7 @@ var data = {
             "baseCoreClockFreq": 1474,
             "baseMemClockFreq": 800,
             "multiGPU": "CrossFire",
-            "partRankingScore": 0
+            "partRankingScore": 4367
         },
         "AMD Radeon Vega 64 | EKWB EK-FC Acetal": {
             "1": {
@@ -14391,7 +14479,7 @@ var data = {
             "baseCoreClockFreq": 1536,
             "baseMemClockFreq": 945,
             "multiGPU": "CrossFire",
-            "partRankingScore": 0
+            "partRankingScore": 4787
         },
         "NVIDIA GeForce GTX 1070 | EKWB EK-FC Plexi": {
             "1": {
@@ -14430,7 +14518,7 @@ var data = {
             "baseCoreClockFreq": 1683,
             "baseMemClockFreq": 2002,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 3511
         },
         "EVGA GeForce RTX 2080 Ti FTW3 ULTRA HYDRO COPPER GAMING": {
             "1": {
@@ -14469,7 +14557,7 @@ var data = {
             "baseCoreClockFreq": 1755,
             "baseMemClockFreq": 1750,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 7943
         },
         "GIGABYTE AORUS GeForce RTX 2080 Ti XTREME WATERFORCE WB 11G": {
             "1": {
@@ -14508,7 +14596,7 @@ var data = {
             "baseCoreClockFreq": 1770,
             "baseMemClockFreq": 1767,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 8031
         },
         "GIGABYTE AORUS GeForce RTX 2080 SUPER WATERFORCE WB 8G": {
             "1": {
@@ -14547,7 +14635,7 @@ var data = {
             "baseCoreClockFreq": 1860,
             "baseMemClockFreq": 1937,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 6657
         },
         "ZOTAC ZOTAC GAMING GeForce RTX 2080 Ti ArcticStorm": {
             "1": {
@@ -14586,7 +14674,7 @@ var data = {
             "baseCoreClockFreq": 1575,
             "baseMemClockFreq": 1750,
             "multiGPU": "SLI",
-            "partRankingScore": 0
+            "partRankingScore": 7058
         }
     },
     "motherboards": {
