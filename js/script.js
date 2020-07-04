@@ -275,15 +275,26 @@ function savePcBuild(id, type, comment) {
     saveBuild(cpu, ramc, rams, ram, gpuCount, gpuType, gpu, mobo, cost, budgetleft, score, wattage, type, comment)
 }
 
+function numberOrDefault(inputString, defaultValue) {
+    var result = null
+    if ((inputString != "") && (!isNaN(Number(inputString)))) {
+        result = Number(inputString)
+    }
+    else {
+        result = defaultValue
+    }
+    return result
+}
+
 function generateBuilds(showAlerts) {
     var form = document.getElementById('buildForm')
 
     var budget = Number(form.budget1.value)
-    var resbudget = Number(form.resbudget1.value) || 400
+    var resbudget = numberOrDefault(form.resbudget1.value, 400)
     var score = Number(form.score1.value)
-    var offset = Number(form.offset1.value) || 400
+    var offset = numberOrDefault(form.offset1.value, 400)
     var level = Number(form.level1.value)
-    var results = Number(form.results1.value) || 200
+    var results = numberOrDefault(form.results1.value, 200)
 
     var selectedCPUSocket = form.selectedCPUSocket1.value
     var selectedGPUCount = form.selectedGPUCount1.value
@@ -508,11 +519,11 @@ function generateUpgrades(showAlerts) {
     var form = document.getElementById('upgradeForm')
 
     var budget = Number(form.budget2.value)
-    var resbudget = Number(form.resbudget2.value) || 0
+    var resbudget = numberOrDefault(form.resbudget2.value, 0)
     var score = Number(form.score2.value)
-    var offset = Number(form.offset2.value) || 400
+    var offset = numberOrDefault(form.offset2.value, 400)
     var level = Number(form.level2.value)
-    var results = Number(form.results2.value) || 200
+    var results = numberOrDefault(form.results2.value, 200)
 
     var currentProc = form.currentProc1.value
     var currentRamSpeed = form.currentRamS1.value
@@ -1137,9 +1148,9 @@ function generatePartFixes(showAlerts) {
     var form = document.getElementById('partFixerForm')
 
     var budget = Number(form.budgetPartFixer.value)
-    var resbudget = Number(form.reservedBudgetPartFixer.value) || 0
+    var resbudget = numberOrDefault(form.reservedBudgetPartFixer.value, 0)
     var level = Number(form.levelPartFixer.value)
-    var results = Number(form.resultsLimitPartFixer.value) || 200
+    var results = numberOrDefault(form.resultsLimitPartFixer.value, 200)
 
     var originalCpu = form.cpuPartFixer.value
     var originalGpu1 = form.gpu1PartFixer.value
