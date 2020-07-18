@@ -76,20 +76,23 @@ function getCpuSocketSortValue(cpuSocket) {
         case "sTRX4":
             value = 3
             break
-        case "LGA 2011-V3":
+        case "FM2+":
             value = 4
             break
-        case "LGA 1151 (Skylake)":
+        case "LGA 2011-V3":
             value = 5
             break
-        case "LGA 1151 (Kaby Lake)":
+        case "LGA 1151 (Skylake)":
             value = 6
             break
-        case "LGA 1151 (Coffee Lake)":
+        case "LGA 1151 (Kaby Lake)":
             value = 7
             break
-        case "LGA 2066":
+        case "LGA 1151 (Coffee Lake)":
             value = 8
+            break
+        case "LGA 2066":
+            value = 9
             break
         default:
             value = 0
@@ -126,6 +129,9 @@ function getCPUSocketSelectOptions(includeAnyOption) {
                 break
             case "sTRX4":
                 name = "AMD - sTRX4 (3rd+ Gen Threadripper)"
+                break
+            case "FM2+":
+                name = "AMD - FM2+ (Used for EPYC CPUs in-game)"
                 break
             case "LGA 2011-V3":
                 name = "Intel - LGA 2011 V3 (Haswell-E, Haswell-EP)"
