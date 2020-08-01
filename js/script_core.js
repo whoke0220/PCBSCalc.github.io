@@ -357,8 +357,8 @@ function generateBuilds(showAlerts) {
                             } else if (currentScore > (score + offset)) {
                                 continue
                             }
-                            var pickedmobo, pickedram
 
+                            var pickedmobo, pickedram
                             if (incmobo == true && incram == false) {
                                 for (mobo in data.motherboards) {
                                     if (data.motherboards[mobo].level > level) {
@@ -372,9 +372,8 @@ function generateBuilds(showAlerts) {
                                     } else if (data.motherboards[mobo].memorySpeedSteps.includes(ramspeed.toString()) == false) {
                                         continue
                                     }
-                                    var tempCurrentPrice = currentPrice + data.motherboards[mobo].price
-                                    if (tempCurrentPrice <= (budget - resbudget)) {
-                                        currentPrice += data.motherboards[mobo].price
+                                    currentPrice = data.procs[cpu].price + data.gpus[gpu][gpuCount].price + data.motherboards[mobo].price
+                                    if (currentPrice <= (budget - resbudget)) {
                                         pickedmobo = data.motherboards[mobo].fullName
                                         builds.push(parts(cpu, ramchannel, ramspeed, (pickedram || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (pickedmobo || "-"), currentPrice, (budget - currentPrice), currentScore, (data.procs[cpu].wattage + data.gpus[gpu][gpuCount].wattage)))
                                     }
@@ -386,9 +385,8 @@ function generateBuilds(showAlerts) {
                                     } else if (data.ram[rams].frequency < Number(ramspeed)) {
                                         continue
                                     }
-                                    var tempCurrentPrice = currentPrice + (data.ram[rams].price * ramchannel)
-                                    if (tempCurrentPrice <= (budget - resbudget)) {
-                                        currentPrice += (data.ram[rams].price * ramchannel)
+                                    currentPrice = data.procs[cpu].price + data.gpus[gpu][gpuCount].price + (data.ram[rams].price * ramchannel)
+                                    if (currentPrice <= (budget - resbudget)) {
                                         pickedram = data.ram[rams].fullName
                                         builds.push(parts(cpu, ramchannel, ramspeed, (pickedram || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (pickedmobo || "-"), currentPrice, (budget - currentPrice), currentScore, (data.procs[cpu].wattage + data.gpus[gpu][gpuCount].wattage)))
                                     }
@@ -406,9 +404,8 @@ function generateBuilds(showAlerts) {
                                     } else if (data.motherboards[mobo].memorySpeedSteps.includes(ramspeed.toString()) == false) {
                                         continue
                                     }
-                                    var tempCurrentPrice = currentPrice + data.motherboards[mobo].price
-                                    if (tempCurrentPrice <= (budget - resbudget)) {
-                                        currentPrice += data.motherboards[mobo].price
+                                    currentPrice = data.procs[cpu].price + data.gpus[gpu][gpuCount].price + data.motherboards[mobo].price
+                                    if (currentPrice <= (budget - resbudget)) {
                                         pickedmobo = data.motherboards[mobo].fullName
                                         for (rams in data.ram) {
                                             if (data.ram[rams].level > level) {
@@ -416,9 +413,8 @@ function generateBuilds(showAlerts) {
                                             } else if (data.ram[rams].frequency < Number(ramspeed)) {
                                                 continue
                                             }
-                                            var tempCurrentPrice = currentPrice + (data.ram[rams].price * ramchannel)
-                                            if (tempCurrentPrice <= (budget - resbudget)) {
-                                                currentPrice += (data.ram[rams].price * ramchannel)
+                                            currentPrice = data.procs[cpu].price + data.gpus[gpu][gpuCount].price + data.motherboards[mobo].price + (data.ram[rams].price * ramchannel)
+                                            if (currentPrice <= (budget - resbudget)) {
                                                 pickedram = data.ram[rams].fullName
                                                 builds.push(parts(cpu, ramchannel, ramspeed, (pickedram || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (pickedmobo || "-"), currentPrice, (budget - currentPrice), currentScore, (data.procs[cpu].wattage + data.gpus[gpu][gpuCount].wattage)))
                                             }
