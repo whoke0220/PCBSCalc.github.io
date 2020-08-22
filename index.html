@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>PCBSCalc v1.8.5_b1 "Actinides"</title>
+<title>PCBSCalc v1.8.7_b1 "Amper"</title>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/95f44c4954.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="scss/custom.css">
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PCBSCalc/PCBSCalc.github.io/master/img/pcbscalc.png"/>
 <style>
         body {
@@ -245,19 +247,13 @@
 </style>
 <script src="js/script_data.js"></script>
 <script src="js/script_core.js"></script>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark text-light">
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark text-white">
     <a class="navbar-brand" href="https://pcbscalc.github.io"><img src="img/pcbscalc2.png" width="50"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="" onclick="window.open('https://discord.gg/mFZsKS2'); return false;"><i class="fab fa-discord"></i>   Discord Server</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="" onclick="window.open('https://steamcommunity.com/groups/PCBSCalc'); return false;"><i class="fab fa-steam-symbol"></i>   Steam Group</a>
-        </li>
         <li class="nav-item">
             <a class="nav-link" href="" onclick="window.open('https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest'); return false;"><i class="fas fa-book"></i>   Changelog</a>
           </li>
@@ -290,11 +286,11 @@
         </div>
     </div>
     <div id="nav" style="margin-top:100px">
-        <button type="button" class="btn btn-dark" onclick="showThisPage('div3DMarkScores');">3DMark Scores</button>
-        <button type="button" class="btn btn-dark" onclick="showThisPage('divBuildMaker');">Build Maker</button>
-        <button type="button" class="btn btn-dark" onclick="showThisPage('divBuildUpgrader');">Build Upgrader</button>
-        <button type="button" class="btn btn-dark" onclick="showThisPage('divPartFixer');">Part Fixer</button>
-        <button type="button" class="btn btn-dark" onclick="showThisPage('divHistoryAndSaves');">History & Saves</button>
+        <button type="button" class="btn btn-info" onclick="showThisPage('div3DMarkScores');">3DMark Scores</button>
+        <button type="button" class="btn btn-info" onclick="showThisPage('divBuildMaker');">Build Maker</button>
+        <button type="button" class="btn btn-info" onclick="showThisPage('divBuildUpgrader');">Build Upgrader</button>
+        <button type="button" class="btn btn-info" onclick="showThisPage('divPartFixer');">Part Fixer</button>
+        <button type="button" class="btn btn-info" onclick="showThisPage('divHistoryAndSaves');">History & Saves</button>
     </div>
     <div id="content">
     <datalist id="cpuList">
@@ -891,7 +887,13 @@
     <script src="js/script_get.js"></script>
     </div>
 </div>
-<div class="jumbotron text-center bg-dark text-light mt-5" style="margin-bottom:0">
+<div class="container-fluid text-center bg-dark text-white mt-5">
+    <div class="row">
+        
+    </div>
+</div>
+<div class="container-fluid text-center bg-dark text-white">
+    <div><a class="nav-link" href="" onclick="window.open('https://discord.gg/mFZsKS2'); return false;"><i class="fab fa-discord"></i> Discord Server</a> <a class="nav-link" href="" onclick="window.open('https://steamcommunity.com/groups/PCBSCalc'); return false;"><i class="fab fa-steam-symbol"></i> Steam Group</a></div>
     <p>Created by Mystic Prism Studio, PUC_Snakeman & Community Contributors.</p>
     <p>Irregular Corporation, the Irregular Corporation logo, PC Building Simulator, the PC Building Simulator logo are trademarks and/or registered trademarks of Irregular Corporation. We are not affliated with Irregular Corporation. All rights belong to Irregular Corporation.</p>
 </div>
