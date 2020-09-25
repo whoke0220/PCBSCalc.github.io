@@ -1,84 +1,915 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>PCBSCalc Labs</title>
-   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-   <style>
-     body {
-       font-family: 'Roboto', sans-serif;
-     }
-   </style>
-</head>
-<body>
-  <nav class="purple lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo"><i class="fas fa-flask"></i> PCBSCalc Labs</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="#">Coming Soon...</a></li>
-      </ul>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">Coming Soon...</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    <!-- Load CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+    <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PCBSCalc/PCBSCalc.github.io/master/labs/img/pcbscalc.png"/>
+
+    <!-- Load Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Load Styles -->
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+      }
+      
+      a {
+        color: white;
+      }
+      
+      a:hover { color: pink !important; }
+
+      .switcher{
+        align-content: center;
+      }
+
+      .EnableHEMParts{
+        align-content: center;
+      }
+
+      #div3DMarkScores {
+            display: block;
+        }
+
+        #divBuildMaker {
+            display: none;
+        }
+
+        #divBuildUpgrader {
+            display: none;
+        }
+
+        #divPartFixer {
+            display: none;
+        }
+
+        #divHistoryAndSaves {
+            display: none;
+        }
+
+        #content {
+            background-color: white;
+            text-align: center;
+            font-size: 20px;
+            padding-top: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        caption {
+            font-size: 25px;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
+
+        select {
+            border-radius: 0px 0px 0px 0px;
+            height: 25px;
+            width: 400px;
+        }
+
+        #scoreCalculator {
+            width: 600px;
+            margin: auto;
+            padding: 15px 20px;
+        }
+
+        #buildMaker {
+            width: 600px;
+            margin: auto;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        #buildMakerTable {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #buildMakerTable td {
+                border: 1px solid;
+                padding: 5px;
+            }
+
+            #buildMakerTable button.buttonSave {
+                font-size: 12px;
+                padding: 0px 0px 0px 0px;
+            }
+
+        #saveBuildBackground {
+            top: 40%;
+            left: 40%;
+            position: absolute;
+            z-index: 2;
+            border: 5px 5px 5px 5px;
+            height: 100px;
+            width: 350px;
+            padding: 20px 20px;
+            display: none;
+        }
+
+        #buildUpgrader {
+            margin: auto;
+            width: 600px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        #buildUpgraderTable {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #buildUpgraderTable td {
+                border: 1px solid;
+                padding: 5px;
+            }
+
+        #divPartFixerInputs {
+            margin: auto;
+            width: 600px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+
+        #partFixerResultsTable {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #partFixerResultsTable td {
+                border: 1px solid;
+                padding: 5px;
+            }
+
+        #scoreCalculatorHistoryTable {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #scoreCalculatorHistoryTable td {
+                padding: 6px;
+            }
+
+        #buildMakerHistoryTable {
+            border: none;
+            padding: 8px;
+            border-collapse: collapse;
+            margin: auto;
+            font-size: 15px;
+        }
+
+            #buildMakerHistoryTable td {
+                padding: 6px;
+            }
+    </style>
+
+    <!-- Website Title -->
+    <title>PCBSCalc Labs v200925</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-primary purple accent-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="https://pcbscalc.github.io/labs/"><img src="img/pcbscalc2.png" width="50"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="fas fa-book"></i>   Changelog</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://donorbox.org/PCBSCalc" target="_blank"><i class="fas fa-money-bill-alt"></i>   Donate us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://github.com/PCBSCalc/Issue-Tracker/issues" target="_blank"><i class="fas fa-exclamation-triangle"></i>   Report Issue</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <script src="js/script_data.js"></script>
+    <script src="js/script_core.js"></script>
+    <center>
+    <div class="btn-group" role="group" aria-label="PCBSCalc" style="align-items: center;">
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('div3DMarkScores');">3DMark Scores</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divBuildMaker');">Build Maker</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divBuildUpgrader');">Build Upgrader</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divPartFixer');">Part Fixer</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divHistoryAndSaves');">History & Saves</button>
     </div>
-  </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
-      <br><br>
-      <h1 class="header center purple-text">Work in Progress!</h1>
-      <div class="row center">
-        <h5 class="header col s12 light">Due to GitKraken being stupid and removing all changes, I decided to recreate whole page. Sorry!</h5>
+    </center>
+    <div id="switcher" style="margin-top:20px; ">
+      
+    </div>
+    <div id="EnableHEMParts" class="container-fluid" style="margin-top: 20px;">
+      <div class="custom-control custom-checkbox center text-center">
+        <input class="custom-control-input" type="checkbox" value="" id="HEMCheckbox" name="includeHEMPartsCheckbox" onclick="includeHEMParts=includeHEMPartsCheckbox.checked;setData();setDataListOptions();setSelectOptions();">
+        <label class="custom-control-label" for="HEMCheckbox">
+          Include Hardware Expansion Mod(HEM) parts
+        </label>
       </div>
     </div>
+    <div id="content">
+      <datalist id="cpuList">
+      </datalist>
+      <datalist id="gpuList">
+      </datalist>
+      <datalist id="mobolist">
+      </datalist>    
+      <div id="div3DMarkScores" class="my-2">
+          <div id="scoreCalculator">
+              <form id="scoreCForm">
+                  <table>
+                      <caption>3DMark Scores</caption>
+                      <tr>
+                          <td>CPU (Processor)</td>
+                          <td><input name="cpu1" list="cpuList" class="form-control" onchange="showAvailableRamSpeed(cpu1.value,rams1);showAvailableRamChannel(cpu1.value,ramc1)"></td>
+                      </tr>
+                      <tr>
+                          <td>RAM Speed</td>
+                          <td>
+                              <select name="rams1" class="browser-default custom-select">
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>RAM Channels</td>
+                          <td>
+                              <select name="ramc1" class="browser-default custom-select">
+                                  <option value="1">1: Single-channel</option>
+                                  <option value="2">2: Dual-channel</option>
+                                  <option value="3">3: Triple-channel</option>
+                                  <option value="4">4: Quad-channel</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>GPU (Graphics Card)</td>
+                          <td><input name="gpu1" class="form-control" list="gpuList"></td>
+                      </tr>
+                      <tr>
+                          <td># GPUs</td>
+                          <td>
+                              <select name="gpuCount1" class="browser-default custom-select">
+                                  <option value="1" selected>1: Single-GPU</option>
+                                  <option value="2">2: Dual-GPUs</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td align="center"><button type="button" class="btn btn-success my-2" onclick="calculate(true);saveBuild(cpu1.value,ramc1.value,rams1.value,'-',gpuCount1.value,calculate(false)[3],gpu1.value,'-',calculate(false)[2],'-',calculate(false)[0],calculate(false)[1],'scorecalculator','-')">Calculate</button></td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr>
+                          <td style="font-weight:bold; font-size:20px">3DMark Score</td>
+                          <td style="font-weight:bold; font-size:20px" id="totalScoreResult1"></td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr>
+                          <td>CPU Score</td>
+                          <td id="cpuScoreResult1"></td>
+                      </tr>
+                      <tr>
+                          <td>GPU Score</td>
+                          <td id="gpuScoreResult1"></td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr>
+                      <tr>
+                          <td>CPU Price New</td>
+                          <td id="cpuPrice1"></td>
+                      </tr>
+                      <tr>
+                          <td>CPU Price Used</td>
+                          <td id="cpuUsedPrice1"></td>
+                      </tr>
+                      <tr>
+                          <td>GPU(s) Price New</td>
+                          <td id="gpuPrice1"></td>
+                      </tr>
+                      <tr>
+                          <td>GPU(s) Price Used</td>
+                          <td id="gpuUsedPrice1"></td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr>
+                          <td>GPU Type</td>
+                          <td id="gpuTypeResult1"></td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr>
+                          <td>System Watts</td>
+                          <td id="wattageResult1"></td>
+                      </tr>
+                  </table>
+              </form>
+          </div>
+      </div>
+      <div id="divBuildMaker">
+          <div id="buildMaker">
+              <form id="buildForm">
+                  <table>
+                      <caption>Build Maker</caption>
+                      <tr><td><u>Requirements:</u></td><td></td></tr>
+                      <tr title="Total amount you can spend.">
+                          <td>
+                              Budget
+                          </td>
+                          <td>
+                              <input name="budget1" class="form-control">
+                          </td>
+                      </tr>
+                      <tr title="Amount you want to reserve for other parts, like: case, fans, storage, PSU, etc.">
+                          <td>
+                              Reserved Budget
+                          </td>
+                          <td>
+                              <input name="resbudget1" class="form-control" placeholder="400">
+                          </td>
+                      </tr>
+                      <tr title="Target 3DMark score.">
+                          <td>
+                              Target Score
+                          </td>
+                          <td>
+                              <input name="score1" class="form-control">
+                          </td>
+                      </tr>
+                      <tr title="3DMark score offset, to allow results that have higher 3DMark scores.">
+                          <td>
+                              Score Offset
+                          </td>
+                          <td>
+                              <input name="offset1" class="form-control" placeholder="400">
+                          </td>
+                      </tr>
+                      <tr title="Your level, so results only contain parts that you have unlocked.">
+                          <td>
+                              Level
+                          </td>
+                          <td>
+                              <input name="level1" class="form-control">
+                          </td>
+                      </tr>
+                      <tr title="# of results to return.">
+                          <td>
+                              # Results
+                          </td>
+                          <td>
+                              <input name="results1" class="form-control" placeholder="10">
+                          </td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr><td><u>Options:</u></td><td></td></tr>
+                      <tr title="Limit to a certain CPU Socket. Useful for targeting Coffee Lake CPUs for higher clocks.">
+                          <td>
+                              CPU Socket
+                          </td>
+                          <td>
+                              <select class="browser-default custom-select" name="selectedCPUSocket1">
+                              </select>
+                          </td>
+                      </tr>
+                      <tr title="# of GPUs allowed for each result.">
+                          <td>
+                              # GPUs
+                          </td>
+                          <td>
+                              <select class="browser-default custom-select" name="selectedGPUCount1">
+                                  <option selected>Any</option>
+                                  <option value="1">1: Single-GPU</option>
+                                  <option value="2">2: Dual-GPUs</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr title="Limit to a certain GPU Type.">
+                          <td>
+                              GPU Type
+                          </td>
+                          <td>
+                              <select class="browser-default custom-select" name="selectedGPUType1">
+                                  <option selected>Any</option>
+                                  <option value="Air">Air</option>
+                                  <option value="Water">Water</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr title="Include the Motherboard in the result set.">
+                          <td>
+                              Include Motherboard
+                          </td>
+                          <td>
+                              <input type="checkbox" class="custom-checkbox mt-1" name="incmobo1" checked>
+                          </td>
+                      </tr>
+                      <tr title="Include the RAM part in the result set.">
+                          <td>
+                              Include RAM Part
+                          </td>
+                          <td>
+                              <input type="checkbox" class="custom-checkbox mt-1" name="incram1">
+                          </td>
+                      </tr>
+                      <tr title="Only list CPUs and Motherboards that can be used for overclocking.">
+                          <td>
+                              Need CPU Overclock
+                          </td>
+                          <td>
+                              <input type="checkbox" class="custom-checkbox mt-1" name="needoc1">
+                          </td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td align="center"><button type="button" class="btn btn-success my-2" onclick="generateBuilds(true)">Get Builds</button></td>
+                      </tr>
+                  </table>
+              </form>
+          </div>
+          <div id="buildMakerResults">
+              <table class="table" id="buildMakerTable">
+                  <tbody>
+                      <tr>
+                          <td class="tdCPU"><b>CPU</b></td>
+                          <td class="tdRAMCount"><b>#</b></td>
+                          <td class="tdRAMSpeed"><b>Speed</b></td>
+                          <td class="tdRAMPart"><b>RAM</b></td>
+                          <td class="tdGPUCount"><b>#</b></td>
+                          <td class="tdGPUType"><b>Type</b></td>
+                          <td class="tdGPUPart"><b>GPU</b></td>
+                          <td class="tdMotherboard"><b>Motherboard</b></td>
+                          <td class="tdCost"><b>Cost</b></td>
+                          <td class="tdCost"><b>Remaining</b></td>
+                          <td class="tdScore"><b>Score</b></td>
+                          <td class="tdOther"><b>Watts</b></td>
+                          <td class="tdOther"><b>Save?</b></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+          <div id="saveBuildBackground">
+              <form id="saveForm">
+                  <input type="search" class="form-control mb-2" name="comment" placeholder="Comment">
+                  <button type="button" class="btn btn-success" onclick="unblurBackground(document.getElementById('buildMaker'));unblurBackground(document.getElementById('buildMakerResults'));hideSaver(document.getElementById('saveBuildBackground'));savePcBuild(document.getElementById('buildMakerTable').rows[temp],'build',document.getElementById('saveForm').comment.value);">Save</button>
+                  <button type="button" class="btn btn-danger" onclick="unblurBackground(document.getElementById('buildMaker'));unblurBackground(document.getElementById('buildMakerResults'));hideSaver(document.getElementById('saveBuildBackground'))">Cancel</button>
+              </form>
+          </div>
+      </div>
+      <div id="divBuildUpgrader">
+          <div id="buildUpgrader">
+              <form id="upgradeForm" name="upgradeForm">
+                  <table>
+                      <caption>
+                          Build Upgrader
+                      </caption>
+                      <tr><td><u>Requirements:</u></td><td></td></tr>
+                      <tr title="Total amount you can spend.">
+                          <td>Budget</td>
+                          <td><input class="form-control" name="budget2" /></td>
+                      </tr>
+                      <tr title="Amount you want to reserve for other parts, like: case, fans, storage, PSU, etc.">
+                          <td>Reserved Budget</td>
+                          <td><input class="form-control" name="resbudget2" placeholder="0" /></td>
+                      </tr>
+                      <tr title="Target 3DMark score.">
+                          <td>Target Score</td>
+                          <td><input class="form-control" name="score2" /></td>
+                      </tr>
+                      <tr title="3DMark score offset, to allow results that have higher 3DMark scores.">
+                          <td>Score Offset</td>
+                          <td><input class="form-control" name="offset2" placeholder="400" /></td>
+                      </tr>
+                      <tr title="Your level, so results only contain parts that you have unlocked.">
+                          <td>Level</td>
+                          <td><input class="form-control" name="level2" /></td>
+                      </tr>
+                      <tr title="# of results to return.">
+                          <td># Results</td>
+                          <td><input class="form-control" name="results2" placeholder="10" /></td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr><td><u>Original System:</u></td><td></td></tr>
+                      <tr>
+                          <td>CPU (Processor)</td>
+                          <td><input class="form-control" name="currentProc1" list="cpuList" type="search" value="AMD Ryzen 3 Quad Core 1200" onchange="showAvailableRamChannel(currentProc1.value,currentRamC1);showAvailableRamSpeed(currentProc1.value,currentRamS1);showAvailableMotherboard(currentProc1.value,currentGpu1.value,currentGpuCount1.value,currentMobo1,currentRamS1.value)"></td>
+                      </tr>
+                      <tr>
+                          <td>RAM Speed</td>
+                          <td>
+                              <select class="browser-default custom-select" name="currentRamS1" onchange="showAvailableMotherboard(currentProc1.value,currentGpu1.value,currentGpuCount1.value,currentMobo1,currentRamS1.value)">
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>RAM Channels</td>
+                          <td>
+                              <select class="browser-default custom-select" name="currentRamC1">
+                                  <option value="1" selected>1: Single-channel</option>
+                                  <option value="2">2: Dual-channel</option>
+                                  <option value="3">3: Triple-channel</option>
+                                  <option value="4">4: Quad-channel</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>GPU (Graphics Card)</td>
+                          <td><input class="form-control" name="currentGpu1" list="gpuList" value="EVGA GeForce GT 1030 SC" onchange="showAvailableMotherboard(currentProc1.value,currentGpu1.value,currentGpuCount1.value,currentMobo1,currentRamS1.value)"></td>
+                      </tr>
+                      <tr>
+                          <td># GPUs</td>
+                          <td>
+                              <select class="browser-default custom-select" name="currentGpuCount1" onchange="showAvailableMotherboard(currentProc1.value,currentGpu1.value,currentGpuCount1.value,currentMobo1,currentRamS1.value)">
+                                  <option value="1" selected>1: Single-GPU</option>
+                                  <option value="2">2: Dual-GPUs</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>Motherboard</td>
+                          <td>
+                              <select class="browser-default custom-select" name="currentMobo1">
+                              </select>
+                          </td>
+                      </tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr></tr>
+                      <tr><td><u>Options:</u></td><td></td></tr>
+                      <tr title="# of GPUs allowed for each result.">
+                          <td># GPUs</td>
+                          <td>
+                              <select class="browser-default custom-select" name="gpuCount2">
+                                  <option selected>Any</option>
+                                  <option value="1">1: Single-GPU</option>
+                                  <option value="2">2: Dual-GPUs</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr title="Limit to a certain GPU Type.">
+                          <td>
+                              GPU Type
+                          </td>
+                          <td>
+                              <select class="browser-default custom-select" name="gpuType2">
+                                  <option selected>Any</option>
+                                  <option value="Air">Air</option>
+                                  <option value="Water">Water</option>
+                              </select>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td></td>
+                          <td align="center"><button class="btn btn-success" onclick="generateUpgrades(true)" type="button">Get Upgrades</button></td>
+                      </tr>
+                  </table>
+              </form>
+          </div>
+          <div id="upgradeResults">
+              <table class="table" id="buildUpgraderTable">
+                  <tbody>
+                      <tr>
+                          <td class="tdCPU"><b>CPU</b></td>
+                          <!--<td class="tdRAMCount"><b>#</b></td>
+                          <td class="tdRAMSpeed"><b>Speed</b></td>
+                          <td class="tdRAMPart"><b>RAM</b></td>-->
+                          <td class="tdGPUCount"><b>#</b></td>
+                          <td class="tdGPUType"><b>Type</b></td>
+                          <td class="tdGPUPart"><b>GPU</b></td>
+                          <td class="tdMotherboard"><b>Motherboard</b></td>
+                          <td class="tdCost"><b>Cost</b></td>
+                          <td class="tdCost"><b>Remaining</b></td>
+                          <td class="tdScore"><b>Score</b></td>
+                          <td class="tdOther"><b>Watts</b></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div id="divPartFixer">
+              <div id="divPartFixerInputs">
+                  <form id="partFixerForm" name="partFixerForm">
+                      <table>
+                          <caption>
+                              Part Fixer
+                          </caption>
+                          <tr><td><u>Requirements:</u></td><td></td></tr>
+                          <tr title="Total amount you can spend.">
+                              <td>Budget</td>
+                              <td><input class="form-control" name="budgetPartFixer" /></td>
+                          </tr>
+                          <tr title="Amount you want to reserve for other parts, like: case, fans, storage, PSU, etc.">
+                              <td>Reserved Budget</td>
+                              <td><input class="form-control" name="reservedBudgetPartFixer" placeholder="0" /></td>
+                          </tr>
+                          <tr title="Your level, so results only contain parts that you have unlocked.">
+                              <td>Level</td>
+                              <td><input class="form-control" name="levelPartFixer" /></td>
+                          </tr>
+                          <tr title="# of results to return.">
+                              <td># Results</td>
+                              <td><input class="form-control" name="resultsLimitPartFixer" placeholder="10" /></td>
+                          </tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr><td><u>Original System:</u></td><td></td></tr>
+                          <tr>
+                              <td>CPU (Processor)</td>
+                              <td><input class="form-control" name="cpuPartFixer" list="cpuList" onchange="showAvailableMotherboard2(cpuPartFixer.value,gpu1PartFixer.value,gpu2PartFixer.value,motherboardPartFixer)" /></td>
+                          </tr>
+                          <tr>
+                              <td>GPU (Graphics Card) 1</td>
+                              <td><input class="form-control" name="gpu1PartFixer" list="gpuList" onchange="showAvailableMotherboard2(cpuPartFixer.value,gpu1PartFixer.value,gpu2PartFixer.value,motherboardPartFixer)" /></td>
+                          </tr>
+                          <tr>
+                              <td>GPU (Graphics Card) 2</td>
+                              <td><input class="form-control" name="gpu2PartFixer" list="gpuList" onchange="showAvailableMotherboard2(cpuPartFixer.value,gpu1PartFixer.value,gpu2PartFixer.value,motherboardPartFixer)" /></td>
+                          </tr>
+                          <tr>
+                              <td>Motherboard</td>
+                              <td>
+                                  <select class="browser-default custom-select" name="motherboardPartFixer">
+                                  </select>
+                              </td>
+                          </tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr></tr>
+                          <tr><td><u>Broken Parts:</u></td><td></td></tr>
+                          <tr title="Check this, if the CPU is broken.">
+                              <td>
+                                  CPU Broken?
+                              </td>
+                              <td>
+                                  <input class="form-control mt-1" type="checkbox" name="cpuBrokenPartFixer">
+                              </td>
+                          </tr>
+                          <tr title="Check this, if GPU 1 is broken.">
+                              <td>
+                                  GPU 1 Broken?
+                              </td>
+                              <td>
+                                  <input class="form-control mt-1" type="checkbox" name="gpu1BrokenPartFixer">
+                              </td>
+                          </tr>
+                          <tr title="Check this, if GPU 2 is broken.">
+                              <td>
+                                  GPU 2 Broken?
+                              </td>
+                              <td>
+                                  <input class="form-control mt-1" type="checkbox" name="gpu2BrokenPartFixer">
+                              </td>
+                          </tr>
+                          <tr title="Check this, if the motherboard is broken.">
+                              <td>
+                                  Motherboard Broken?
+                              </td>
+                              <td>
+                                  <input class="form-control" type="checkbox" name="motherboardBrokenPartFixer">
+                              </td>
+                          </tr>
+                          <tr>
+                              <td></td>
+                              <td align="center"><button class="btn btn-success" onclick="generatePartFixes(true)" type="button">Get Part Fixes</button></td>
+                          </tr>
+                      </table>
+                  </form>
+              </div>
+              <div id="partFixerResults">
+                  <table class="table" id="partFixerResultsTable">
+                      <tbody>
+                          <tr>
+                              <td class="tdCPU"><b>CPU</b></td>
+                              <td class="tdGPU1Type"><b>Type</b></td>
+                              <td class="tdGPU1Part"><b>GPU 1</b></td>
+                              <td class="tdGPU2Type"><b>Type</b></td>
+                              <td class="tdGPU2Part"><b>GPU 2</b></td>
+                              <td class="tdMotherboard"><b>Motherboard</b></td>
+                              <td class="tdCost"><b>Cost</b></td>
+                              <td class="tdCost"><b>Remaining</b></td>
+                              <td class="tdOther"><b>Watts</b></td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+          <div id="divHistoryAndSaves">
+              <div id="scoreCalculatorHistory">
+                  <h1>3DMark Scores History</h1>
+                  <table class="table" id="scoreCalculatorHistoryTable">
+                      <tbody>
+                      <tr>
+                          <td class="tdCPU"><b>CPU</b></td>
+                          <td class="tdRAMCount"><b>#</b></td>
+                          <td class="tdRAMSpeed"><b>RAM Speed</b></td>
+                          <td class="tdGPUCount"><b>#</b></td>
+                          <td class="tdGPUType"><b>Type</b></td>
+                          <td class="tdGPUPart"><b>GPU</b></td>
+                          <td class="tdCost"><b>Cost</b></td>
+                          <td class="tdScore"><b>Score</b></td>
+                          <td class="tdOther"><b>Watts</b></td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <div id="buildMakerHistory">
+                  <h1>Build Maker Saves</h1>
+                  <table class="table mt-3" id="buildMakerHistoryTable">
+                      <tbody>
+                      <tr>
+                          <td class="tdCPU"><b>CPU</b></td>
+                          <td class="tdRAMCount"><b>#</b></td>
+                          <td class="tdRAMSpeed"><b>Speed</b></td>
+                          <td class="tdRAMPart"><b>RAM</b></td>
+                          <td class="tdGPUCount"><b>#</b></td>
+                          <td class="tdGPUType"><b>Type</b></td>
+                          <td class="tdGPUPart"><b>GPU</b></td>
+                          <td class="tdMotherboard"><b>Motherboard</b></td>
+                          <td class="tdCost"><b>Cost</b></td>
+                          <td class="tdCost"><b>Remaining</b></td>
+                          <td class="tdScore"><b>Score</b></td>
+                          <td class="tdOther"><b>Watts</b></td>
+                          <td class="tdOther"><b>Comment</b></td>
+                      </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+      
+      <script src="js/script_get.js"></script>
+    </div> 
+    <!-- Load JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <!-- Footer -->
+<footer class="page-footer font-small purple pt-4 mt-5">
+
+  <!-- Footer Links -->
+  <div class="container-fluid text-center text-md-left">
+
+    <!-- Grid row -->
+    <div class="row">
+
+      <!-- Grid column -->
+      <div class="col-md-6 mt-md-0 mt-3">
+
+        <!-- Content -->
+        <h5><i class="fas fa-flask"></i> PCBSCalc Labs</h5>
+        <p>Made with <i class="fas fa-heart"></i> by community!</p>
+        <p>Irregular Corporation, the Irregular Corporation logo, PC Building Simulator, the PC Building Simulator logo are trademarks and/or registered trademarks of Irregular Corporation. PC Building Simulator Calculator is not sponsored, endorsed, licensed by, or affiliated with Irregular Corporation.</p>
+
+      </div>
+      <!-- Grid column -->
+
+      <hr class="clearfix w-100 d-md-none pb-3">
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5>Mystic Prism Studio</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="https://mysticprismstudio.home.blog" target="_blank"><i class="fas fa-globe"></i> Website</a>
+          </li>
+          <li>
+            <a href="https://github.com/MysticPrismStudio" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+          </li>
+          <li>
+            <a href="https://twitter.com/MPSOfficial_" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+      <!-- Grid column -->
+      <div class="col-md-3 mb-md-0 mb-3">
+
+        <!-- Links -->
+        <h5>PCBSCalc</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="fas fa-book"></i> Changelog</a>
+          </li>
+          <li>
+            <a href="https://github.com/PCBSCalc/PCBSCalc.github.io" target="_blank"><i class="fas fa-archive"></i> Repository</a>
+          </li>
+          <li>
+            <a href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="fas fa-exclamation-triangle"></i> Issue Tracker</a>
+          </li>
+          <li>
+            <a href="https://donorbox.org/pcbscalc" target="_blank"><i class="fas fa-money-bill-alt"></i> Donate us</a>
+          </li>
+          <li>
+            <a href="https://pcbscalc.github.io"><i class="fas fa-arrow-left"></i> Return to PCBSCalc</a>
+          </li>
+        </ul>
+
+      </div>
+      <!-- Grid column -->
+
+    </div>
+    <!-- Grid row -->
+
   </div>
-  <footer class="page-footer grey darken-3" style="margin-top:300px">
-    <div class="container">
-      <div class="row">
-        <div class="col l6 s12">
-          <h5 class="white-text">SoonTM</h5>
-          <p class="grey-text text-lighten-4">There is nothing here yet. Come back later!</p>
+  <!-- Footer Links -->
 
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">Copyright © 
+    <a href="https://mysticprismstudio.home.blog/"> Mystic Prism Studio</a>
+  </div>
+  <!-- Copyright -->
 
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Social</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-        <div class="col l3 s12">
-          <h5 class="white-text">Support</h5>
-          <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="footer-copyright">
-      <div class="container">
-        <p>Created by Mystic Prism Studio, PUC_Snakeman & Community Contributors.</p>
-        <p>Irregular Corporation, the Irregular Corporation logo, PC Building Simulator, the PC Building Simulator logo are trademarks and/or registered trademarks of Irregular Corporation. We are not affliated with Irregular Corporation. All rights belong to Irregular Corporation.</p>
-      </div>
-    </div>
-  </footer>
-
-
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/script_materialize.js"></script>
-
+</footer>
+<!-- Footer -->
   </body>
 </html>
