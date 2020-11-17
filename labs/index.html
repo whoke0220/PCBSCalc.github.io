@@ -30,9 +30,53 @@
         align-content: center;
       }
 
-      .EnableHEMParts{
-        align-content: center;
-      }
+        #divOptionCheckboxSection {
+            background-color: #ffffff;
+            padding-top: 32px;
+            height: 52px;
+        }
+
+        #OptionCheckboxSection {
+            background-color: #ffffff;
+            height: 40px;
+            color: black;
+            width: 370px;
+            margin: auto;
+            padding: 5px 0px;
+        }
+
+        #OptionCheckboxTable {
+            padding: 0px;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+            #OptionCheckboxTable td {
+                padding: 0px;
+            }
+
+                #OptionCheckboxTable td.tdOptionInput {
+                    width: 278px;
+                }
+
+                #OptionCheckboxTable td.tdOptionCheckbox {
+                    width: 25px;
+                }
+        
+        input {
+            border-radius: 0px 0px 0px 0px;
+            height: 25px;
+            width: 400px;
+        }
+
+            input.bigCheckbox {
+                width: 400px;
+            }
+
+            input.optionCheckbox {
+                width: auto;
+                height: auto;
+            }
 
       #div3DMarkScores {
             display: block;
@@ -183,7 +227,7 @@
     </style>
 
     <!-- Website Title -->
-    <title>PCBSCalc Labs v666.20201113 "Calamity"</title>
+    <title>PCBSCalc Labs v666.20201117 "Calamity"</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-primary purple accent-4">
@@ -221,13 +265,29 @@
     <div id="switcher" style="margin-top:20px; ">
       
     </div>
-    <div id="EnableHEMParts" class="container-fluid" style="margin-top: 20px;">
-      <div class="custom-control custom-checkbox center text-center">
-        <input class="custom-control-input" type="checkbox" value="" id="HEMCheckbox" name="includeHEMPartsCheckbox" onclick="includeHEMParts=includeHEMPartsCheckbox.checked;setData();setDataListOptions();setSelectOptions();">
-        <label class="custom-control-label" for="HEMCheckbox">
-          Include Hardware Expansion Mod(HEM) parts
-        </label>
-      </div>
+    <div id="divOptionCheckboxSection">
+        <div id="OptionCheckboxSection">
+            <form id="OptionCheckboxForm">
+                <table id="OptionCheckboxTable" align="center">
+                    <tr>
+                        <td class="tdOptionHEMLabel">
+                            Include Hardware Expansion Mod (HEM) parts?
+                        </td>
+                        <td class="tdOptionHEMCheckbox">
+                            <input type="checkbox" name="optionHEMCheckbox" class="optionCheckbox" onclick="includeHEMParts=optionHEMCheckbox.checked;setData();setDataListOptions();setSelectOptions();">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="tdOptionPartsNotInShopLabel">
+                            Include parts not in the Shop?
+                        </td>
+                        <td class="tdOptionPartsNotInShopCheckbox">
+                            <input type="checkbox" name="optionPartsNotInShopCheckbox" class="optionCheckbox" onclick="includePartsNotInShop=optionPartsNotInShopCheckbox.checked;setData();setDataListOptions();setSelectOptions();">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
     </div>
     <div id="content">
       <datalist id="cpuList">
