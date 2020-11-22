@@ -66803,7 +66803,7 @@ var sourceData = {
 }
 
 // By default, do not use HEM parts
-var includeHEMParts = false
+var includeHemParts = false
 
 // By default, do not include parts that are not in the shop
 var includePartsNotInShop = false
@@ -66818,25 +66818,25 @@ function setData() {
         "ram": {}
     }
     for (cpu in sourceData.procs) {
-        if ((includeHEMParts || !sourceData.procs[cpu].isHEMPart) &&
+        if ((includeHemParts || !sourceData.procs[cpu].isHEMPart) &&
             (includePartsNotInShop || sourceData.procs[cpu].inShop == "Yes")) {
             data.procs[cpu] = sourceData.procs[cpu]
         }
     }
     for (gpu in sourceData.gpus) {
-        if ((includeHEMParts || !sourceData.gpus[gpu].isHEMPart) &&
+        if ((includeHemParts || !sourceData.gpus[gpu].isHEMPart) &&
             (includePartsNotInShop || sourceData.gpus[gpu].inShop == "Yes")) {
             data.gpus[gpu] = sourceData.gpus[gpu]
         }
     }
     for (mobo in sourceData.motherboards) {
-        if ((includeHEMParts || !sourceData.motherboards[mobo].isHEMPart) &&
+        if ((includeHemParts || !sourceData.motherboards[mobo].isHEMPart) &&
             (includePartsNotInShop || sourceData.motherboards[mobo].inShop == "Yes")) {
             data.motherboards[mobo] = sourceData.motherboards[mobo]
         }
     }
     for (ram in sourceData.ram) {
-        if ((includeHEMParts || !sourceData.ram[ram].isHEMPart) &&
+        if ((includeHemParts || !sourceData.ram[ram].isHEMPart) &&
             (includePartsNotInShop || sourceData.ram[ram].inShop == "Yes")) {
             data.ram[ram] = sourceData.ram[ram]
         }
