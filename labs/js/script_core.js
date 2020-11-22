@@ -562,12 +562,12 @@ function generateUpgrades(showAlerts) {
         }
         return false
     }
-    if (!data.procs[currentProc][currentRamChannel][currentRamSpeed]) {
-        if (showAlerts) {
-            alert("RAM Speed not found for CPU.")
-        }
-        return false
-    }
+    //if (!data.procs[currentProc][currentRamChannel][currentRamSpeed]) {
+    //    if (showAlerts) {
+    //        alert("RAM Speed not found for CPU.")
+    //    }
+    //    return false
+    //}
     if (!data.gpus[currentGpu]) {
         if (showAlerts) {
             alert("GPU not found.")
@@ -587,7 +587,9 @@ function generateUpgrades(showAlerts) {
         return false
     }
 
-    var currentScore = getScore(data.procs[currentProc][currentRamChannel][currentRamSpeed], data.gpus[currentGpu][currentGpuCount].graphicsScore)
+    var currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[currentMobo].maxMemorySpeed)
+
+    var currentScore = getScore(data.procs[currentProc][currentRamChannel][currentSelectionRAMSpeed], data.gpus[currentGpu][currentGpuCount].graphicsScore)
     if (currentScore > score) {
         alert("No upgrade is needed")
         return false
@@ -603,10 +605,13 @@ function generateUpgrades(showAlerts) {
             continue
         }
 
+        // Get RAM Speed that will be used for this selection
+        currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[currentMobo].maxMemorySpeed)
+
         if (!data.procs[cpu][currentRamChannel]) {
             continue
         }
-        if (!data.procs[cpu][currentRamChannel][currentRamSpeed]) {
+        if (!data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed]) {
             continue
         }
 
@@ -614,7 +619,8 @@ function generateUpgrades(showAlerts) {
         if (cost > (budget - resbudget)) {
             continue
         }
-        var newScore = getScore(data.procs[cpu][currentRamChannel][currentRamSpeed], data.gpus[currentGpu][currentGpuCount].graphicsScore)
+
+        var newScore = getScore(data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed], data.gpus[currentGpu][currentGpuCount].graphicsScore)
         if ((newScore >= score) && (newScore < (score + offset))) {
             upgrades.push(parts(cpu, "-", "-", "-", "-", "-", "-", "-", cost, budget - cost, newScore, (data.procs[cpu].wattage + data.gpus[currentGpu][currentGpuCount].wattage)))
         }
@@ -639,10 +645,13 @@ function generateUpgrades(showAlerts) {
                 continue
             }
 
+            // Get RAM Speed that will be used for this selection
+            currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[currentMobo].maxMemorySpeed)
+
             var cost
             cost = data.gpus[gpu][sf].price
             if (cost <= (budget - resbudget)) {
-                var newScore = getScore(data.procs[currentProc][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                var newScore = getScore(data.procs[currentProc][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                 if ((newScore >= score) && (newScore < (score + offset))) {
                     upgrades.push(parts("-", "-", "-", "-", sf, data.gpus[gpu].gpuType, gpu, "-", cost, budget - cost, newScore, (data.procs[currentProc].wattage + data.gpus[gpu][sf].wattage)))
                 }
@@ -650,7 +659,7 @@ function generateUpgrades(showAlerts) {
             if (currentGpuCount == 1 && sf == "2" && data.gpus[currentGpu].fullName == data.gpus[gpu].fullName) {
                 cost = data.gpus[gpu][1].price
                 if (cost <= (budget - resbudget)) {
-                    var newScore = getScore(data.procs[currentProc][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                    var newScore = getScore(data.procs[currentProc][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                     if ((newScore >= score) && (newScore < (score + offset))) {
                         upgrades.push(parts("-", "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, "-", cost, budget - cost, newScore, (data.procs[currentProc].wattage + data.gpus[gpu][sf].wattage)))
                     }
@@ -667,10 +676,13 @@ function generateUpgrades(showAlerts) {
             continue
         }
 
+        // Get RAM Speed that will be used for this selection
+        currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[currentMobo].maxMemorySpeed)
+
         if (!data.procs[cpu][currentRamChannel]) {
             continue
         }
-        if (!data.procs[cpu][currentRamChannel][currentRamSpeed]) {
+        if (!data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed]) {
             continue
         }
 
@@ -695,7 +707,7 @@ function generateUpgrades(showAlerts) {
                 var cost
                 cost = data.gpus[gpu][sf].price + data.procs[cpu].price
                 if (cost <= (budget - resbudget)) {
-                    var newScore = getScore(data.procs[cpu][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                    var newScore = getScore(data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                     if ((newScore >= score) && (newScore < (score + offset))) {
                         upgrades.push(parts(cpu, "-", "-", "-", sf, data.gpus[gpu].gpuType, gpu, "-", cost, budget - cost, newScore, (data.procs[cpu].wattage + data.gpus[gpu][sf].wattage)))
                     }
@@ -703,7 +715,7 @@ function generateUpgrades(showAlerts) {
                 if (currentGpuCount == 1 && sf == "2" && data.gpus[currentGpu].fullName == data.gpus[gpu].fullName) {
                     cost = data.gpus[gpu][1].price + data.procs[cpu].price
                     if (cost <= (budget - resbudget)) {
-                        var newScore = getScore(data.procs[cpu][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                        var newScore = getScore(data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                         if ((newScore >= score) && (newScore < (score + offset))) {
                             upgrades.push(parts(cpu, "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, "-", cost, budget - cost, newScore, (data.procs[cpu].wattage + data.gpus[gpu][sf].wattage)))
                         }
@@ -723,6 +735,9 @@ function generateUpgrades(showAlerts) {
         //    continue
         //}
 
+        // Get RAM Speed that will be used for this selection
+        currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[mobo].maxMemorySpeed)
+
         for (cpu in data.procs) {
             if (socketsCompatible(data.motherboards[mobo].cpuSocket, data.procs[cpu].cpuSocket) == false) {
                 continue
@@ -733,7 +748,7 @@ function generateUpgrades(showAlerts) {
             if (!data.procs[cpu][currentRamChannel]) {
                 continue
             }
-            if (!data.procs[cpu][currentRamChannel][currentRamSpeed]) {
+            if (!data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed]) {
                 continue
             }
 
@@ -746,7 +761,7 @@ function generateUpgrades(showAlerts) {
             if (cost > (budget - resbudget)) {
                 continue
             }
-            var newScore = getScore(data.procs[cpu][currentRamChannel][currentRamSpeed], data.gpus[currentGpu][currentGpuCount].graphicsScore)
+            var newScore = getScore(data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed], data.gpus[currentGpu][currentGpuCount].graphicsScore)
             if ((newScore >= score) && (newScore < (score + offset))) {
                 upgrades.push(parts(cpu, "-", "-", "-", "-", "-", "-", mobo, cost, budget - cost, newScore, (data.procs[cpu].wattage + data.gpus[currentGpu][currentGpuCount].wattage)))
             }
@@ -766,6 +781,9 @@ function generateUpgrades(showAlerts) {
         //if (data.motherboards[mobo].fullName == data.motherboards[currentMobo].fullName) {
         //    continue
         //}
+
+        // Get RAM Speed that will be used for this selection
+        currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[mobo].maxMemorySpeed)
 
         for (gpu in data.gpus) {
             if (data.gpus[gpu].level > level) {
@@ -793,7 +811,7 @@ function generateUpgrades(showAlerts) {
                 var cost
                 cost = data.gpus[gpu][sf].price + data.motherboards[mobo].price
                 if (cost <= (budget - resbudget)) {
-                    var newScore = getScore(data.procs[currentProc][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                    var newScore = getScore(data.procs[currentProc][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                     if ((newScore >= score) && (newScore < (score + offset))) {
                         upgrades.push(parts("-", "-", "-", "-", sf, data.gpus[gpu].gpuType, gpu, mobo, cost, budget - cost, newScore, (data.procs[currentProc].wattage + data.gpus[gpu][sf].wattage)))
                     }
@@ -801,7 +819,7 @@ function generateUpgrades(showAlerts) {
                 if (currentGpuCount == 1 && sf == "2" && data.gpus[currentGpu].fullName == data.gpus[gpu].fullName) {
                     cost = data.gpus[gpu][1].price + data.motherboards[mobo].price
                     if (cost <= (budget - resbudget)) {
-                        var newScore = getScore(data.procs[currentProc][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                        var newScore = getScore(data.procs[currentProc][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                         if ((newScore >= score) && (newScore < (score + offset))) {
                             upgrades.push(parts("-", "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, mobo, cost, budget - cost, newScore, (data.procs[currentProc].wattage + data.gpus[gpu][sf].wattage)))
                         }
@@ -821,6 +839,9 @@ function generateUpgrades(showAlerts) {
         //    continue
         //}
 
+        // Get RAM Speed that will be used for this selection
+        currentSelectionRAMSpeed = Math.min(currentRamSpeed, data.motherboards[mobo].maxMemorySpeed)
+
         for (cpu in data.procs) {
             if (socketsCompatible(data.motherboards[mobo].cpuSocket, data.procs[cpu].cpuSocket) == false) {
                 continue
@@ -831,7 +852,7 @@ function generateUpgrades(showAlerts) {
             if (!data.procs[cpu][currentRamChannel]) {
                 continue
             }
-            if (!data.procs[cpu][currentRamChannel][currentRamSpeed]) {
+            if (!data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed]) {
                 continue
             }
 
@@ -862,7 +883,7 @@ function generateUpgrades(showAlerts) {
                     var cost
                     cost = data.gpus[gpu][sf].price + data.motherboards[mobo].price + data.procs[cpu].price
                     if (cost <= (budget - resbudget)) {
-                        var newScore = getScore(data.procs[cpu][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                        var newScore = getScore(data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                         if ((newScore >= score) && (newScore < (score + offset))) {
                             upgrades.push(parts(cpu, "-", "-", "-", sf, data.gpus[gpu].gpuType, gpu, mobo, cost, budget - cost, newScore, (data.procs[cpu].wattage + data.gpus[gpu][sf].wattage)))
                         }
@@ -870,7 +891,7 @@ function generateUpgrades(showAlerts) {
                     if (currentGpuCount == 1 && sf == "2" && data.gpus[currentGpu].fullName == data.gpus[gpu].fullName) {
                         cost = data.gpus[gpu][1].price + data.motherboards[mobo].price + data.procs[cpu].price
                         if (cost <= (budget - resbudget)) {
-                            var newScore = getScore(data.procs[cpu][currentRamChannel][currentRamSpeed], data.gpus[gpu][sf].graphicsScore)
+                            var newScore = getScore(data.procs[cpu][currentRamChannel][currentSelectionRAMSpeed], data.gpus[gpu][sf].graphicsScore)
                             if ((newScore >= score) && (newScore < (score + offset))) {
                                 upgrades.push(parts(cpu, "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, mobo, cost, budget - cost, newScore, (data.procs[cpu].wattage + data.gpus[gpu][sf].wattage)))
                             }
