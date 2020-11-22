@@ -227,7 +227,7 @@
     </style>
 
     <!-- Website Title -->
-    <title>PCBSCalc Labs v666.20201122.01 "Calamity"</title>
+    <title>PCBSCalc Labs v666.20201122.02 "Calamity"</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-primary purple accent-4">
@@ -255,11 +255,11 @@
     <script src="js/script_core.js"></script>
     <center>
     <div class="btn-group" role="group" aria-label="PCBSCalc" style="align-items: center;">
-      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('div3DMarkScoreCalculator');">3DMark Scores</button>
-      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divBuildMaker');">Build Maker</button>
-      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divBuildUpgrader');">Build Upgrader</button>
-      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divPartReplacer');">Part Replacer</button>
-      <button type="button" class="btn btn-secondary purple accent-4" onclick="showThisPage('divHistoryAndSaves');">History & Saves</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showPage('div3DMarkScoreCalculator');">3DMark Scores</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showPage('divBuildMaker');">Build Maker</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showPage('divBuildUpgrader');">Build Upgrader</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showPage('divPartReplacer');">Part Replacer</button>
+      <button type="button" class="btn btn-secondary purple accent-4" onclick="showPage('divHistoryAndSaves');">History & Saves</button>
     </div>
     </center>
     <div id="switcher" style="margin-top:20px; ">
@@ -312,7 +312,7 @@
                       <tr>
                           <td>CPU (Processor)</td>
                           <td>
-                            <input name="input3DMarkCpu" list="listCpus" onchange="
+                            <input name="input3DMarkCpu" class="browser-default custom-select" list="listCpus" onchange="
                             updateRamSpeedOptions3DMark();
                             updateRamChannelOptions3DMark();
                             ">
@@ -793,13 +793,15 @@
                                 Status
                             </td>
                             <td>
-                                <select name="selectPartReplacerOriginalSystemCpuPartStatus">
+                                <select class="form-control" name="selectPartReplacerOriginalSystemCpuPartStatus">
                                     <option selected></option>
                                     <option value="Broken">Broken</option>
                                     <option value="Upgrade">Upgrade Requested</option>
                                 </select>
                             </td>
                           </tr>
+                          <tr></tr>
+                          <tr></tr>
                           <tr></tr>
                           <tr></tr>
                           <tr></tr>
@@ -809,7 +811,7 @@
                           <tr>
                             <td>GPU (Graphics Card) 1</td>
                             <td>
-                                <input name="inputPartReplacerOriginalSystemGpu1" list="listGpus" onchange="
+                                <input class="form-control" name="inputPartReplacerOriginalSystemGpu1" list="listGpus" onchange="
                                     updateMotherboardOptionsPartReplacer();
                                 " />
                             </td>
@@ -819,13 +821,15 @@
                                 Status
                             </td>
                             <td>
-                                <select name="selectPartReplacerOriginalSystemGpu1PartStatus">
+                                <select class="form-control" name="selectPartReplacerOriginalSystemGpu1PartStatus">
                                     <option selected></option>
                                     <option value="Broken">Broken</option>
                                     <option value="Upgrade">Upgrade Requested</option>
                                 </select>
                             </td>
                         </tr>
+                        <tr></tr>
+                        <tr></tr>
                         <tr></tr>
                         <tr></tr>
                         <tr></tr>
@@ -835,9 +839,9 @@
                         <tr>
                             <td>GPU (Graphics Card) 2</td>
                             <td>
-                                <td><input class="form-control" name="inputPartReplacerOriginalSystemGpu2" list="listGpus" onchange="
-                                    updateMotherboardOptionsPartReplacer()
-                                " /></td>
+                                <input class="form-control" name="inputPartReplacerOriginalSystemGpu2" list="listGpus" onchange="
+                                    updateMotherboardOptionsPartReplacer();
+                                " />
                             </td>
                         </tr>
                         <tr>
@@ -845,7 +849,7 @@
                                 Status
                             </td>
                             <td>
-                                <select name="selectPartReplacerOriginalSystemGpu2PartStatus">
+                                <select class="form-control" name="selectPartReplacerOriginalSystemGpu2PartStatus">
                                     <option selected></option>
                                     <option value="Broken">Broken</option>
                                     <option value="Upgrade">Upgrade Requested</option>
@@ -858,10 +862,12 @@
                         <tr></tr>
                         <tr></tr>
                         <tr></tr>
+                        <tr></tr>
+                        <tr></tr>
                           <tr>
                               <td>Motherboard</td>
                               <td>
-                                  <select class="browser-default custom-select" name="inputPartReplacerOriginalSystemMobo">
+                                  <select class="form-control" name="inputPartReplacerOriginalSystemMobo">
                                   </select>
                               </td>
                           </tr>
@@ -870,7 +876,7 @@
                                 Status
                             </td>
                             <td>
-                                <select name="selectPartReplacerOriginalSystemMoboPartStatus">
+                                <select class="form-control" name="selectPartReplacerOriginalSystemMoboPartStatus">
                                     <option selected></option>
                                     <option value="Broken">Broken</option>
                                     <!--<option value="Upgrade">Upgrade Requested</option>-->
@@ -989,6 +995,9 @@
           </li>
           <li>
             <a href="https://twitter.com/StudioMMForever" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
+          </li>
+          <li>
+            <a href="https://discord.gg/PdF9cQU" target="_blank"><i class="fab fa-discord"></i> Discord Server (PCBSCalc)</a>
           </li>
         </ul>
 
