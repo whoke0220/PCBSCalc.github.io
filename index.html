@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>PCBSCalc v1.9.2 b5 "Betsy"</title>
+<title>PCBSCalc v1.9.2 b6 "Betsy"</title>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -249,8 +249,6 @@
                 padding: 6px;
             }
 </style>
-<script src="js/script_data.js"></script>
-<script src="js/script_core.js"></script>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark text-light">
     <a class="navbar-brand" href="https://pcbscalc.github.io"><img src="img/pcbscalc2.png" width="50"></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -316,12 +314,11 @@
         <button type="button" class="btn btn-dark" onclick="showPage('divHistoryAndSaves');">History & Saves</button>
     </div>
     <div id="divPages">
-        <datalist id="listCpus">
-        </datalist>
-        <datalist id="listGpus">
-        </datalist>
-        <datalist id="listMotherboards">
-        </datalist> 
+        <datalist id="listCases"></datalist>
+        <datalist id="listCpus"></datalist>
+        <datalist id="listGpus"></datalist>
+        <datalist id="listMobos"></datalist>
+        <datalist id="listStorageM2s"></datalist>
         <div id="div3DMarkScoreCalculator" class="my-2">
             <div id="div3DMarkScoreCalculatorForm">
                 <form id="form3DMarkScoreCalculator">
@@ -561,6 +558,14 @@
                             <input type="checkbox" class="form-control mt-1" name="inputBuildMakerIncludeMotherboard" checked>
                         </td>
                     </tr>
+                    <tr title="Include the Case in the result set.">
+                        <td>
+                            Include Case
+                        </td>
+                        <td>
+                            <input type="checkbox" class="form-control mt-1" name="inputBuildMakerIncludeCases">
+                        </td>
+                    </tr>
                     <tr title="Include the RAM part in the result set.">
                         <td>
                             Include RAM Part
@@ -590,8 +595,9 @@
             <table class="table" id="buildMakerTable">
                 <tbody>
                     <tr>
+                        <td class="tdCase"><b>Case</b></td>
                         <td class="tdCPU"><b>CPU</b></td>
-                        <td class="tdRAMCount"><b>#</b></td>
+                        <td class="tdramChannel"><b>#</b></td>
                         <td class="tdRAMSpeed"><b>Speed</b></td>
                         <td class="tdRAMPart"><b>RAM</b></td>
                         <td class="tdGPUCount"><b>#</b></td>
@@ -657,45 +663,50 @@
                     <tr></tr>
                     <tr><td><u>Original System:</u></td><td></td></tr>
                     <tr>
+                        <td>Case</td>
+                        <td>
+                            <input class="form-control" name="inputBuildUpgraderOriginalSystemCase" list="listCases" onchange="
+                                updateMoboOptionsBuildUpgrader();
+                            ">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>M.2</td>
+                        <td>
+                            <input class="form-control" name="inputBuildUpgraderOriginalSystemM2" list="listStorageM2s" onchange="
+                                updateMoboOptionsBuildUpgrader();
+                            ">
+                        </td>
+                    </tr>
+                    <tr>
                         <td>CPU (Processor)</td>
                         <td>
                             <input class="form-control" name="inputBuildUpgraderOriginalSystemCpu" list="listCpus" value="AMD Ryzen 3 Quad Core 1200" onchange="
-                            updateRamSpeedOptionsBuildUpgrader();
-                            updateRamChannelOptionsBuildUpgrader();
-                            updateMotherboardOptionsBuildUpgrader();
+                                updateMoboOptionsBuildUpgrader();
                             ">
                         </td>
                     </tr>
                     <tr>
                         <td>RAM Speed</td>
                         <td>
-                            <select class="form-control" name="selectBuildUpgraderOriginalSystemRamSpeed" onchange="
-                            updateMotherboardOptionsBuildUpgrader();">
-                            </select>
+                            <select class="form-control" name="selectBuildUpgraderOriginalSystemRamSpeed"></select>
                         </td>
                     </tr>
                     <tr>
-                        <td>RAM Channels</td>
-                        <td>
-                            <select class="form-control" name="selectBuildUpgraderOriginalSystemRamChannel">
-                                <option value="1" selected>1: Single-channel</option>
-                                <option value="2">2: Dual-channel</option>
-                                <option value="3">3: Triple-channel</option>
-                                <option value="4">4: Quad-channel</option>
-                            </select>
-                        </td>
+                        <td>RAM Sticks</td>
+                        <td><input class="form-control" name="inputBuildUpgraderRamSticks" placeholder="1" /></td>
                     </tr>
                     <tr>
                         <td>GPU (Graphics Card)</td>
                         <td><input class="form-control" name="inputBuildUpgraderOriginalSystemGpu" list="listGpus" value="EVGA GeForce GT 1030 SC" onchange="
-                            updateMotherboardOptionsBuildUpgrader();
+                            updateMoboOptionsBuildUpgrader();
                         "></td>
                     </tr>
                     <tr>
                         <td># GPUs</td>
                         <td>
                             <select class="form-control" name="selectBuildUpgraderOriginalSystemGpuCount" onchange="
-                            updateMotherboardOptionsBuildUpgrader();">
+                            updateMoboOptionsBuildUpgrader();">
                                 <option value="1" selected>1: Single-GPU</option>
                                 <option value="2">2: Dual-GPUs</option>
                             </select>
@@ -751,7 +762,7 @@
                 <tbody>
                     <tr>
                         <td class="tdCpu"><b>CPU</b></td>
-                        <!--<td class="tdRamCount"><b>#</b></td>
+                        <!--<td class="tdramChannel"><b>#</b></td>
                         <td class="tdRamSpeed"><b>Speed</b></td>
                         <td class="tdRamPart"><b>RAM</b></td>-->
                         <td class="tdGpuCount"><b>#</b></td>
@@ -801,9 +812,25 @@
                         <tr></tr>
                         <tr><td><u>Original System:</u></td><td></td></tr>
                         <tr>
+                            <td>Case</td>
+                            <td>
+                                <input class="form-control" name="inputPartReplacerOriginalSystemCase" list="listCases" onchange="
+                                    updateMoboOptionsPartReplacer();
+                                ">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>M.2</td>
+                            <td>
+                                <input class="form-control" name="inputPartReplacerOriginalSystemM2" list="listStorageM2s" onchange="
+                                    updateMoboOptionsPartReplacer();
+                                ">
+                            </td>
+                        </tr>
+                        <tr>
                             <td>CPU (Processor)</td>
                             <td><input class="form-control" name="inputPartReplacerOriginalSystemCpu" list="listCpus" onchange="
-                                updateMotherboardOptionsPartReplacer();
+                                updateMoboOptionsPartReplacer();
                             " /></td>
                         </tr>
                         <tr>
@@ -828,7 +855,7 @@
                             <td>GPU (Graphics Card) 1</td>
                             <td>
                                 <input class="form-control" name="inputPartReplacerOriginalSystemGpu1" list="listGpus" onchange="
-                                    updateMotherboardOptionsPartReplacer();
+                                    updateMoboOptionsPartReplacer();
                                 " />
                             </td>
                         </tr>
@@ -853,7 +880,7 @@
                         <tr>
                             <td>GPU (Graphics Card) 2</td>
                             <td><input class="form-control" name="inputPartReplacerOriginalSystemGpu2" list="listGpus" onchange="
-                                updateMotherboardOptionsPartReplacer()
+                                updateMoboOptionsPartReplacer();
                             " /></td>
                         </tr>
                         <tr>
@@ -912,7 +939,7 @@
                 <table id="table3DMarkScoreCalculatorHistory">
                     <tr>
                         <td class="tdCpu"><b>CPU</b></td>
-                        <td class="tdRamCount"><b>#</b></td>
+                        <td class="tdramChannel"><b>#</b></td>
                         <td class="tdRamSpeed"><b>RAM Speed</b></td>
                         <td class="tdGpuCount"><b>#</b></td>
                         <td class="tdGpuType"><b>Type</b></td>
@@ -927,8 +954,9 @@
                 <h1>Build Maker Saves</h1>
                 <table id="tableBuildMakerSaves">
                     <tr>
+                        <td class="tdCase"><b>Case</b></td>
                         <td class="tdCpu"><b>CPU</b></td>
-                        <td class="tdRamCount"><b>#</b></td>
+                        <td class="tdramChannel"><b>#</b></td>
                         <td class="tdRamSpeed"><b>Speed</b></td>
                         <td class="tdRamPart"><b>RAM</b></td>
                         <td class="tdGpuCount"><b>#</b></td>
@@ -945,6 +973,8 @@
             </div>
         </div>
     </div>
+    <script src="js/script_data.js"></script>
+    <script src="js/script_core.js"></script>
     <script src="js/script_get.js"></script>
     </div>
 </div>

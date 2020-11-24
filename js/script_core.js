@@ -51,14 +51,6 @@ function updateRamSpeedOptions3DMark() {
     )
 }
 
-function updateRamSpeedOptionsBuildUpgrader() {
-    var form = document.getElementById('formBuildUpgrader')
-    updateRamSpeedOptions(
-        form.inputBuildUpgraderOriginalSystemCpu.value,
-        form.selectBuildUpgraderOriginalSystemRamSpeed
-    )
-}
-
 function updateRamChannelOptions(cpu, ramChannelList) {
     for (i = 0; i < ramChannelList.options.length; i++) {
         if (ramChannelList.options[i].value <= data.cpus[cpu].maxMemoryChannels) {
@@ -77,125 +69,180 @@ function updateRamChannelOptions3DMark() {
     )
 }
 
-function updateRamChannelOptionsBuildUpgrader() {
-    var form = document.getElementById('formBuildUpgrader')
-    updateRamChannelOptions (
-        form.inputBuildUpgraderOriginalSystemCpu.value,
-        form.selectBuildUpgraderOriginalSystemRamChannel
-    )
-}
-
-function socketsCompatible(socket1, socket2) {
-    if (socket1 == "LGA 1151 (Skylake)" &&
-        socket2 == "LGA 1151 (Kaby Lake)") {
-        return true
-    } else if (
-        socket1 == "LGA 1151 (Kaby Lake)" &&
-        socket2 == "LGA 1151 (Skylake)") {
-        return true
+function caseSupportsMobo(pcCase, mobo) {
+    if (
+        pcCase == "" ||
+        mobo == "" ||
+        data.pcCases[pcCase] == null ||
+        data.mobos[mobo] == null
+    ) {
+        return false
     } else {
-        return socket1 == socket2
+        return data.pcCases[pcCase].motherboardSize.includes(data.mobos[mobo].motherboardSize)
     }
 }
 
-function motherboardSupportsMultiGPUType(motherboardSupportSLI, motherboardSupportCrossfire, gpuMultiGPU) {
-    if (gpuMultiGPU == "SLI") {
-        return (motherboardSupportSLI == "Yes")
-    } else if (gpuMultiGPU == "CrossFire") {
-        return (motherboardSupportCrossfire == "Yes")
+function caseSupportsGpu(pcCase, gpu, gpuCount) {
+    if (
+        pcCase == "" ||
+        gpu == "" ||
+        data.pcCases[pcCase] == null ||
+        data.gpus[gpu] == null
+    ) {
+        return false
     } else {
-        return true
+        return (
+            data.pcCases[pcCase].maxGpuLength >= data.gpus[gpu].length &&
+            (
+                gpuCount == 1 ||
+                data.gpus[gpu].realSlotSize <= 2 ||
+                data.pcCases[pcCase].motherboardSize.includes("S-ATX")
+            )
+        )
     }
 }
 
-function updateMotherboardOptions(cpu, gpu, gpuCount, motherboardlist, ramSpeed) {
-    for (mobo in motherboardlist.options) {
-        if (mobo == "length" || mobo == "selectedIndex" || mobo == "add" || mobo == "remove" || mobo == "item" || mobo == "namedItem") {
-            continue
-        }
-        if (socketsCompatible(data.cpus[cpu].cpuSocket, data.mobos[motherboardlist.options[mobo].innerHTML].cpuSocket)) {
-            if (gpuCount == "1") {
-                motherboardlist.options[mobo].style.display = "block"
+function moboSupportsM2(mobo, m2) {
+    if (
+        mobo == "" ||
+        m2 == "" ||
+        data.mobos[mobo] == null ||
+        data.storages[m2] == null
+    ) {
+        return false
+    } else {
+        return data.mobos[mobo].m2Slots > 0 && (data.storages[m2].includesHeatsink != "Yes" || data.mobos[mobo].m2SlotsSupportingHeatsinks > 0)
+    }
+}
+
+function moboSupportsCpu(mobo, cpu) {
+    if (
+        mobo == "" ||
+        cpu == "" ||
+        data.mobos[mobo] == null ||
+        data.cpus[cpu] == null
+    ) {
+        return false
+    } else {
+        var socket1 = data.mobos[mobo].cpuSocket
+        var socket2 = data.cpus[cpu].cpuSocket
+        return (
+            (socket1 == "LGA 1151 (Skylake)" && socket2 == "LGA 1151 (Kaby Lake)") ||
+            (socket2 == "LGA 1151 (Skylake)" && socket1 == "LGA 1151 (Kaby Lake)") ||
+            (socket1 == socket2)
+        )
+    }
+}
+
+function moboSupportsGpu(mobo, gpu, gpuCount) {
+    if (
+        mobo == "" ||
+        gpu == "" ||
+        data.mobos[mobo] == null ||
+        data.gpus[gpu] == null
+    ) {
+        return false
+    }
+    else {
+        if (gpuCount == 1) {
+            return true
+        } else if (gpuCount == 2) {
+            if (
+                data.mobos[mobo].dualGpuMaxSlotSize == null ||
+                data.mobos[mobo].dualGpuMaxSlotSize < data.gpus[gpu].realSlotSize
+            ) {
+                return false
             } else {
-                if (motherboardSupportsMultiGPUType(data.mobos[motherboardlist.options[mobo].innerHTML].supportSLI, data.mobos[motherboardlist.options[mobo].innerHTML].supportCrossfire, data.gpus[gpu].multiGPU)) {
-                    if (data.mobos[motherboardlist.options[mobo].innerHTML].memorySpeedSteps.includes(ramSpeed) || Number(ramSpeed) < data.mobos[motherboardlist.options[mobo].innerHTML].maxMemorySpeed) {
-                        motherboardlist.options[mobo].style.display = "block"
-                    } else {
-                        motherboardlist.options[mobo].style.display = "none"
-                    }
+                var gpuMultiGpu = data.gpus[gpu].multiGPU
+                if (gpuMultiGpu == "SLI") {
+                    return data.mobos[mobo].supportSLI == "Yes"
+                } else if (gpuMultiGpu == "CrossFire") {
+                    return data.mobos[mobo].supportCrossfire == "Yes"
                 } else {
-                    motherboardlist.options[mobo].style.display = "none"
+                    return false
                 }
             }
         } else {
-            motherboardlist.options[mobo].style.display = "none"
+            return false
         }
     }
 }
 
-function updateMotherboardOptionsBuildUpgrader() {
+function moboSupportsRamCount(mobo, ramCount) {
+    if (
+        mobo == "" ||
+        data.mobos[mobo] == null
+    ) {
+        return false
+    } else {
+        return data.mobos[mobo].ramSlots >= ramCount
+    }
+}
+
+function updateMoboOptions(moboList, pcCase, m2, cpu, gpu, gpuCount) {
+    var show
+    for (moboOption in moboList.options) {
+        if (moboOption == "length" || moboOption == "selectedIndex" || moboOption == "add" || moboOption == "remove" || moboOption == "item" || moboOption == "namedItem") {
+            continue
+        }
+
+        mobo = moboList.options[moboOption].innerHTML
+        show = false
+        if (
+            (pcCase == "" || (data.pcCases[pcCase] != null && caseSupportsMobo(pcCase, mobo))) &&
+            (moboSupportsCpu(mobo, cpu)) &&
+            (moboSupportsGpu(mobo, gpu, gpuCount)) &&
+            (m2 == "" || (data.storages[m2] != null && moboSupportsM2(mobo, m2)))
+        ) {
+            show = true
+        }
+        moboList.options[moboOption].style.display = (show ? "block" : "none")
+    }
+}
+
+function updateMoboOptionsBuildUpgrader() {
     var form = document.getElementById('formBuildUpgrader')
-    updateMotherboardOptions(
+    updateMoboOptions(
+        form.selectBuildUpgraderOriginalSystemMobo,
+        form.inputBuildUpgraderOriginalSystemCase.value,
+        form.inputBuildUpgraderOriginalSystemM2.value,
         form.inputBuildUpgraderOriginalSystemCpu.value,
         form.inputBuildUpgraderOriginalSystemGpu.value,
-        form.selectBuildUpgraderOriginalSystemGpuCount.value,
-        form.selectBuildUpgraderOriginalSystemMobo,
-        form.selectBuildUpgraderOriginalSystemRamSpeed.value
+        form.selectBuildUpgraderOriginalSystemGpuCount.value
     )
 }
 
-function updateMotherboardOptions2(cpu, gpu1, gpu2, motherboardlist) {
-
-    if (data.cpus[cpu] == null) {
-        return false
-    }
-    if (gpu1 == "" && gpu2 == "") {
-        return false
-    }
-    if (gpu1 != "" && data.gpus[gpu1] == null) {
-        return false
-    }
-    if (gpu2 != "" && data.gpus[gpu2] == null) {
+function updateMoboOptions2(moboList, pcCase, m2, cpu, gpu1, gpu2) {
+    if ((data.cpus[cpu] == null) ||
+        (gpu1 == "" && gpu2 == "") ||
+        (gpu1 != "" && data.gpus[gpu1] == null) ||
+        (gpu2 != "" && data.gpus[gpu2] == null)) {
         return false
     }
 
     var gpuCount = 0
-    var evalGpu
+    var gpu
     if (gpu1 != "") {
         gpuCount += 1
-        evalGpu = gpu1
+        gpu = gpu1
     }
     if (gpu2 != "") {
         gpuCount += 1
-        evalGpu = gpu2
+        gpu = gpu2
     }
-    for (mobo in motherboardlist.options) {
-        if (mobo == "length" || mobo == "selectedIndex" || mobo == "add" || mobo == "remove" || mobo == "item" || mobo == "namedItem") {
-            continue
-        }
-        if (socketsCompatible(data.cpus[cpu].cpuSocket, data.mobos[motherboardlist.options[mobo].innerHTML].cpuSocket)) {
-            if (gpuCount == "1") {
-                motherboardlist.options[mobo].style.display = "block"
-            } else {
-                if (motherboardSupportsMultiGPUType(data.mobos[motherboardlist.options[mobo].innerHTML].supportSLI, data.mobos[motherboardlist.options[mobo].innerHTML].supportCrossfire, data.gpus[evalGpu].multiGPU)) {
-                    motherboardlist.options[mobo].style.display = "block"
-                } else {
-                    motherboardlist.options[mobo].style.display = "none"
-                }
-            }
-        } else {
-            motherboardlist.options[mobo].style.display = "none"
-        }
-    }
+
+    updateMoboOptions(moboList, pcCase, m2, cpu, gpu, gpuCount)
 }
 
-function updateMotherboardOptionsPartReplacer() {
+function updateMoboOptionsPartReplacer() {
     var form = document.getElementById('formPartReplacer')
-    updateMotherboardOptions2(
+    updateMoboOptions2(
+        form.inputPartReplacerOriginalSystemMobo,
+        form.inputPartReplacerOriginalSystemCase.value,
+        form.inputPartReplacerOriginalSystemM2.value,
         form.inputPartReplacerOriginalSystemCpu.value,
         form.inputPartReplacerOriginalSystemGpu1.value,
-        form.inputPartReplacerOriginalSystemGpu2.value,
-        form.inputPartReplacerOriginalSystemMobo
+        form.inputPartReplacerOriginalSystemGpu2.value
     )
 }
 
@@ -378,6 +425,7 @@ function getSystemWattsDifferentGpus(cpu, gpu1, gpu2) {
 function CalculatorSaveBuild() {
     var form = document.getElementById('form3DMarkScoreCalculator')
     saveBuild(
+        '-',
         form.input3DMarkCpu.value,
         form.select3DMarkRamChannel.value,
         form.select3DMarkRamSpeed.value,
@@ -395,8 +443,9 @@ function CalculatorSaveBuild() {
     )
 }
 
-function partsForBuild(cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, cost, budgetLeft, score, systemWatts) {
+function partsForBuild(pcCase, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, budgetTotal, budgetReserved, cost, budgetLeft, score, systemWatts) {
     var build = {
+        "pcCase": pcCase,
         "cpu": cpu,
         "ramChannel": ramChannel,
         "ramSpeed": ramSpeed,
@@ -405,6 +454,8 @@ function partsForBuild(cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, m
         "gpuType": gpuType,
         "gpu": gpu,
         "mobo": mobo,
+        "budgetTotal": budgetTotal,
+        "budgetReserved": budgetReserved,
         "cost": cost,
         "budgetLeft": budgetLeft,
         "score": score,
@@ -414,7 +465,7 @@ function partsForBuild(cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, m
     return build
 }
 
-function partsForReplacer(cpu, gpu1Type, gpu1, gpu2Type, gpu2, mobo, cost, budgetLeft, systemWatts) {
+function partsForReplacer(cpu, gpu1Type, gpu1, gpu2Type, gpu2, mobo, budgetTotal, budgetReserved, cost, budgetLeft, systemWatts) {
     var parts = {
         "cpu": cpu,
         "gpu1Type": gpu1Type,
@@ -422,6 +473,8 @@ function partsForReplacer(cpu, gpu1Type, gpu1, gpu2Type, gpu2, mobo, cost, budge
         "gpu2Type": gpu2Type,
         "gpu2": gpu2,
         "mobo": mobo,
+        "budgetTotal": budgetTotal,
+        "budgetReserved": budgetReserved,
         "cost": cost,
         "budgetLeft": budgetLeft,
         "systemWatts": systemWatts,
@@ -460,20 +513,21 @@ function savePcBuild(id, type, comment) {
     type = type
     comment = comment
 
-    cpu = id.cells[0].innerHTML
-    ramc = id.cells[1].innerHTML
-    rams = id.cells[2].innerHTML
-    ram = id.cells[3].innerHTML
-    gpuCount = id.cells[4].innerHTML
-    gpuType = id.cells[5].innerHTML
-    gpu = id.cells[6].innerHTML
-    mobo = id.cells[7].innerHTML
-    cost = id.cells[8].innerHTML
-    budgetleft = id.cells[9].innerHTML
-    score = id.cells[10].innerHTML
-    wattage = id.cells[11].innerHTML
+    pcCase = id.cells[0].innerHTML
+    cpu = id.cells[1].innerHTML
+    ramChannel = id.cells[2].innerHTML
+    ramSpeed = id.cells[3].innerHTML
+    ram = id.cells[4].innerHTML
+    gpuCount = id.cells[5].innerHTML
+    gpuType = id.cells[6].innerHTML
+    gpu = id.cells[7].innerHTML
+    mobo = id.cells[8].innerHTML
+    cost = id.cells[9].innerHTML
+    budgetleft = id.cells[10].innerHTML
+    score = id.cells[11].innerHTML
+    systemWatts = id.cells[12].innerHTML
 
-    saveBuild(cpu, ramc, rams, ram, gpuCount, gpuType, gpu, mobo, cost, budgetleft, score, wattage, type, comment)
+    saveBuild(pcCase, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, cost, budgetleft, score, systemWatts, type, comment)
 }
 
 function numberOrDefault(inputString, defaultValue) {
@@ -487,10 +541,31 @@ function numberOrDefault(inputString, defaultValue) {
     return result
 }
 
+function pushBuildForCases(builds, includeCases, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost, score, systemWatts) {
+    if (!includeCases)
+    {
+        builds.push(partsForBuild("-", cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost, budgetTotal - buildCost, score, systemWatts))
+    } else {
+        for (pcCase in data.pcCases) {
+            var caseCost = data.pcCases[pcCase].price
+            if (
+                caseSupportsMobo(pcCase, mobo) &&
+                caseSupportsGpu(pcCase, gpu, gpuCount) &&
+                buildCost + caseCost <= budgetTotal - budgetReserved
+            ) {
+                builds.push(partsForBuild(data.pcCases[pcCase].fullName, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost + caseCost, budgetTotal - buildCost - caseCost, score, systemWatts))
+            }
+        }
+    }
+}
+
 function BuildMakerGetBuilds() {
     var showAlerts = true
 
     var form = document.getElementById('formBuildMaker')
+    var table = document.getElementById('tableBuildMakerResults')
+    var tableCells = 14
+    resetResultsTable(table, 0, tableCells)
 
     var budgetTotal = Number(form.inputBuildMakerBudget.value)
     var budgetReserved = numberOrDefault(form.inputBuildMakerReservedBudget.value, 400)
@@ -508,6 +583,7 @@ function BuildMakerGetBuilds() {
     var selectedGpuType = form.selectBuildMakerGpuType.value
     var includeMotherboard = form.inputBuildMakerIncludeMotherboard.checked
     var includeRamPart = form.inputBuildMakerIncludeRamPart.checked
+    var includeCases = form.inputBuildMakerIncludeCases.checked
     var needCpuOverclock = form.inputBuildMakerNeedCpuOverclock.checked
 
     if (isNaN(budgetTotal) || budgetTotal == 0) {
@@ -535,108 +611,123 @@ function BuildMakerGetBuilds() {
     var selectedMotherboardName
     var selectedRamName
     for (cpu in data.cpus) {
-        if (data.cpus[cpu].level <= level) {
-            if (needCpuOverclock == true && data.cpus[cpu].canOverclock == "No") {
+        if (data.cpus[cpu].level > level) {
+            continue
+        }
+        if (needCpuOverclock == true && data.cpus[cpu].canOverclock == "No") {
+            continue
+        }
+        if (selectedCpuSocket != "Any" && selectedCpuSocket != data.cpus[cpu].cpuSocket) {
+            continue
+        }
+
+        buildCost = data.cpus[cpu].price
+        if (buildCost > budgetForParts) {
+            continue
+        }
+
+        for (gpu in data.gpus) {
+            if (data.gpus[gpu].level > level) {
                 continue
             }
-            if (selectedCpuSocket != "Any" && selectedCpuSocket != data.cpus[cpu].cpuSocket) {
+            if (selectedGpuType != "Any" && selectedGpuType != data.gpus[gpu].gpuType) {
                 continue
             }
+            for (gpuCount = 1; gpuCount <= 2; gpuCount++) {
+                if (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) {
+                    continue
+                }
 
-            for (ramChannel = 1; ramChannel <= data.cpus[cpu].maxMemoryChannels; ramChannel++) {
-                for (ramSpeed in data.ramSpeeds[getCpuSocketForRamSpeeds(data.cpus[cpu].cpuSocket)]) {
-                    for (gpu in data.gpus) {
-                        if (data.gpus[gpu].level > level) {
+                buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price)
+                if (buildCost > budgetForParts) {
+                    continue
+                }
+
+                for (ramChannel = 1; ramChannel <= data.cpus[cpu].maxMemoryChannels; ramChannel++) {
+                    for (ramSpeed in data.ramSpeeds[getCpuSocketForRamSpeeds(data.cpus[cpu].cpuSocket)]) {
+
+                        buildScore =
+                            getSystemScore(
+                                getCpuScore(cpu, ramChannel, ramSpeed),
+                                getGpuScore(gpu, gpuCount)
+                            )
+                        if (buildScore < target3DMarkScore) {
                             continue
                         }
-                        if (selectedGpuType != "Any" && selectedGpuType != data.gpus[gpu].gpuType) {
+                        if (buildScore > target3DMarkScoreMaximum) {
                             continue
                         }
-                        for (gpuCount = 1; gpuCount <= 2; gpuCount++) {
-                            if (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) {
-                                continue
-                            }
 
-                            buildScore =
-                                getSystemScore(
-                                    getCpuScore(cpu, ramChannel, ramSpeed),
-                                    getGpuScore(gpu, gpuCount)
-                                )
-                            if (buildScore < target3DMarkScore) {
-                                continue
-                            }
-                            if (buildScore > target3DMarkScoreMaximum) {
-                                continue
-                            }
+                        selectedMotherboardName = null
+                        selectedRamName = null
 
-                            buildCost = null
-                            selectedMotherboardName = null
-                            selectedRamName = null
-
-                            if (includeMotherboard == false && includeRamPart == false) {
-                                buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price)
+                        if (includeMotherboard == false && includeRamPart == false) {
+                            buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price)
+                            if (buildCost <= budgetForParts) {
+                                pushBuildForCases(builds, includeCases, cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
+                            }
+                        } else if (includeMotherboard == true && includeRamPart == false) {
+                            for (mobo in data.mobos) {
+                                if (data.mobos[mobo].level > level) {
+                                    continue
+                                } else if (!moboSupportsCpu(mobo, cpu)) {
+                                    continue
+                                } else if (!moboSupportsGpu(mobo, gpu, gpuCount)) {
+                                    continue
+                                } else if (!moboSupportsRamCount(mobo, ramChannel)) {
+                                    continue
+                                } else if (needCpuOverclock == true && data.mobos[mobo].canOverclock != "Yes") {
+                                    continue
+                                } else if (data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()) == false) {
+                                    continue
+                                }
+                                buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + data.mobos[mobo].price
                                 if (buildCost <= budgetForParts) {
-                                    builds.push(partsForBuild(cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), buildCost, (budgetTotal - buildCost), buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                                    selectedMotherboardName = data.mobos[mobo].fullName
+                                    pushBuildForCases(builds, includeCases, cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                                 }
-                            } else if (includeMotherboard == true && includeRamPart == false) {
-                                for (mobo in data.mobos) {
-                                    if (data.mobos[mobo].level > level) {
-                                        continue
-                                    } else if (gpuCount == "2" && motherboardSupportsMultiGPUType(data.mobos[mobo].supportSLI, data.mobos[mobo].supportCrossfire, data.gpus[gpu].multiGPU) == false) {
-                                        continue
-                                    } else if (socketsCompatible(data.mobos[mobo].cpuSocket, data.cpus[cpu].cpuSocket) == false) {
-                                        continue
-                                    } else if (needCpuOverclock == true && data.mobos[mobo].canOverclock != "Yes") {
-                                        continue
-                                    } else if (data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()) == false) {
-                                        continue
-                                    }
-                                    buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + data.mobos[mobo].price
-                                    if (buildCost <= budgetForParts) {
-                                        selectedMotherboardName = data.mobos[mobo].fullName
-                                        builds.push(partsForBuild(cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), buildCost, (budgetTotal - buildCost), buildScore, getSystemWatts(cpu, gpu, gpuCount)))
-                                    }
+                            }
+                        } else if (includeMotherboard == false && includeRamPart == true) {
+                            for (ram in data.rams) {
+                                if (data.rams[ram].level > level) {
+                                    continue
+                                } else if (data.rams[ram].frequency != Number(ramSpeed)) {
+                                    continue
                                 }
-                            } else if (includeMotherboard == false && includeRamPart == true) {
-                                for (ram in data.rams) {
-                                    if (data.rams[ram].level > level) {
-                                        continue
-                                    } else if (data.rams[ram].frequency < Number(ramSpeed)) {
-                                        continue
-                                    }
-                                    buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + (ramChannel * data.rams[ram].price)
-                                    if (buildCost <= budgetForParts) {
-                                        selectedRamName = data.rams[ram].fullName
-                                        builds.push(partsForBuild(cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), buildCost, (budgetTotal - buildCost), buildScore, getSystemWatts(cpu, gpu, gpuCount)))
-                                    }
+                                buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + (ramChannel * data.rams[ram].price)
+                                if (buildCost <= budgetForParts) {
+                                    selectedRamName = data.rams[ram].fullName
+                                    pushBuildForCases(builds, includeCases, cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                                 }
-                            } else if (includeMotherboard == true && includeRamPart == true) {
-                                for (mobo in data.mobos) {
-                                    if (data.mobos[mobo].level > level) {
-                                        continue
-                                    } else if (gpuCount == "2" && motherboardSupportsMultiGPUType(data.mobos[mobo].supportSLI, data.mobos[mobo].supportCrossfire, data.gpus[gpu].multiGPU) == false) {
-                                        continue
-                                    } else if (socketsCompatible(data.mobos[mobo].cpuSocket, data.cpus[cpu].cpuSocket) == false) {
-                                        continue
-                                    } else if (needCpuOverclock == true && data.mobos[mobo].canOverclock != "Yes") {
-                                        continue
-                                    } else if (data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()) == false) {
-                                        continue
-                                    }
-                                    buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + data.mobos[mobo].price
-                                    if (buildCost <= budgetForParts) {
-                                        for (ram in data.rams) {
-                                            if (data.rams[ram].level > level) {
-                                                continue
-                                            } else if (data.rams[ram].frequency < Number(ramSpeed)) {
-                                                continue
-                                            }
-                                            buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + data.mobos[mobo].price + (ramChannel * data.rams[ram].price)
-                                            if (buildCost <= budgetForParts) {
-                                                selectedMotherboardName = data.mobos[mobo].fullName
-                                                selectedRamName = data.rams[ram].fullName
-                                                builds.push(partsForBuild(cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), buildCost, (budgetTotal - buildCost), buildScore, getSystemWatts(cpu, gpu, gpuCount)))
-                                            }
+                            }
+                        } else if (includeMotherboard == true && includeRamPart == true) {
+                            for (mobo in data.mobos) {
+                                if (data.mobos[mobo].level > level) {
+                                    continue
+                                } else if (!moboSupportsCpu(mobo, cpu)) {
+                                    continue
+                                } else if (!moboSupportsGpu(mobo, gpu, gpuCount)) {
+                                    continue
+                                } else if (!moboSupportsRamCount(mobo, ramChannel)) {
+                                    continue
+                                } else if (needCpuOverclock == true && data.mobos[mobo].canOverclock != "Yes") {
+                                    continue
+                                } else if (data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()) == false) {
+                                    continue
+                                }
+                                buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + data.mobos[mobo].price
+                                if (buildCost <= budgetForParts) {
+                                    for (ram in data.rams) {
+                                        if (data.rams[ram].level > level) {
+                                            continue
+                                        } else if (data.rams[ram].frequency != Number(ramSpeed)) {
+                                            continue
+                                        }
+                                        buildCost = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) + data.mobos[mobo].price + (ramChannel * data.rams[ram].price)
+                                        if (buildCost <= budgetForParts) {
+                                            selectedMotherboardName = data.mobos[mobo].fullName
+                                            selectedRamName = data.rams[ram].fullName
+                                            pushBuildForCases(builds, includeCases, cpu, ramChannel, ramSpeed, (selectedRamName || "-"), gpuCount, data.gpus[gpu].gpuType, gpu, (selectedMotherboardName || "-"), budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                                         }
                                     }
                                 }
@@ -649,43 +740,45 @@ function BuildMakerGetBuilds() {
     }
 
     var results = getResultsLimitedAndSorted(builds, resultsRequested)
-    var table = document.getElementById('tableBuildMakerResults')
-    resetResultsTable(table, results.length, 13)
+    resetResultsTable(table, results.length, tableCells)
 
     for (i = 1; i < results.length + 1; i++) {
-        table.rows[i].cells[0].className = "tdCpu"
-        table.rows[i].cells[0].innerHTML = results[i - 1].cpu
+        table.rows[i].cells[0].className = "tdCase"
+        table.rows[i].cells[0].innerHTML = results[i - 1].pcCase
 
-        table.rows[i].cells[1].className = "tdRamCount"
-        table.rows[i].cells[1].innerHTML = results[i - 1].ramChannel
-        table.rows[i].cells[2].className = "tdRamSpeed"
-        table.rows[i].cells[2].innerHTML = results[i - 1].ramSpeed
-        table.rows[i].cells[3].className = "tdRamPart"
-        table.rows[i].cells[3].innerHTML = results[i - 1].ram
+        table.rows[i].cells[1].className = "tdCpu"
+        table.rows[i].cells[1].innerHTML = results[i - 1].cpu
 
-        table.rows[i].cells[4].className = "tdGpuCount"
-        table.rows[i].cells[4].innerHTML = results[i - 1].gpuCount
-        table.rows[i].cells[5].className = "tdGpuType"
-        table.rows[i].cells[5].innerHTML = results[i - 1].gpuType
-        table.rows[i].cells[6].className = "tdGpuPart"
-        table.rows[i].cells[6].innerHTML = results[i - 1].gpu
+        table.rows[i].cells[2].className = "tdramChannel"
+        table.rows[i].cells[2].innerHTML = results[i - 1].ramChannel
+        table.rows[i].cells[3].className = "tdRamSpeed"
+        table.rows[i].cells[3].innerHTML = results[i - 1].ramSpeed
+        table.rows[i].cells[4].className = "tdRamPart"
+        table.rows[i].cells[4].innerHTML = results[i - 1].ram
 
-        table.rows[i].cells[7].className = "tdMobo"
-        table.rows[i].cells[7].innerHTML = results[i - 1].mobo
+        table.rows[i].cells[5].className = "tdGpuCount"
+        table.rows[i].cells[5].innerHTML = results[i - 1].gpuCount
+        table.rows[i].cells[6].className = "tdGpuType"
+        table.rows[i].cells[6].innerHTML = results[i - 1].gpuType
+        table.rows[i].cells[7].className = "tdGpuPart"
+        table.rows[i].cells[7].innerHTML = results[i - 1].gpu
 
-        table.rows[i].cells[8].className = "tdCost"
-        table.rows[i].cells[8].innerHTML = results[i - 1].cost
+        table.rows[i].cells[8].className = "tdMobo"
+        table.rows[i].cells[8].innerHTML = results[i - 1].mobo
+
         table.rows[i].cells[9].className = "tdCost"
-        table.rows[i].cells[9].innerHTML = results[i - 1].budgetLeft
+        table.rows[i].cells[9].innerHTML = results[i - 1].cost
+        table.rows[i].cells[10].className = "tdCost"
+        table.rows[i].cells[10].innerHTML = results[i - 1].budgetLeft
 
-        table.rows[i].cells[10].className = "tdScore"
-        table.rows[i].cells[10].innerHTML = results[i - 1].score
-
-        table.rows[i].cells[11].className = "tdOther"
-        table.rows[i].cells[11].innerHTML = results[i - 1].systemWatts
+        table.rows[i].cells[11].className = "tdScore"
+        table.rows[i].cells[11].innerHTML = results[i - 1].score
 
         table.rows[i].cells[12].className = "tdOther"
-        table.rows[i].cells[12] = addSaveButton(table.rows[i].cells[12], i)
+        table.rows[i].cells[12].innerHTML = results[i - 1].systemWatts
+
+        table.rows[i].cells[13].className = "tdOther"
+        table.rows[i].cells[13] = addSaveButton(table.rows[i].cells[13], i)
     }
 
     if (showAlerts && results.length == 0) {
@@ -808,6 +901,9 @@ function BuildUpgraderGetUpgrades() {
     var showAlerts = true
 
     var form = document.getElementById('formBuildUpgrader')
+    var table = document.getElementById('tableBuildUpgraderResults')
+    var tableCells = 9
+    resetResultsTable(table, 0, tableCells)
 
     var budgetTotal = Number(form.inputBuildUpgraderBudget.value)
     var budgetReserved = numberOrDefault(form.inputBuildUpgraderReservedBudget.value, 0)
@@ -820,9 +916,11 @@ function BuildUpgraderGetUpgrades() {
     var level = Number(form.inputBuildUpgraderLevel.value)
     var resultsRequested = numberOrDefault(form.inputBuildUpgraderResultsRequested.value, 200)
 
+    var originalSystemCase = form.inputBuildUpgraderOriginalSystemCase.value
+    var originalSystemM2 = form.inputBuildUpgraderOriginalSystemM2.value
     var originalSystemCpu = form.inputBuildUpgraderOriginalSystemCpu.value
     var originalSystemRamSpeed = form.selectBuildUpgraderOriginalSystemRamSpeed.value
-    var originalSystemRamChannel = form.selectBuildUpgraderOriginalSystemRamChannel.value
+    var originalSystemRamSticks = Number(form.inputBuildUpgraderRamSticks.value)
     var originalSystemGpu = form.inputBuildUpgraderOriginalSystemGpu.value
     var originalSystemGpuCount = form.selectBuildUpgraderOriginalSystemGpuCount.value
     var originalSystemMobo = form.selectBuildUpgraderOriginalSystemMobo.value
@@ -869,13 +967,61 @@ function BuildUpgraderGetUpgrades() {
         }
         return false
     }
-    if (socketsCompatible(data.mobos[originalSystemMobo].cpuSocket, data.cpus[originalSystemCpu].cpuSocket) == false) {
+    if (!moboSupportsCpu(originalSystemMobo, originalSystemCpu)) {
         if (showAlerts) {
             alert("Selected CPU and Motherboard are incompatible.")
         }
         return false
     }
+    if (!moboSupportsGpu(originalSystemMobo, originalSystemGpu, originalSystemGpuCount)) {
+        if (showAlerts) {
+            alert("Motherboard does not support this Multi-GPU type.")
+        }
+        return false
+    }
+    if (!moboSupportsRamCount(originalSystemMobo, originalSystemRamSticks)) {
+        if (showAlerts) {
+            alert("Motherboard does not support this many RAM Sticks.")
+        }
+        return false
+    }
 
+    if (originalSystemCase != "") {
+        if (!data.pcCases[originalSystemCase]) {
+            if (showAlerts) {
+                alert("Case not found.")
+            }
+            return false
+        }
+        if (!caseSupportsMobo(originalSystemCase, originalSystemMobo)) {
+            if (showAlerts) {
+                alert("Case does not support motherboard.")
+            }
+            return false
+        }
+        if (originalSystemGpu != "" && !caseSupportsGpu(originalSystemCase, originalSystemGpu, originalSystemGpuCount)) {
+            if (showAlerts) {
+                alert("Case does not support GPU(s).")
+            }
+            return false
+        }
+    }
+    if (originalSystemM2 != "") {
+        if (!data.storages[originalSystemM2]) {
+            if (showAlerts) {
+                alert("M.2 not found.")
+            }
+            return false
+        }
+        if (!moboSupportsM2(originalSystemMobo, originalSystemM2)) {
+            if (showAlerts) {
+                alert("Motheboard does not support this M.2.")
+            }
+            return false
+        }
+    }
+
+    var originalSystemRamChannel = Math.min(originalSystemRamSticks, data.cpus[originalSystemCpu].maxMemoryChannels)
     var originalSystemRamSpeedForCalc = Math.min(originalSystemRamSpeed, data.mobos[originalSystemMobo].maxMemorySpeed)
     var originalSystemScore = getSystemScore(getCpuScore(originalSystemCpu, originalSystemRamChannel, originalSystemRamSpeedForCalc), getGpuScore(originalSystemGpu, originalSystemGpuCount))
     if (originalSystemScore > target3DMarkScore) {
@@ -884,10 +1030,12 @@ function BuildUpgraderGetUpgrades() {
         }
     }
 
+    var pcCase = originalSystemCase
     var cpu
     var mobo
     var gpu
     var gpuCount
+    var m2 = originalSystemM2
 
     var ramSpeed
     var ramChannel
@@ -902,7 +1050,7 @@ function BuildUpgraderGetUpgrades() {
     gpuCount = originalSystemGpuCount
     ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
     for (cpu in data.cpus) {
-        if (socketsCompatible(data.cpus[cpu].cpuSocket, data.mobos[mobo].cpuSocket) == false) {
+        if (!moboSupportsCpu(mobo, cpu)) {
             continue
         } else if (data.cpus[cpu].level > level) {
             continue
@@ -913,11 +1061,11 @@ function BuildUpgraderGetUpgrades() {
             continue
         }
 
-        ramChannel = Math.min(originalSystemRamChannel, data.cpus[cpu].maxMemoryChannels)
+        ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
 
         buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
         if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-            builds.push(partsForBuild(cpu, "-", "-", "-", "-", "-", "-", "-", buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+            pushBuildForCases(builds, false, cpu, "-", "-", "-", "-", "-", "-", "-", budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
         }
     }
 
@@ -925,7 +1073,7 @@ function BuildUpgraderGetUpgrades() {
     mobo = originalSystemMobo
     cpu = originalSystemCpu
     ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
-    ramChannel = Math.min(originalSystemRamChannel, data.cpus[cpu].maxMemoryChannels)
+    ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
     for (gpu in data.gpus) {
         if (data.gpus[gpu].level > level) {
             continue
@@ -937,7 +1085,10 @@ function BuildUpgraderGetUpgrades() {
             if (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) {
                 continue
             }
-            if (gpuCount == "2" && motherboardSupportsMultiGPUType(data.mobos[mobo].supportSLI, data.mobos[mobo].supportCrossfire, data.gpus[gpu].multiGPU) == false) {
+            if (!moboSupportsGpu(mobo, gpu, gpuCount)) {
+                continue
+            }
+            if (pcCase != "" && !caseSupportsGpu(pcCase, gpu, gpuCount)) {
                 continue
             }
 
@@ -945,7 +1096,7 @@ function BuildUpgraderGetUpgrades() {
             if (buildCost <= budgetForParts) {
                 buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                 if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                    builds.push(partsForBuild("-", "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, "-", buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                    pushBuildForCases(builds, false, "-", "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, "-", budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                 }
             }
             if (originalSystemGpuCount == 1 && gpuCount == "2" && data.gpus[originalSystemGpu].fullName == data.gpus[gpu].fullName) {
@@ -953,7 +1104,7 @@ function BuildUpgraderGetUpgrades() {
                 if (buildCost <= budgetForParts) {
                     buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                     if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                        builds.push(partsForBuild("-", "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, "-", buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                        pushBuildForCases(builds, false, "-", "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, "-", budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                     }
                 }
             }
@@ -964,13 +1115,13 @@ function BuildUpgraderGetUpgrades() {
     mobo = originalSystemMobo
     ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
     for (cpu in data.cpus) {
-        if (socketsCompatible(data.mobos[mobo].cpuSocket, data.cpus[cpu].cpuSocket) == false) {
+        if (!moboSupportsCpu(mobo, cpu)) {
             continue
         } else if (data.cpus[cpu].level > level) {
             continue
         }
 
-        ramChannel = Math.min(originalSystemRamChannel, data.cpus[cpu].maxMemoryChannels)
+        ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
 
         for (gpu in data.gpus) {
             if (data.gpus[gpu].level > level) {
@@ -983,7 +1134,10 @@ function BuildUpgraderGetUpgrades() {
                 if (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) {
                     continue
                 }
-                if (gpuCount == "2" && motherboardSupportsMultiGPUType(data.mobos[mobo].supportSLI, data.mobos[mobo].supportCrossfire, data.gpus[gpu].multiGPU) == false) {
+                if (!moboSupportsGpu(mobo, gpu, gpuCount)) {
+                    continue
+                }
+                if (pcCase != "" && !caseSupportsGpu(pcCase, gpu, gpuCount)) {
                     continue
                 }
 
@@ -991,7 +1145,7 @@ function BuildUpgraderGetUpgrades() {
                 if (buildCost <= budgetForParts) {
                     buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                     if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                        builds.push(partsForBuild(cpu, "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, "-", buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                        pushBuildForCases(builds, false, cpu, "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, "-", budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                     }
                 }
                 if (originalSystemGpuCount == 1 && gpuCount == "2" && data.gpus[originalSystemGpu].fullName == data.gpus[gpu].fullName) {
@@ -999,7 +1153,7 @@ function BuildUpgraderGetUpgrades() {
                     if (buildCost <= budgetForParts) {
                         buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                         if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                            builds.push(partsForBuild(cpu, "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, "-", buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                            pushBuildForCases(builds, false, cpu, "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, "-", budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                         }
                     }
                 }
@@ -1014,6 +1168,12 @@ function BuildUpgraderGetUpgrades() {
         if (data.mobos[mobo].level > level) {
             continue
         }
+        if (pcCase != "" && !caseSupportsMobo(pcCase, mobo)) {
+            continue
+        }
+        if (m2 != "" && !moboSupportsM2(mobo, m2)) {
+            continue
+        }
 
         //if (data.mobos[mobo].fullName == data.mobos[originalSystemMobo].fullName) {
         //    continue
@@ -1022,14 +1182,14 @@ function BuildUpgraderGetUpgrades() {
         ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
 
         for (cpu in data.cpus) {
-            if (socketsCompatible(data.mobos[mobo].cpuSocket, data.cpus[cpu].cpuSocket) == false) {
+            if (!moboSupportsCpu(mobo, cpu)) {
                 continue
             } else if (data.cpus[cpu].level > level) {
                 continue
             }
 
             /* if old motherboard would have worked, skip */
-            //if (socketsCompatible(data.mobos[originalSystemMobo].cpuSocket, data.cpus[cpu].cpuSocket) == true) {
+            //if (moboSupportsCpu(originalSystemMobo, cpu)) {
             //    continue
             //}
 
@@ -1038,24 +1198,30 @@ function BuildUpgraderGetUpgrades() {
                 continue
             }
 
-            ramChannel = Math.min(originalSystemRamChannel, data.cpus[cpu].maxMemoryChannels)
+            ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
 
             buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
             if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                builds.push(partsForBuild(cpu, "-", "-", "-", "-", "-", "-", mobo, buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                pushBuildForCases(builds, false, cpu, "-", "-", "-", "-", "-", "-", mobo, budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
             }
         }
     }
 
     /* motherboard change - GPU-only upgrade */
     cpu = originalSystemCpu
-    ramChannel = Math.min(originalSystemRamChannel, data.cpus[cpu].maxMemoryChannels)
+    ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
     for (mobo in data.mobos) {
         if (data.mobos[mobo].level > level) {
             continue
         }
+        if (pcCase != "" && !caseSupportsMobo(pcCase, mobo)) {
+            continue
+        }
+        if (m2 != "" && !moboSupportsM2(mobo, m2)) {
+            continue
+        }
 
-        if (socketsCompatible(data.mobos[mobo].cpuSocket, data.cpus[cpu].cpuSocket) == false) {
+        if (!moboSupportsCpu(mobo, cpu)) {
             continue
         }
 
@@ -1076,12 +1242,15 @@ function BuildUpgraderGetUpgrades() {
                 if (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) {
                     continue
                 }
-                if (gpuCount == "2" && motherboardSupportsMultiGPUType(data.mobos[mobo].supportSLI, data.mobos[mobo].supportCrossfire, data.gpus[gpu].multiGPU) == false) {
+                if (!moboSupportsGpu(mobo, gpu, gpuCount)) {
+                    continue
+                }
+                if (pcCase != "" && !caseSupportsGpu(pcCase, gpu, gpuCount)) {
                     continue
                 }
 
                 /* if old motherboard would have worked, skip */
-                //if (motherboardSupportsMultiGPUType(data.mobos[originalSystemMobo].supportSLI, data.mobos[originalSystemMobo].supportCrossfire, data.gpus[gpu].multiGPU) == true) {
+                //if (moboSupportsGpu(originalSystemMobo, gpu, gpuCount)) {
                 //    continue
                 //}
 
@@ -1089,7 +1258,7 @@ function BuildUpgraderGetUpgrades() {
                 if (buildCost <= budgetForParts) {
                     buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                     if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                        builds.push(partsForBuild("-", "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, mobo, buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                        pushBuildForCases(builds, false, "-", "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                     }
                 }
                 if (originalSystemGpuCount == 1 && gpuCount == "2" && data.gpus[originalSystemGpu].fullName == data.gpus[gpu].fullName) {
@@ -1097,7 +1266,7 @@ function BuildUpgraderGetUpgrades() {
                     if (buildCost <= budgetForParts) {
                         buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                         if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                            builds.push(partsForBuild("-", "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, mobo, buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                            pushBuildForCases(builds, false, "-", "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                         }
                     }
                 }
@@ -1110,6 +1279,12 @@ function BuildUpgraderGetUpgrades() {
         if (data.mobos[mobo].level > level) {
             continue
         }
+        if (pcCase != "" && !caseSupportsMobo(pcCase, mobo)) {
+            continue
+        }
+        if (m2 != "" && !moboSupportsM2(mobo, m2)) {
+            continue
+        }
 
         //if (data.mobos[mobo].fullName == data.mobos[originalSystemMobo].fullName) {
         //    continue
@@ -1118,13 +1293,13 @@ function BuildUpgraderGetUpgrades() {
         ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
 
         for (cpu in data.cpus) {
-            if (socketsCompatible(data.mobos[mobo].cpuSocket, data.cpus[cpu].cpuSocket) == false) {
+            if (!moboSupportsCpu(mobo, cpu)) {
                 continue
             } else if (data.cpus[cpu].level > level) {
                 continue
             }
 
-            ramChannel = Math.min(originalSystemRamChannel, data.cpus[cpu].maxMemoryChannels)
+            ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
 
             for (gpu in data.gpus) {
                 if (data.gpus[gpu].level > level) {
@@ -1137,13 +1312,16 @@ function BuildUpgraderGetUpgrades() {
                     if (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) {
                         continue
                     }
-                    if (gpuCount == "2" && motherboardSupportsMultiGPUType(data.mobos[mobo].supportSLI, data.mobos[mobo].supportCrossfire, data.gpus[gpu].multiGPU) == false) {
+                    if (!moboSupportsGpu(mobo, gpu, gpuCount)) {
+                        continue
+                    }
+                    if (pcCase != "" && !caseSupportsGpu(pcCase, gpu, gpuCount)) {
                         continue
                     }
 
                     /* if old motherboard would have worked, skip */
-                    //if (socketsCompatible(data.mobos[originalSystemMobo].cpuSocket, data.cpus[cpu].cpuSocket) == true &&
-                    //    motherboardSupportsMultiGPUType(data.mobos[originalSystemMobo].supportSLI, data.mobos[originalSystemMobo].supportCrossfire, data.gpus[gpu].multiGPU) == true) {
+                    //if (moboSupportsCpu(originalSystemMobo, cpu) &&
+                    //    moboSupportsGpu(originalSystemMobo, gpu, gpuCount)) {
                     //    continue
                     //}
 
@@ -1151,7 +1329,7 @@ function BuildUpgraderGetUpgrades() {
                     if (buildCost <= budgetForParts) {
                         buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                         if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                            builds.push(partsForBuild(cpu, "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, mobo, buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                            pushBuildForCases(builds, false, cpu, "-", "-", "-", gpuCount, data.gpus[gpu].gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                         }
                     }
                     if (originalSystemGpuCount == 1 && gpuCount == "2" && data.gpus[originalSystemGpu].fullName == data.gpus[gpu].fullName) {
@@ -1159,7 +1337,7 @@ function BuildUpgraderGetUpgrades() {
                         if (buildCost <= budgetForParts) {
                             buildScore = getSystemScore(getCpuScore(cpu, ramChannel, ramSpeed), getGpuScore(gpu, gpuCount))
                             if ((buildScore >= target3DMarkScore) && (buildScore < target3DMarkScoreMaximum)) {
-                                builds.push(partsForBuild(cpu, "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, mobo, buildCost, budgetTotal - buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount)))
+                                pushBuildForCases(builds, false, cpu, "-", "-", "-", "1 + 1", data.gpus[gpu].gpuType, gpu, mobo, budgetTotal, budgetReserved, buildCost, buildScore, getSystemWatts(cpu, gpu, gpuCount))
                             }
                         }
                     }
@@ -1169,14 +1347,13 @@ function BuildUpgraderGetUpgrades() {
     }
 
     var results = getResultsLimitedAndSorted(builds, resultsRequested)
-    var table = document.getElementById('tableBuildUpgraderResults')
-    resetResultsTable(table, results.length, 9)
+    resetResultsTable(table, results.length, tableCells)
 
     for (i = 1; i < results.length + 1; i++) {
         table.rows[i].cells[0].className = "tdCpu"
         table.rows[i].cells[0].innerHTML = results[i - 1].cpu
 
-        //table.rows[i].cells[?].className = "tdRamCount"
+        //table.rows[i].cells[?].className = "tdramChannel"
         //table.rows[i].cells[?].innerHTML = results[i - 1].ramChannel
         //table.rows[i].cells[?].className = "tdRamSpeed"
         //table.rows[i].cells[?].innerHTML = results[i - 1].ramSpeed
@@ -1210,11 +1387,12 @@ function BuildUpgraderGetUpgrades() {
     }
 }
 
-function saveBuild(cpu, ramc, rams, ram, gpuCount, gpuType, gpu, mobo, cost, budgetleft, score, wattage, type, comment) {
+function saveBuild(pcCase, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, cost, budgetleft, score, systemWatts, type, comment) {
     sessionStorage.setItem(new Date().getTime(), JSON.stringify({
+        "pcCase": pcCase,
         "cpu": cpu,
-        "ramc": ramc,
-        "rams": rams,
+        "ramChannel": ramChannel,
+        "ramSpeed": ramSpeed,
         "ram": ram,
         "gpuCount": gpuCount,
         "gpuType": gpuType,
@@ -1223,7 +1401,7 @@ function saveBuild(cpu, ramc, rams, ram, gpuCount, gpuType, gpu, mobo, cost, bud
         "cost": cost,
         "budgetleft": budgetleft,
         "score": score,
-        "wattage": wattage,
+        "systemWatts": systemWatts,
         "type": type,
         "comment": comment
     }))
@@ -1254,10 +1432,10 @@ function updateHistory() {
             table.rows[1].cells[0].className = "tdCpu"
             table.rows[1].cells[0].innerHTML = a.cpu
 
-            table.rows[1].cells[1].className = "tdRamCount"
-            table.rows[1].cells[1].innerHTML = a.ramc
+            table.rows[1].cells[1].className = "tdramChannel"
+            table.rows[1].cells[1].innerHTML = a.ramChannel
             table.rows[1].cells[2].className = "tdRamSpeed"
-            table.rows[1].cells[2].innerHTML = a.rams
+            table.rows[1].cells[2].innerHTML = a.ramSpeed
 
             table.rows[1].cells[3].className = "tdGpuCount"
             table.rows[1].cells[3].innerHTML = a.gpuCount
@@ -1273,45 +1451,48 @@ function updateHistory() {
             table.rows[1].cells[7].innerHTML = a.score
 
             table.rows[1].cells[8].className = "tdOther"
-            table.rows[1].cells[8].innerHTML = a.wattage
+            table.rows[1].cells[8].innerHTML = a.systemWatts
         } else if (a.type == "build") {
             var table = document.getElementById('tableBuildMakerSaves')
             table.insertRow(1)
-            for (i = 0; i < 13; i++) {
+            for (i = 0; i < 14; i++) {
                 table.rows[1].insertCell(i)
             }
-            table.rows[1].cells[0].className = "tdCpu"
-            table.rows[1].cells[0].innerHTML = a.cpu
+            table.rows[1].cells[0].className = "tdCase"
+            table.rows[1].cells[0].innerHTML = a.pcCase
 
-            table.rows[1].cells[1].className = "tdRamCount"
-            table.rows[1].cells[1].innerHTML = a.ramc
-            table.rows[1].cells[2].className = "tdRamSpeed"
-            table.rows[1].cells[2].innerHTML = a.rams
-            table.rows[1].cells[3].className = "tdRamPart"
-            table.rows[1].cells[3].innerHTML = a.ram
+            table.rows[1].cells[1].className = "tdCpu"
+            table.rows[1].cells[1].innerHTML = a.cpu
 
-            table.rows[1].cells[4].className = "tdGpuCount"
-            table.rows[1].cells[4].innerHTML = a.gpuCount
-            table.rows[1].cells[5].className = "tdGpuType"
-            table.rows[1].cells[5].innerHTML = a.gpuType
-            table.rows[1].cells[6].className = "tdGpuPart"
-            table.rows[1].cells[6].innerHTML = a.gpu
+            table.rows[1].cells[2].className = "tdramChannel"
+            table.rows[1].cells[2].innerHTML = a.ramChannel
+            table.rows[1].cells[3].className = "tdRamSpeed"
+            table.rows[1].cells[3].innerHTML = a.ramSpeed
+            table.rows[1].cells[4].className = "tdRamPart"
+            table.rows[1].cells[4].innerHTML = a.ram
 
-            table.rows[1].cells[7].className = "tdMobo"
-            table.rows[1].cells[7].innerHTML = a.mobo
+            table.rows[1].cells[5].className = "tdGpuCount"
+            table.rows[1].cells[5].innerHTML = a.gpuCount
+            table.rows[1].cells[6].className = "tdGpuType"
+            table.rows[1].cells[6].innerHTML = a.gpuType
+            table.rows[1].cells[7].className = "tdGpuPart"
+            table.rows[1].cells[7].innerHTML = a.gpu
 
-            table.rows[1].cells[8].className = "tdCost"
-            table.rows[1].cells[8].innerHTML = a.cost
+            table.rows[1].cells[8].className = "tdMobo"
+            table.rows[1].cells[8].innerHTML = a.mobo
+
             table.rows[1].cells[9].className = "tdCost"
-            table.rows[1].cells[9].innerHTML = a.budgetleft
+            table.rows[1].cells[9].innerHTML = a.cost
+            table.rows[1].cells[10].className = "tdCost"
+            table.rows[1].cells[10].innerHTML = a.budgetleft
 
-            table.rows[1].cells[10].className = "tdScore"
-            table.rows[1].cells[10].innerHTML = a.score
+            table.rows[1].cells[11].className = "tdScore"
+            table.rows[1].cells[11].innerHTML = a.score
 
-            table.rows[1].cells[11].className = "tdOther"
-            table.rows[1].cells[11].innerHTML = a.wattage
             table.rows[1].cells[12].className = "tdOther"
-            table.rows[1].cells[12].innerHTML = a.comment
+            table.rows[1].cells[12].innerHTML = a.systemWatts
+            table.rows[1].cells[13].className = "tdOther"
+            table.rows[1].cells[13].innerHTML = a.comment
         }
     })
 }
@@ -1319,7 +1500,7 @@ function updateHistory() {
 var partReplacerSolutions
 
 function pushPartReplacerSolutionIfValid(
-    budgetTotal, budgetReserved, level,
+    budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
     originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
     originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, newMobo
 ) {
@@ -1360,6 +1541,9 @@ function pushPartReplacerSolutionIfValid(
         ) {
             return false
         }
+        if (originalSystemCase != "" && !caseSupportsGpu(originalSystemCase, newGpu1, 1)) {
+            return false
+        }
 
         partsCost += data.gpus[newGpu1].price
         newGpu1Type = data.gpus[newGpu1].gpuType
@@ -1377,6 +1561,9 @@ function pushPartReplacerSolutionIfValid(
         if (originalSystemGpu2PartStatus == "Upgrade" &&
             data.gpus[newGpu2].partRankingScore <= data.gpus[originalSystemGpu2].partRankingScore
         ) {
+            return false
+        }
+        if (originalSystemCase != "" && !caseSupportsGpu(originalSystemCase, newGpu2, 1)) {
             return false
         }
 
@@ -1398,6 +1585,12 @@ function pushPartReplacerSolutionIfValid(
         ) {
             return false
         }
+        if (originalSystemCase != "" && !caseSupportsMobo(originalSystemCase, newMobo)) {
+            return false
+        }
+        if (originalSystemM2 != "" && !moboSupportsM2(newMobo, originalSystemM2)) {
+            return false
+        }
 
         partsCost += data.mobos[newMobo].price
     }
@@ -1411,7 +1604,9 @@ function pushPartReplacerSolutionIfValid(
     evalGpu2 = (newGpu2 == "" ? originalSystemGpu2 : newGpu2)
     evalMobo = (newMobo == "" ? originalSystemMobo : newMobo)
 
-    if (socketsCompatible(data.mobos[evalMobo].cpuSocket, data.cpus[evalCpu].cpuSocket) == false) {
+    evalGpuCount = ((evalGpu1 == "" ? 0 : 1) + (evalGpu2 == "" ? 0 : 1))
+
+    if (!moboSupportsCpu(evalMobo, evalCpu)) {
         return false
     }
 
@@ -1422,24 +1617,32 @@ function pushPartReplacerSolutionIfValid(
         if (data.gpus[evalGpu1].multiGPU != data.gpus[evalGpu2].multiGPU) {
             return false
         }
-
-        if (motherboardSupportsMultiGPUType(data.mobos[evalMobo].supportSLI, data.mobos[evalMobo].supportCrossfire, data.gpus[evalGpu1].multiGPU) == false) {
+        if (!moboSupportsGpu(evalMobo, evalGpu1, evalGpuCount)) {
+            return false
+        }
+        if (originalSystemCase != "" && !caseSupportsGpu(originalSystemCase, evalGpu1, 2)) {
             return false
         }
     }
 
-    partReplacerSolutions.push(partsForReplacer(newCpu, newGpu1Type, newGpu1, newGpu2Type, newGpu2, newMobo, partsCost, (budgetTotal - partsCost), getSystemWattsDifferentGpus(evalCpu, evalGpu1, evalGpu2)))
+    partReplacerSolutions.push(partsForReplacer(newCpu, newGpu1Type, newGpu1, newGpu2Type, newGpu2, newMobo, budgetTotal, budgetReserved, partsCost, budgetTotal - partsCost, getSystemWattsDifferentGpus(evalCpu, evalGpu1, evalGpu2)))
 }
 
 function PartReplacerGetParts() {
     var showAlerts = true
 
     var form = document.getElementById('formPartReplacer')
+    var table = document.getElementById('tablePartReplacerResults')
+    var tableCells = 9
+    resetResultsTable(table, 0, tableCells)
 
     var budgetTotal = Number(form.inputPartReplacerBudget.value)
     var budgetReserved = numberOrDefault(form.inputPartReplacerReservedBudget.value, 0)
     var level = Number(form.inputPartReplacerLevel.value)
     var resultsRequested = numberOrDefault(form.inputPartReplacerResultsRequested.value, 200)
+
+    var originalSystemCase = form.inputPartReplacerOriginalSystemCase.value
+    var originalSystemM2 = form.inputPartReplacerOriginalSystemM2.value
 
     var originalSystemCpu = form.inputPartReplacerOriginalSystemCpu.value
     var originalSystemCpuPartStatus = form.selectPartReplacerOriginalSystemCpuPartStatus.value
@@ -1498,29 +1701,79 @@ function PartReplacerGetParts() {
     }
     if (originalSystemGpu1 != "" && originalSystemGpu2 != "" && data.gpus[originalSystemGpu1].multiGPU == null) {
         if (showAlerts) {
-            alert("GPU does not support Multi-GPU.")
+            alert("GPU 1 does not support Multi-GPU.")
         }
         return false
     }
     if (originalSystemGpu1 != "" && originalSystemGpu2 != "" && data.gpus[originalSystemGpu2].multiGPU == null) {
         if (showAlerts) {
-            alert("GPU does not support Multi-GPU.")
+            alert("GPU 2 does not support Multi-GPU.")
         }
         return false
     }
 
-    if (socketsCompatible(data.mobos[originalSystemMobo].cpuSocket, data.cpus[originalSystemCpu].cpuSocket) == false) {
+    if (!moboSupportsCpu(originalSystemMobo, originalSystemCpu)) {
         if (showAlerts) {
             alert("Selected CPU and Motherboard are incompatible.")
         }
         return false
     }
 
-    if (originalSystemGpu1 != "" && originalSystemGpu2 != "" && motherboardSupportsMultiGPUType(data.mobos[originalSystemMobo].supportSLI, data.mobos[originalSystemMobo].supportCrossfire, data.gpus[originalSystemGpu1].multiGPU) == false) {
+    if (originalSystemGpu1 != "" &&
+        originalSystemGpu2 != "" &&
+        !moboSupportsGpu(originalSystemMobo, originalSystemGpu1, 2)
+    ) {
         if (showAlerts) {
             alert("Motherboard does not support this Multi-GPU type.")
         }
         return false
+    }
+
+    if (originalSystemCase != "") {
+        if (!data.pcCases[originalSystemCase]) {
+            if (showAlerts) {
+                alert("Case not found.")
+            }
+            return false
+        }
+        if (!caseSupportsMobo(originalSystemCase, originalSystemMobo)) {
+            if (showAlerts) {
+                alert("Case does not support motherboard.")
+            }
+            return false
+        }
+        if (originalSystemGpu1 != "" && !caseSupportsGpu(originalSystemCase, originalSystemGpu1, 1)) {
+            if (showAlerts) {
+                alert("Case does not support GPU 1.")
+            }
+            return false
+        }
+        if (originalSystemGpu2 != "" && !caseSupportsGpu(originalSystemCase, originalSystemGpu2, 1)) {
+            if (showAlerts) {
+                alert("Case does not support GPU 2.")
+            }
+            return false
+        }
+        if (originalSystemGpu1 != "" && originalSystemGpu2 != "" && !caseSupportsGpu(originalSystemCase, originalSystemGpu1, 2)) {
+            if (showAlerts) {
+                alert("Case does not support these GPUs.")
+            }
+            return false
+        }
+    }
+    if (originalSystemM2 != "") {
+        if (!data.storages[originalSystemM2]) {
+            if (showAlerts) {
+                alert("M.2 not found.")
+            }
+            return false
+        }
+        if (!moboSupportsM2(originalSystemMobo, originalSystemM2)) {
+            if (showAlerts) {
+                alert("Motheboard does not support this M.2.")
+            }
+            return false
+        }
     }
 
     if (originalSystemCpuPartStatus == "" &&
@@ -1587,14 +1840,14 @@ function PartReplacerGetParts() {
                                             if (replaceMobo) {
                                                 for (newMobo in data.mobos) {
                                                     pushPartReplacerSolutionIfValid(
-                                                        budgetTotal, budgetReserved, level,
+                                                        budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                         originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                         originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                                 }
                                             }
                                             else {
                                                 pushPartReplacerSolutionIfValid(
-                                                    budgetTotal, budgetReserved, level,
+                                                    budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                     originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                     originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                             }
@@ -1604,14 +1857,14 @@ function PartReplacerGetParts() {
                                         if (replaceMobo) {
                                             for (newMobo in data.mobos) {
                                                 pushPartReplacerSolutionIfValid(
-                                                    budgetTotal, budgetReserved, level,
+                                                    budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                     originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                     originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, newMobo)
                                             }
                                         }
                                         else {
                                             pushPartReplacerSolutionIfValid(
-                                                budgetTotal, budgetReserved, level,
+                                                budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                 originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                 originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, "")
                                         }
@@ -1624,14 +1877,14 @@ function PartReplacerGetParts() {
                                         if (replaceMobo) {
                                             for (newMobo in data.mobos) {
                                                 pushPartReplacerSolutionIfValid(
-                                                    budgetTotal, budgetReserved, level,
+                                                    budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                     originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                     originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                             }
                                         }
                                         else {
                                             pushPartReplacerSolutionIfValid(
-                                                budgetTotal, budgetReserved, level,
+                                                budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                 originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                 originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                         }
@@ -1641,14 +1894,14 @@ function PartReplacerGetParts() {
                                     if (replaceMobo) {
                                         for (newMobo in data.mobos) {
                                             pushPartReplacerSolutionIfValid(
-                                                budgetTotal, budgetReserved, level,
+                                                budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                 originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                 originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, newMobo)
                                         }
                                     }
                                     else {
                                         pushPartReplacerSolutionIfValid(
-                                            budgetTotal, budgetReserved, level,
+                                            budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                             originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                             originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, "")
                                     }
@@ -1664,14 +1917,14 @@ function PartReplacerGetParts() {
                                         if (replaceMobo) {
                                             for (newMobo in data.mobos) {
                                                 pushPartReplacerSolutionIfValid(
-                                                    budgetTotal, budgetReserved, level,
+                                                    budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                     originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                     originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                             }
                                         }
                                         else {
                                             pushPartReplacerSolutionIfValid(
-                                                budgetTotal, budgetReserved, level,
+                                                budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                 originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                 originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                         }
@@ -1681,14 +1934,14 @@ function PartReplacerGetParts() {
                                     if (replaceMobo) {
                                         for (newMobo in data.mobos) {
                                             pushPartReplacerSolutionIfValid(
-                                                budgetTotal, budgetReserved, level,
+                                                budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                 originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                 originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, newMobo)
                                         }
                                     }
                                     else {
                                         pushPartReplacerSolutionIfValid(
-                                            budgetTotal, budgetReserved, level,
+                                            budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                             originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                             originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, "")
                                     }
@@ -1701,14 +1954,14 @@ function PartReplacerGetParts() {
                                     if (replaceMobo) {
                                         for (newMobo in data.mobos) {
                                             pushPartReplacerSolutionIfValid(
-                                                budgetTotal, budgetReserved, level,
+                                                budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                                 originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                                 originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                         }
                                     }
                                     else {
                                         pushPartReplacerSolutionIfValid(
-                                            budgetTotal, budgetReserved, level,
+                                            budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                             originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                             originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                     }
@@ -1718,14 +1971,14 @@ function PartReplacerGetParts() {
                                 if (replaceMobo) {
                                     for (newMobo in data.mobos) {
                                         pushPartReplacerSolutionIfValid(
-                                            budgetTotal, budgetReserved, level,
+                                            budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                             originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                             originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, newMobo)
                                     }
                                 }
                                 else {
                                     pushPartReplacerSolutionIfValid(
-                                        budgetTotal, budgetReserved, level,
+                                        budgetTotal, budgetReserved, level, originalSystemCase, originalSystemM2,
                                         originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
                                         originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, "")
                                 }
@@ -1738,8 +1991,7 @@ function PartReplacerGetParts() {
     }
 
     var results = getResultsLimitedAndSorted(partReplacerSolutions, resultsRequested)
-    var table = document.getElementById('tablePartReplacerResults')
-    resetResultsTable(table, results.length, 9)
+    resetResultsTable(table, results.length, tableCells)
 
     for (i = 1; i < results.length + 1; i++) {
         table.rows[i].cells[0].className = "tdCpu"
