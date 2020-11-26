@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>PCBSCalc v1.9.2 b6 "Betsy"</title>
+<title>PCBSCalc v1.9.5 b1 "Blaze"</title>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.4.4/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-<script src="https://kit.fontawesome.com/95f44c4954.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap">
 <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PCBSCalc/PCBSCalc.github.io/master/img/pcbscalc.png"/>
@@ -28,6 +28,35 @@
             padding-top: 32px;
             height: 52px;
         }
+
+        #divLevel {
+            height: 30px;
+            width: 100px;
+            margin: auto;
+            padding: 0px 0px 0px 0px;
+            text-align: center;
+        }
+
+        #tableLevel {
+            border: none;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+            #tableLevel td {
+                padding: 0px;
+            }
+
+                #tableLevel td.tdLevelLabel {
+                    width: auto;
+                    padding-right: 8px;
+                }
+
+                #tableLevel td.tdLevelValue {
+                    width: auto;
+                    height: auto;
+                    padding: 3px;
+                }
 
         #OptionCheckboxSection {
             background-color: #ffffff;
@@ -97,6 +126,11 @@
             input.optionCheckbox {
                 width: auto;
                 height: auto;
+            }
+
+            input.levelText {
+                height: auto;
+                width: 30px;
             }
 
 
@@ -282,7 +316,7 @@
                         Include Hardware Expansion Mod (HEM) parts?
                     </td>
                     <td class="tdOptionHemCheckbox">
-                        <input type="checkbox" name="inputOptionHem" class="optionCheckbox" onclick="
+                        <input type="checkbox" name="inputOptionHem" class="optionCheckbox form-control" onclick="
                             includeHemParts = inputOptionHem.checked;
                             setData();
                             setListOptions();
@@ -295,11 +329,27 @@
                         Include parts not in the Shop?
                     </td>
                     <td class="tdOptionPartsNotInShopCheckbox">
-                        <input type="checkbox" name="inputOptionPartsNotInShop" class="optionCheckbox" onclick="
+                        <input type="checkbox" name="inputOptionPartsNotInShop" class="optionCheckbox form-control" onclick="
                             includePartsNotInShop = inputOptionPartsNotInShop.checked;
                             setData();
                             setListOptions();
                             setSelectOptions();
+                        ">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div id="divLevel">
+        <form id="formLevel">
+            <table id="tableLevel" align="center">
+                <tr title="Your level, so results only contain parts that you have unlocked.">
+                    <td class="tdLevelLabel">
+                        Level:
+                    </td>
+                    <td class="tdLevelValue">
+                        <input name="inputLevel" class="levelText form-control" onchange="
+                            updateLevel();
                         ">
                     </td>
                 </tr>
@@ -367,9 +417,7 @@
                     <tr>
                         <td></td>
                         <td align="center"><button type="button" class="btn btn-success my-2" onclick="
-                            if (CalculatorCalculate()) {
-                                CalculatorSaveBuild()
-                            };
+                            CalculatorCalculate();
                         ">Calculate</button></td>
                     </tr>
                     <tr></tr>
@@ -974,8 +1022,25 @@
         </div>
     </div>
     <script src="js/script_data.js"></script>
-    <script src="js/script_core.js"></script>
+    <script src="js/script_man.js"></script>
+    <script src="js/script_cscore.js"></script>
+    <script src="js/script_cwatt.js"></script>
+    <script src="js/script_check.js"></script>
     <script src="js/script_get.js"></script>
+    <script src="js/script_uram.js"></script>
+    <script src="js/script_umobo.js"></script>
+    <script src="js/script_oset.js"></script>
+    <script src="js/script_level.js"></script>
+    <script src="js/script_abuild.js"></script>
+    <script src="js/script_iman.js"></script>
+    <script src="js/script_blur.js"></script>
+    <script src="js/script_navbar.js"></script>
+    <script src="js/script_scalc.js"></script>
+    <script src="js/script_bmaker.js"></script>
+    <script src="js/script_bupgr.js"></script>
+    <script src="js/script_preplace.js"></script>
+    <script src="js/script_history.js"></script>
+    <script src="js/script_rtable.js"></script>
     </div>
 </div>
 
