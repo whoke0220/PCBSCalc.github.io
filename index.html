@@ -130,7 +130,7 @@
 
             input.levelText {
                 height: auto;
-                width: 30px;
+                width: 50px;
             }
 
 
@@ -546,20 +546,12 @@
                             <input name="inputBuildMakerTarget3DMarkScoreOffset" class="form-control" placeholder="400">
                         </td>
                     </tr>
-                    <tr title="Your level, so results only contain parts that you have unlocked.">
-                        <td>
-                            Level
-                        </td>
-                        <td>
-                            <input name="inputBuildMakerLevel" class="form-control">
-                        </td>
-                    </tr>
                     <tr title="# of results to return.">
                         <td>
                             # Results
                         </td>
                         <td>
-                            <input name="inputBuildMakerResultsRequested" class="form-control" placeholder="10">
+                            <input name="inputBuildMakerResultsRequested" class="form-control" placeholder="200">
                         </td>
                     </tr>
                     <tr></tr>
@@ -645,9 +637,8 @@
                 </table>
             </form>
         </div>
-        <div id="buildMakerResults">
-            <table class="table" id="buildMakerTable">
-                <tbody>
+        <div id="divBuildMakerResults">
+            <table class="table" id="tableBuildMakerResults">
                     <tr>
                         <td class="tdCase"><b>Case</b></td>
                         <td class="tdCPU"><b>CPU</b></td>
@@ -664,10 +655,9 @@
                         <td class="tdOther"><b>Watts</b></td>
                         <td class="tdOther"><b>Save?</b></td>
                     </tr>
-                </tbody>
             </table>
         </div>
-        <div id="saveBuildBackground">
+        <div id="divBuildMakerSaveForm">
             <form id="saveForm">
                 <input class="form-control mb-2" name="inputBuildMakerSaveFormComment" placeholder="Comment">
                 <button type="button" class="btn btn-success" onclick="ProcessBuildMakerSave(true);">Save</button>
@@ -698,10 +688,6 @@
                     <tr title="3DMark score offset, to allow results that have higher 3DMark scores.">
                         <td>Score Offset</td>
                         <td><input class="form-control" name="inputBuildUpgraderTarget3DMarkScoreOffset" placeholder="400" /></td>
-                    </tr>
-                    <tr title="Your level, so results only contain parts that you have unlocked.">
-                        <td>Level</td>
-                        <td><input class="form-control" name="inputBuildUpgraderLevel" /></td>
                     </tr>
                     <tr title="# of results to return.">
                         <td># Results</td>
@@ -813,7 +799,6 @@
         </div>
         <div id="divBuildUpgraderResults">
             <table class="table" id="tableBuildUpgraderResults">
-                <tbody>
                     <tr>
                         <td class="tdCpu"><b>CPU</b></td>
                         <!--<td class="tdramChannel"><b>#</b></td>
@@ -828,7 +813,6 @@
                         <td class="tdScore"><b>Score</b></td>
                         <td class="tdOther"><b>Watts</b></td>
                     </tr>
-                </tbody>
             </table>
         </div>
     </div>
@@ -848,13 +832,9 @@
                             <td>Reserved Budget</td>
                             <td><input class="form-control" name="inputPartReplacerReservedBudget" placeholder="0" /></td>
                         </tr>
-                        <tr title="Your level, so results only contain parts that you have unlocked.">
-                            <td>Level</td>
-                            <td><input class="form-control" name="inputPartReplacerLevel" /></td>
-                        </tr>
                         <tr title="# of results to return.">
                             <td># Results</td>
-                            <td><input class="form-control" name="inputPartReplacerResultsRequested" placeholder="10" /></td>
+                            <td><input class="form-control" name="inputPartReplacerResultsRequested" placeholder="200" /></td>
                         </tr>
                         <tr></tr>
                         <tr></tr>
@@ -1027,26 +1007,7 @@
             </div>
         </div>
     </div>
-    <script src="js/script_data.js"></script>
-    <script src="js/script_man.js"></script>
-    <script src="js/script_cscore.js"></script>
-    <script src="js/script_cwatt.js"></script>
-    <script src="js/script_check.js"></script>
-    <script src="js/script_get.js"></script>
-    <script src="js/script_uram.js"></script>
-    <script src="js/script_umobo.js"></script>
-    <script src="js/script_oset.js"></script>
-    <script src="js/script_level.js"></script>
-    <script src="js/script_abuild.js"></script>
-    <script src="js/script_iman.js"></script>
-    <script src="js/script_blur.js"></script>
-    <script src="js/script_navbar.js"></script>
-    <script src="js/script_scalc.js"></script>
-    <script src="js/script_bmaker.js"></script>
-    <script src="js/script_bupgr.js"></script>
-    <script src="js/script_preplace.js"></script>
-    <script src="js/script_history.js"></script>
-    <script src="js/script_rtable.js"></script>
+    <script src="js/script_core.js"></script>
     </div>
 </div>
 
