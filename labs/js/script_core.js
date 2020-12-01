@@ -43991,6 +43991,54 @@ updateMoboOptionsBuildUpgrader()
 // Store that we set them
 settingOptionsOnLoad = false
 
+function getMobos() {
+    var mobos = []
+    for (mobo in data.mobos) {
+        mobos.push({
+            "fullName": data.mobos[mobo].fullName,
+            "price": data.mobos[mobo].price
+        })
+    }
+    return mobos
+}
+
+function getCases() {
+    var pcCases = []
+    for (pcCase in data.pcCases) {
+        pcCases.push({
+            "fullName": data.pcCases[pcCase].fullName,
+            "price": data.pcCases[pcCase].price
+        })
+    }
+    return pcCases
+}
+
+function getRams() {
+    var rams = []
+    for (ram in data.rams) {
+        rams.push({
+            "fullName": data.rams[ram].fullName,
+            "price": data.rams[ram].price
+        })
+    }
+    return rams
+}
+
+function performancePartsForBuild(cpu, gpu, gpuCount, priceCpuGpus, price, ramChannel, ramSpeed, score) {
+    var parts = {
+        "cpu": cpu,
+        "gpu": gpu,
+        "gpuCount": gpuCount,
+        "priceCpuGpus": priceCpuGpus,
+        "price": price,
+        "ramChannel": ramChannel,
+        "ramSpeed": ramSpeed,
+        "score": score,
+        "stopPicking": false
+    }
+    return parts
+}
+
 function partsForBuild(pcCase, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, budgetTotal, budgetReserved, price, priceAllParts, score) {
     var build = {
         "pcCase": pcCase,
@@ -44141,7 +44189,7 @@ function BuildMakerGetBuilds() {
     var target3DMarkScoreOffset = numberOrDefault(form.inputBuildMakerTarget3DMarkScoreOffset.value, 400)
     var target3DMarkScoreMaximum = target3DMarkScore + target3DMarkScoreOffset
 
-    var resultsRequested = numberOrDefault(form.inputBuildMakerResultsRequested.value, 25)
+    var resultsRequested = numberOrDefault(form.inputBuildMakerResultsRequested.value, 15)
 
     var selectedCpuSocket = form.selectBuildMakerCpuSocket.value
     var selectedGpuCount = form.selectBuildMakerGpuCount.value
@@ -44166,143 +44214,294 @@ function BuildMakerGetBuilds() {
         return false
     }
 
-    var results = []
     var score
 
     var mobosByPrice = getMobos().sort(sortByPrice)
     var mobosByPriceDesc = getMobos().sort(sortByPriceDesc)
-    var ramsByPrice = getRams().sort(sortByPrice)
-    var ramsByPriceDesc = getRams().sort(sortByPriceDesc)
     var casesByPrice = getCases().sort(sortByPrice)
     var casesByPriceDesc = getCases().sort(sortByPriceDesc)
+    var ramsByPrice = getRams().sort(sortByPrice)
+    var ramsByPriceDesc = getRams().sort(sortByPriceDesc)
 
+    // Build array of parts that would work for performance
+    var performanceParts = []
+
+    // Cpu
     for (cpu in data.cpus) {
-        if ((needCpuOverclock && !(data.cpus[cpu].canOverclock == "Yes")) ||
-            (selectedCpuSocket != "Any" && selectedCpuSocket != data.cpus[cpu].cpuSocket) ||
-            (data.cpus[cpu].price >= budgetForParts)) {
+        cpuPrice = data.cpus[cpu].price
+        if ((cpuPrice >= budgetForParts) ||
+            (needCpuOverclock && !(data.cpus[cpu].canOverclock == "Yes")) ||
+            (selectedCpuSocket != "Any" && selectedCpuSocket != data.cpus[cpu].cpuSocket)) {
             continue
         }
+
+        // Gpu
         for (gpu in data.gpus) {
             if (selectedGpuType != "Any" && selectedGpuType != data.gpus[gpu].gpuType) {
                 continue
             }
             for (gpuCount = 1; gpuCount <= 2; gpuCount++) {
-                if ((selectedGpuCount != "Any" && selectedGpuCount != gpuCount) ||
-                    (gpuCount == 2 && data.gpus[gpu].multiGPU == null) ||
-                    (data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price) > budgetForParts)) {
+                gpusPrice = gpuCount * data.gpus[gpu].price
+                if ((cpuPrice + gpusPrice > budgetForParts) ||
+                    (selectedGpuCount != "Any" && selectedGpuCount != gpuCount) ||
+                    (gpuCount == 2 && data.gpus[gpu].multiGPU == null)) {
                     continue
                 }
+
+                // Ram Channel
                 for (ramChannel = 1; ramChannel <= data.cpus[cpu].maxMemoryChannels; ramChannel++) {
+                    var foundRamCombinationWithinScoreMaximum = false
+
+                    // Ram Speed
                     for (ramSpeed in data.ramSpeeds[getCpuSocketForRamSpeeds(data.cpus[cpu].cpuSocket)]) {
                         score =
                             getSystemScore(
                                 getCpuScore(data, cpu, ramChannel, ramSpeed),
                                 getGpuScore(data, gpu, gpuCount)
                             )
-                        if ((score < target3DMarkScore) ||
-                            (score > target3DMarkScoreMaximum)) {
-                            continue
+                        if (score > target3DMarkScoreMaximum) {
+                            // Score too high, and can skip the rest
+                            break
+                        } else {
+                            foundRamCombinationWithinScoreMaximum = true
                         }
+                        if (score >= target3DMarkScore) {
 
-                        priceCpuGpus = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price)
-                        priceRequestedParts = priceCpuGpus
-                        priceAllParts = priceRequestedParts
+                            priceCpuGpus = data.cpus[cpu].price + (gpuCount * data.gpus[gpu].price)
+                            priceRequestedParts = priceCpuGpus
+                            priceAllParts = priceRequestedParts
 
-                        // Find cheapest mobo
-                        cheapestMoboFound = false
-                        for (moboOption in mobosByPrice) {
-                            mobo = mobosByPrice[moboOption].fullName
+                            // Find cheapest combination of other parts
 
-                            if ((!moboSupportsCpu(mobo, cpu)) ||
-                                (!moboSupportsGpu(mobo, gpu, gpuCount)) ||
-                                (!moboSupportsRamCount(mobo, ramChannel)) ||
-                                (needCpuOverclock && !(data.mobos[mobo].canOverclock == "Yes")) ||
-                                (!data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()))) {
+                            // Find cheapest mobo
+                            cheapestMoboFound = false
+                            for (moboOption in mobosByPrice) {
+                                mobo = mobosByPrice[moboOption].fullName
+
+                                if ((!moboSupportsCpu(mobo, cpu)) ||
+                                    (!moboSupportsGpu(mobo, gpu, gpuCount)) ||
+                                    (!moboSupportsRamCount(mobo, ramChannel)) ||
+                                    (needCpuOverclock && !(data.mobos[mobo].canOverclock == "Yes")) ||
+                                    (!data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()))) {
+                                    continue
+                                }
+
+                                // Found the cheapest
+                                cheapestMoboFound = true
+                                priceRequestedParts += (includeMotherboard ? data.mobos[mobo].price : 0)
+                                priceAllParts += data.mobos[mobo].price
+                                break
+                            }
+                            if ((!cheapestMoboFound) ||
+                                (priceRequestedParts > budgetForParts) ||
+                                (priceAllParts > budgetTotal)) {
+                                // cheapest would not work
                                 continue
                             }
 
-                            // Found the cheapest
-                            cheapestMoboFound = true
-                            priceRequestedParts += (includeMotherboard ? data.mobos[mobo].price : 0)
-                            priceAllParts += data.mobos[mobo].price
-                            break
-                        }
-                        if ((!cheapestMoboFound) ||
-                            (priceRequestedParts > budgetForParts) ||
-                            (priceAllParts > budgetTotal)) {
-                            // cheapest would not work
-                            continue
-                        }
+                            // Find cheapest Case
+                            cheapestCaseFound = false
+                            for (pcCaseOption in casesByPrice) {
+                                pcCase = casesByPrice[pcCaseOption].fullName
 
-                        // Find cheapest Case
-                        cheapestCaseFound = false
-                        for (pcCaseOption in casesByPrice) {
-                            pcCase = casesByPrice[pcCaseOption].fullName
+                                if ((!caseSupportsMobo(pcCase, mobo)) ||
+                                    (!caseSupportsGpu(pcCase, gpu, gpuCount))) {
+                                    continue
+                                }
 
-                            if ((!caseSupportsMobo(pcCase, mobo)) ||
-                                (!caseSupportsGpu(pcCase, gpu, gpuCount))) {
+                                // Found the cheapest
+                                cheapestCaseFound = true
+                                priceRequestedParts += (includeCase ? data.pcCases[pcCase].price : 0)
+                                priceAllParts += data.pcCases[pcCase].price
+                                break
+                            }
+                            if ((!cheapestCaseFound) ||
+                                (priceRequestedParts > budgetForParts) ||
+                                (priceAllParts > budgetTotal)) {
+                                // cheapest would not work
                                 continue
                             }
 
-                            // Found the cheapest
-                            cheapestCaseFound = true
-                            priceRequestedParts += (includeCase ? data.pcCases[pcCase].price : 0)
-                            priceAllParts += data.pcCases[pcCase].price
-                            break
-                        }
-                        if ((!cheapestCaseFound) ||
-                            (priceRequestedParts > budgetForParts) ||
-                            (priceAllParts > budgetTotal)) {
-                            // cheapest would not work
-                            continue
-                        }
+                            // Find cheapest Ram
+                            cheapestRamFound = false
+                            for (ramOption in ramsByPrice) {
+                                ram = ramsByPrice[ramOption].fullName
 
-                        // Find cheapest Ram
-                        cheapestRamFound = false
-                        for (ramOption in ramsByPrice) {
-                            ram = ramsByPrice[ramOption].fullName
+                                if (data.rams[ram].frequency != ramSpeed) {
+                                    continue
+                                }
 
-                            if (data.rams[ram].frequency != ramSpeed) {
+                                // Found the cheapest
+                                cheapestRamFound = true
+                                priceRequestedParts += (includeRamPart ? (ramChannel * data.rams[ram].price) : 0)
+                                priceAllParts += (ramChannel * data.rams[ram].price)
+                                break
+                            }
+                            if ((!cheapestRamFound) ||
+                                (priceRequestedParts > budgetForParts) ||
+                                (priceAllParts > budgetTotal)) {
+                                // cheapest would not work
                                 continue
                             }
 
-                            // Found the cheapest
-                            cheapestRamFound = true
-                            priceRequestedParts += (includeRamPart ? (ramChannel * data.rams[ram].price) : 0)
-                            priceAllParts += (ramChannel * data.rams[ram].price)
-                            break
+                            // Found the cheapest, for this combination
+                            performanceParts.push(
+                                performancePartsForBuild(
+                                    cpu, gpu, gpuCount,
+                                    priceCpuGpus,
+                                    priceAllParts,
+                                    ramChannel, ramSpeed, score
+                                )
+                            )
                         }
-                        if ((!cheapestRamFound) ||
-                            (priceRequestedParts > budgetForParts) ||
-                            (priceAllParts > budgetTotal)) {
-                            // cheapest would not work
-                            continue
-                        }
-
-                        // PASSED ALL THE CHECKS SO FAR - SEND IT (without mobo, case, ram)
-                        results.push(partsForBuild("", cpu, ramChannel, ramSpeed, "", gpuCount, data.gpus[gpu].gpuType, gpu, "", budgetTotal, budgetReserved, priceCpuGpus, priceAllParts, score))
+                    }
+                    // No need to check the other Ram Channels
+                    if (!foundRamCombinationWithinScoreMaximum) {
+                        break
                     }
                 }
             }
         }
     }
 
-    results.sort(sortByPriceAllParts)
-    results = limitResultsToFirstLastAndRandomMiddle(results, resultsRequested)
-    results.sort(sortByPriceAllParts)
+    var results = []
 
-    // Now add optional parts: Mobo, Case, Ram
-    if ((results.length > 0) &&
-        (includeMotherboard || includeCase || includeRamPart)) {
+    // Get results for 3 modes:
+    // Mode 0: Cheapest result
+    // Mode 1: Most expensive result
+    // Mode 2: The rest of the results at random
+    for (resultMode = 0; resultMode <= 2; resultMode++) {
 
-        // Cheapest
-        buildMakerAddOptionalParts(results[0], needCpuOverclock, includeMotherboard, mobosByPrice, includeCase, casesByPrice, includeRamPart, ramsByPrice)
-        if (results.length > 1) {
-            // Most Expensive
-            buildMakerAddOptionalParts(results[results.length - 1], needCpuOverclock, includeMotherboard, mobosByPriceDesc, includeCase, casesByPriceDesc, includeRamPart, ramsByPriceDesc)
-                // Random in middle
-            for (i = 1; i < results.length - 1; i++) {
-                buildMakerAddOptionalParts(results[i], needCpuOverclock, includeMotherboard, getMobos().sort(sortByRandom), includeCase, getCases().sort(sortByRandom), includeRamPart, getRams().sort(sortByRandom))
+        // Set results requested for mode
+        resultsNeededToEndMode = resultMode == 0 ? 1 : resultMode == 1 ? 2 : resultMode == 2 ? resultsRequested : 0
+
+        // Set performance parts
+        performanceParts.sort(resultMode == 0 ? sortByPrice : resultMode == 1 ? sortByPriceDesc : resultMode == 2 ? sortByRandom : null)
+            // Reset performance parts
+        for (performancePartsIndex = 0; performancePartsIndex < performanceParts.length; performancePartsIndex++) {
+            performancePartsCombo = performanceParts[performancePartsIndex]
+            performancePartsCombo.StopPicking = false
+        }
+
+        performancePartsSearched = 0
+        while ((performancePartsSearched < performanceParts.length) &&
+            (results.length < resultsNeededToEndMode)) {
+
+            // Pick performance part combination at random
+            for (performancePartsIndex = 0; performancePartsIndex < performanceParts.length; performancePartsIndex++) {
+                if (results.length >= resultsNeededToEndMode) {
+                    break
+                }
+                performancePartsCombo = performanceParts[performancePartsIndex]
+                if (performancePartsCombo.stopPicking) {
+                    continue
+                }
+
+                cpu = performancePartsCombo.cpu
+                gpu = performancePartsCombo.gpu
+                gpuCount = performancePartsCombo.gpuCount
+                priceCpuGpus = performancePartsCombo.priceCpuGpus
+                ramChannel = performancePartsCombo.ramChannel
+                ramSpeed = performancePartsCombo.ramSpeed
+                score = performancePartsCombo.score
+
+                // Pick additional part combinations that would work
+                matchFound = false
+
+                // Get mobo
+                mobos = resultMode == 0 ? mobosByPrice : resultMode == 1 ? mobosByPriceDesc : resultMode == 2 ? getMobos().sort(sortByRandom) : null
+                for (moboIndex = 0; moboIndex < mobos.length; moboIndex++) {
+                    mobo = mobos[moboIndex].fullName
+                    moboPrice = mobos[moboIndex].price
+
+                    if ((priceCpuGpus + (includeMotherboard ? moboPrice : 0) > budgetForParts) ||
+                        (priceCpuGpus + moboPrice > budgetTotal) ||
+                        (needCpuOverclock && !(data.mobos[mobo].canOverclock == "Yes")) ||
+                        (!moboSupportsCpu(mobo, cpu)) ||
+                        (!moboSupportsGpu(mobo, gpu, gpuCount)) ||
+                        (!moboSupportsRamCount(mobo, ramChannel)) ||
+                        (!data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()))) {
+                        continue
+                    }
+
+                    // Get case
+                    pcCases = resultMode == 0 ? casesByPrice : resultMode == 1 ? casesByPriceDesc : resultMode == 2 ? getCases().sort(sortByRandom) : null
+                    for (pcCaseIndex = 0; pcCaseIndex < pcCases.length; pcCaseIndex++) {
+                        pcCase = pcCases[pcCaseIndex].fullName
+                        pcCasePrice = pcCases[pcCaseIndex].price
+
+                        if ((priceCpuGpus + (includeMotherboard ? moboPrice : 0) + (includeCase ? pcCasePrice : 0) > budgetForParts) ||
+                            (priceCpuGpus + moboPrice + pcCasePrice > budgetTotal) ||
+                            (!caseSupportsMobo(pcCase, mobo)) ||
+                            (!caseSupportsGpu(pcCase, gpu, gpuCount))) {
+                            continue
+                        }
+
+                        // Ram
+                        rams = resultMode == 0 ? ramsByPrice : resultMode == 1 ? ramsByPriceDesc : resultMode == 2 ? getRams().sort(sortByRandom) : null
+                        for (ramIndex = 0; ramIndex < rams.length; ramIndex++) {
+                            ram = rams[ramIndex].fullName
+                            ramPrice = rams[ramIndex].price
+
+                            if ((priceCpuGpus + (includeMotherboard ? moboPrice : 0) + (includeCase ? pcCasePrice : 0) + (includeRamPart ? (ramChannel * ramPrice) : 0) > budgetForParts) ||
+                                (priceCpuGpus + moboPrice + pcCasePrice + (ramChannel * ramPrice) > budgetTotal) ||
+                                (data.rams[ram].frequency != ramSpeed)) {
+                                continue
+                            }
+
+                            // Found a combination that works!
+
+                            if (!includeMotherboard) {
+                                mobo = ""
+                                moboPrice = 0
+                            }
+                            if (!includeCase) {
+                                pcCase = ""
+                                pcCasePrice = 0
+                            }
+                            if (!includeRamPart) {
+                                ram = ""
+                                ramPrice = 0
+                            }
+
+                            // See if it was already included as a result
+                            if (results.find(
+                                    el =>
+                                    el.cpu == cpu &&
+                                    el.gpu == gpu &&
+                                    el.gpuCount == gpuCount &&
+                                    el.ramChannel == ramChannel &&
+                                    el.ramSpeed == ramSpeed &&
+                                    el.mobo == mobo &&
+                                    el.pcCase == pcCase &&
+                                    el.ram == ram
+                                ) == null) {
+
+                                // Store the match!
+                                results.push(
+                                    partsForBuild(
+                                        pcCase, cpu, ramChannel, ramSpeed, ram, gpuCount, data.gpus[gpu].gpuType, gpu, mobo, budgetTotal, budgetReserved,
+                                        priceCpuGpus + moboPrice + pcCasePrice + (ramChannel * ramPrice),
+                                        priceCpuGpus + moboPrice + pcCasePrice + (ramChannel * ramPrice),
+                                        score))
+
+                                // Set match variable and break, to get a new Performance Part combination to start from
+                                matchFound = true
+                                break
+                            }
+                        }
+                        if (matchFound) {
+                            break
+                        }
+                    }
+                    if (matchFound) {
+                        break
+                    }
+                }
+                if (!matchFound) {
+                    performancePartsCombo.stopPicking = true
+                    performancePartsSearched += 1
+                }
             }
         }
     }
@@ -44353,120 +44552,6 @@ function BuildMakerGetBuilds() {
     if (showAlerts && results.length == 0) {
         alert("No builds found.")
     }
-}
-
-function buildMakerAddOptionalParts(result, needCpuOverclock, includeMotherboard, mobos, includeCase, pcCases, includeRamPart, rams) {
-
-    var cpu = result.cpu
-    var gpu = result.gpu
-    var gpuCount = result.gpuCount
-    var ramChannel = result.ramChannel
-    var ramSpeed = result.ramSpeed
-
-    var priceCpuGpus = result.price
-    var budgetTotal = result.budgetTotal
-    var budgetReserved = result.budgetReserved
-    var budgetForParts = budgetTotal - budgetReserved
-
-    var found = false
-
-    // Iterate mobos
-    for (moboOption in mobos) {
-        mobo = mobos[moboOption].fullName
-
-        if ((!moboSupportsCpu(mobo, cpu)) ||
-            (!moboSupportsGpu(mobo, gpu, gpuCount)) ||
-            (!moboSupportsRamCount(mobo, ramChannel)) ||
-            (needCpuOverclock && !(data.mobos[mobo].canOverclock == "Yes")) ||
-            (!data.mobos[mobo].memorySpeedSteps.includes(ramSpeed.toString()))) {
-            continue
-        }
-        priceRequestedParts = priceCpuGpus + (includeMotherboard ? data.mobos[mobo].price : 0)
-        priceAllParts = priceCpuGpus + data.mobos[mobo].price
-        if ((priceRequestedParts > budgetForParts) ||
-            (priceAllParts > budgetTotal)) {
-            continue
-        }
-
-        // Iterate cases
-        for (pcCaseOption in pcCases) {
-            pcCase = pcCases[pcCaseOption].fullName
-
-            if ((!caseSupportsMobo(pcCase, mobo)) ||
-                (!caseSupportsGpu(pcCase, gpu, gpuCount))) {
-                continue
-            }
-            priceRequestedParts = priceCpuGpus + (includeMotherboard ? data.mobos[mobo].price : 0) + (includeCase ? data.pcCases[pcCase].price : 0)
-            priceAllParts = priceCpuGpus + data.mobos[mobo].price + data.pcCases[pcCase].price
-            if ((priceRequestedParts > budgetForParts) ||
-                (priceAllParts > budgetTotal)) {
-                continue
-            }
-
-            // Iterate rams
-            for (ramOption in rams) {
-                ram = rams[ramOption].fullName
-
-                if (data.rams[ram].frequency != ramSpeed) {
-                    continue
-                }
-                priceRequestedParts = priceCpuGpus + (includeMotherboard ? data.mobos[mobo].price : 0) + (includeCase ? data.pcCases[pcCase].price : 0) + (includeRamPart ? (ramChannel * data.rams[ram].price) : 0)
-                priceAllParts = priceCpuGpus + data.mobos[mobo].price + data.pcCases[pcCase].price + (ramChannel * data.rams[ram].price)
-                if ((priceRequestedParts > budgetForParts) ||
-                    (priceAllParts > budgetTotal)) {
-                    continue
-                }
-
-                // Finally found match!
-                found = true
-                result.price = priceRequestedParts
-                result.priceAllParts = priceAllParts
-                result.mobo = includeMotherboard ? mobo : ""
-                result.pcCase = includeCase ? pcCase : ""
-                result.ram = includeRamPart ? ram : ""
-                break
-            }
-            if (found) {
-                break
-            }
-        }
-        if (found) {
-            break
-        }
-    }
-}
-
-function getCases() {
-    var pcCases = []
-    for (pcCase in data.pcCases) {
-        pcCases.push({
-            "fullName": data.pcCases[pcCase].fullName,
-            "price": data.pcCases[pcCase].price
-        })
-    }
-    return pcCases
-}
-
-function getRams() {
-    var rams = []
-    for (ram in data.rams) {
-        rams.push({
-            "fullName": data.rams[ram].fullName,
-            "price": data.rams[ram].price
-        })
-    }
-    return rams
-}
-
-function getMobos() {
-    var mobos = []
-    for (mobo in data.mobos) {
-        mobos.push({
-            "fullName": data.mobos[mobo].fullName,
-            "price": data.mobos[mobo].price
-        })
-    }
-    return mobos
 }
 
 var temp
