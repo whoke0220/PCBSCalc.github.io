@@ -44938,7 +44938,13 @@ function BuildUpgraderGetUpgrades() {
         table.rows[i].cells[7].innerHTML = results[i - 1].score
 
         table.rows[i].cells[8].className = "tdOther"
-        table.rows[i].cells[8].innerHTML = getSystemWatts(data, results[i - 1].cpu, results[i - 1].gpu, results[i - 1].gpuCount)
+        table.rows[i].cells[8].innerHTML =
+            getSystemWatts(
+                data,
+                results[i - 1].cpu == "" ? originalSystemCpu : results[i - 1].cpu,
+                results[i - 1].gpu == "" ? originalSystemGpu : results[i - 1].gpu,
+                results[i - 1].gpuCount == "" ? originalSystemGpuCount : results[i - 1].gpuCount == "1 + 1" ? 2 : results[i - 1].gpuCount
+            )
     }
 
     if (showAlerts && results.length == 0) {
@@ -45233,9 +45239,9 @@ function PartReplacerGetParts() {
         table.rows[i].cells[8].innerHTML =
             getSystemWattsExactParts(
                 data,
-                results[i - 1].cpu,
-                results[i - 1].gpu1 != "" ? results[i - 1].gpu1 : originalSystemGpu1,
-                results[i - 1].gpu2 != "" ? results[i - 1].gpu2 : originalSystemGpu2
+                results[i - 1].cpu == "" ? originalSystemCpu : results[i - 1].cpu,
+                results[i - 1].gpu1 == "" ? originalSystemGpu1 : results[i - 1].gpu1,
+                results[i - 1].gpu2 == "" ? originalSystemGpu2 : results[i - 1].gpu2
             )
     }
 
