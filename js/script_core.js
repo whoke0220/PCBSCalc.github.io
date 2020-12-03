@@ -1,3 +1,4 @@
+// 1. Source Data
 var sourceData = {
     "cpus": {
         "AMD Ryzen Threadripper Sixteen Core 1950X": {
@@ -43288,6 +43289,7 @@ var sourceData = {
     }
 }
 
+// 2. Level
 var level = 0
 
 function updateLevel() {
@@ -43308,6 +43310,8 @@ function updateLevel() {
 function isLevelSet() {
     return level > 0
 }
+
+// 3. Data Manipulation
 
 // By default, do not use HEM parts
 var includeHemParts = false
@@ -43395,6 +43399,8 @@ function loadData(loadingFor3DMark) {
 // Set the data on first load
 setData()
 
+
+// 4. Calculations - Score
 function getCpuScoreOC(myData, cpu, frequency, ramChannel, ramSpeed) {
     return Math.floor(
         (
@@ -43475,6 +43481,7 @@ function getSystemScore(cpuScore, gpuScore) {
     )
 }
 
+// 5. Calculations - Watts
 function getSystemWattsExactParts(myData, cpu, gpu1, gpu2) {
     var systemWatts = 30
     if (cpu != "" && myData.cpus[cpu] != null) {
@@ -43493,6 +43500,7 @@ function getSystemWatts(myData, cpu, gpu, gpuCount) {
     return getSystemWattsExactParts(myData, cpu, gpu, gpuCount == 2 ? gpu : "")
 }
 
+// 6. Part Compatiability Checks
 function caseSupportsMobo(pcCase, mobo) {
     if (
         pcCase == "" ||
@@ -43602,6 +43610,7 @@ function moboSupportsRamCount(mobo, ramCount) {
     }
 }
 
+// 7. Options - Get
 function getCaseOptions() {
     var pcCases = new Array()
     for (pcCase in data.pcCases) {
@@ -43815,6 +43824,7 @@ function getRamOptions(myData, preselectedValue) {
     return options
 }
 
+// 8. Options - Update Ram
 function getCpuSocketForRamSpeeds(cpuSocket) {
     var cpuSocketForRamSpeeds
     if (cpuSocket == "LGA 1151 (Skylake)") {
@@ -43870,6 +43880,7 @@ function updateRamChannelOptions3DMark() {
     )
 }
 
+// 9. Options - Update Mobo
 function updateMoboOptions(moboList, pcCase, m2, cpu, gpu, gpuCount) {
     var show
     for (moboOption in moboList.options) {
@@ -43937,6 +43948,7 @@ function updateMoboOptionsPartReplacer() {
     )
 }
 
+// 10. Options - Set
 var settingOptionsOnLoad = true
 
 function setListOptions() {
@@ -43991,6 +44003,7 @@ updateMoboOptionsBuildUpgrader()
 // Store that we set them
 settingOptionsOnLoad = false
 
+// 11. Data Array - Parts
 function getMobos() {
     var mobos = []
     for (mobo in data.mobos) {
@@ -44024,6 +44037,7 @@ function getRams() {
     return rams
 }
 
+// 12. Data Arrays - Solutions
 function performancePartsForBuild(cpu, gpu, gpuCount, priceCpuGpus, price, ramChannel, ramSpeed, score) {
     var parts = {
         "cpu": cpu,
@@ -44076,6 +44090,7 @@ function partsForReplacer(cpu, gpu1Type, gpu1, gpu2Type, gpu2, mobo, budgetTotal
     return parts
 }
 
+// 13. Input Manipulation
 function numberOrDefault(inputString, defaultValue) {
     var result = null
     if ((inputString != "") && (!isNaN(Number(inputString)))) {
@@ -44086,6 +44101,7 @@ function numberOrDefault(inputString, defaultValue) {
     return result
 }
 
+// 14. Blurring
 function blurBackground(id) {
     id.style.filter = "blur(8px)"
 }
@@ -44094,6 +44110,7 @@ function unblurBackground(id) {
     id.style.filter = "blur(0px)"
 }
 
+// 15. Navigation Bar
 function showPage(id) {
     document.getElementById('div3DMarkScoreCalculator').style.display = ((id == 'div3DMarkScoreCalculator') ? "block" : "none")
     document.getElementById('divBuildMaker').style.display = ((id == 'divBuildMaker') ? "block" : "none")
@@ -44102,6 +44119,7 @@ function showPage(id) {
     document.getElementById('divHistoryAndSaves').style.display = ((id == 'divHistoryAndSaves') ? "block" : "none")
 }
 
+// 16. 3DMark Score Calculator
 function CalculatorCalculate() {
     var showAlerts = true
 
@@ -44173,6 +44191,7 @@ function CalculatorCalculate() {
     )
 }
 
+// 17. Build Maker
 function BuildMakerGetBuilds() {
     var showAlerts = true
 
@@ -44592,6 +44611,7 @@ function ProcessBuildMakerSave(saveBuild) {
     }
 }
 
+// 18. Build Upgrader
 function BuildUpgraderGetUpgrades() {
     var showAlerts = true
 
@@ -44952,6 +44972,7 @@ function BuildUpgraderGetUpgrades() {
     }
 }
 
+// 19. Part Replacer
 var partReplacerResults
 
 function PartReplacerGetParts() {
@@ -45361,6 +45382,7 @@ function pushPartReplacerSolutionIfValid(
     partReplacerResults.push(partsForReplacer(newCpu, newGpu1Type, newGpu1, newGpu2Type, newGpu2, newMobo, budgetTotal, budgetReserved, partsPrice))
 }
 
+// 20. Save Build
 function saveBuild(pcCase, cpu, ramChannel, ramSpeed, ram, gpuCount, gpuType, gpu, mobo, price, budgetleft, score, systemWatts, type, comment) {
     sessionStorage.setItem(new Date().getTime(), JSON.stringify({
         "pcCase": pcCase,
@@ -45492,6 +45514,7 @@ setInterval(function() {
     }
 }, 100)
 
+// Finalize - Results Tables and Sorting
 function resetResultsTable(table, dataRowsNeeded, cellsNeeded) {
 
     // Delete all rows except the header
@@ -45592,3 +45615,5 @@ function getRandomIntInclusive(min, max) {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive 
 }
+
+console.log("Script successfully loaded!");
