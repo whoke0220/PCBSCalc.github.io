@@ -7,25 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Website Title -->
-    <title>PCBSCalc Labs v20201206 "Chemistry"</title>
+    <title>PCBSCalc Labs v20201223 "Chemistry"</title>
 
-    <!-- Load CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
+    <!-- Load CSS and other sources -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/PCBSCalc/PCBSCalc.github.io/master/labs/img/pcbscalc.png" />
-
-    <!-- Load Fonts -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
     <!-- Load Styles -->
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-        }
-        
-        a {
-            color: white;
         }
         
         a:hover {
@@ -36,64 +30,16 @@
             align-content: center;
         }
         
-        #divOptionCheckboxSection {
-            background-color: #ffffff;
-            padding-top: 32px;
-            height: 52px;
-        }
-        
-        #OptionCheckboxSection {
-            background-color: #ffffff;
-            height: 40px;
-            color: black;
-            width: 370px;
-            margin: auto;
-            padding: 5px 0px;
-        }
-        
-        #OptionCheckboxTable {
-            padding: 0px;
-            border-collapse: collapse;
-            font-size: 15px;
-        }
-        
-        #OptionCheckboxTable td {
-            padding: 0px;
-        }
-        
-        #OptionCheckboxTable td.tdOptionInput {
-            width: 278px;
-        }
-        
-        #OptionCheckboxTable td.tdOptionCheckbox {
-            width: 25px;
-        }
-        
-        #divLevel {
-            height: 45px;
-            width: 100px;
-            margin: auto;
-            padding: 0px 0px 0px 0px;
-            text-align: center;
+        #tableOptions {
+            margin-left: auto;
+            margin-right: auto;
+            width: 400px;
         }
         
         #tableLevel {
-            border: none;
-            border-collapse: collapse;
-        }
-        
-        #tableLevel td {
-            padding: 0px;
-        }
-        
-        #tableLevel td.tdLevelLabel {
-            width: auto;
-        }
-        
-        #tableLevel td.tdLevelValue {
-            width: auto;
-            height: auto;
-            padding: 3px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 400px;
         }
         
         input {
@@ -139,20 +85,13 @@
         #divPages {
             background-color: white;
             text-align: center;
-            font-size: 20px;
             padding-top: 10px;
             font-family: 'Roboto', sans-serif;
         }
         
-        caption {
-            font-size: 25px;
-            font-weight: bold;
-            padding-bottom: 10px;
-        }
-        
         select {
             border-radius: 0px 0px 0px 0px;
-            height: 25px;
+            height: 50px;
             width: 400px;
         }
         
@@ -170,15 +109,14 @@
         }
         
         #tableBuildMakerResults {
-            border: none;
             padding: 8px;
-            border-collapse: collapse;
-            margin: auto;
-            font-size: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 100px;
+            width: 1200px;
         }
         
         #tableBuildMakerResults td {
-            border: 1px solid;
             padding: 5px;
         }
         
@@ -191,6 +129,7 @@
             top: 40%;
             left: 40%;
             position: absolute;
+            background-color: white;
             z-index: 2;
             border: 5px 5px 5px 5px;
             height: 100px;
@@ -206,16 +145,19 @@
             margin-bottom: 20px;
         }
         
+        #divBuildUpgraderResults {
+            margin-bottom: 100px;
+        }
+        
         #tableBuildUpgraderResults {
-            border: none;
             padding: 8px;
-            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
             margin: auto;
-            font-size: 15px;
         }
         
         #tableBuildUpgraderResults td {
-            border: 1px solid;
             padding: 5px;
         }
         
@@ -226,37 +168,52 @@
             margin-bottom: 20px;
         }
         
+        #divPartReplacerResults {
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
+        }
+        
         #tablePartReplacerResults {
-            border: none;
             padding: 8px;
-            border-collapse: collapse;
             margin: auto;
-            font-size: 15px;
+            margin-bottom: 100px;
         }
         
         #tablePartReplacerResults td {
-            border: 1px solid;
             padding: 5px;
+        }
+        
+        #div3DMarkScoreCalculatorHistory {
+            margin-bottom: 100px;
         }
         
         #table3DMarkScoreCalculatorHistory {
             border: none;
             padding: 8px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
             border-collapse: collapse;
             margin: auto;
-            font-size: 15px;
         }
         
         #table3DMarkScoreCalculatorHistory td {
             padding: 6px;
         }
         
+        #divBuildMakerSaves {
+            margin-bottom: 100px;
+        }
+        
         #tableBuildMakerSaves {
             border: none;
             padding: 8px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
             border-collapse: collapse;
             margin: auto;
-            font-size: 15px;
         }
         
         #tableBuildMakerSaves td {
@@ -265,44 +222,33 @@
     </style>
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-primary purple accent-4">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="https://pcbscalc.github.io/labs/"><img src="img/pcbscalc2.png" width="50"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="fas fa-book"></i>   Changelog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://donorbox.org/PCBSCalc" target="_blank"><i class="fas fa-money-bill-alt"></i>   Donate us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://github.com/PCBSCalc/Issue-Tracker/issues" target="_blank"><i class="fas fa-exclamation-triangle"></i>   Report Issue</a>
-                    </li>
-                </ul>
-            </div>
+<body onload="M.toast({html: 'Welcome to PCBSCalc Labs! You can test the new theme here. If you found any issue please report them on our Issue tracker or our Discord server on bottom. Have fun!'})">
+    <nav class="nav-extended purple accent-4">
+        <div class="nav-wrapper">
+            <a href="https://pcbscalc.github.io/labs/" class="brand-logo"><img src="img/pcbscalc2.png" width="60"></a>
+            <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="material-icons left">book</i>  Changelog</a></li>
+                <li><a href="https://donorbox.org/PCBSCalc" target="_blank"><i class="material-icons left">attach_money</i>  Donate us</a></li>
+                <li><a href="https://github.com/PCBSCalc/Issue-Tracker/issues" target="_blank"><i class="material-icons left">warning</i>  Report Issue</a></li>
+            </ul>
+        </div>
+        <div class="nav-content">
+            <ul class="tabs tabs-transparent">
+                <li class="tab"><a href="#" onclick="showPage('div3DMarkScoreCalculator');">3DMark Scores</a></li>
+                <li class="tab"><a href="#" onclick="showPage('divBuildMaker');">Build Maker</a></li>
+                <li class="tab"><a href="#" onclick="showPage('divBuildUpgrader');">Build Upgrader</a></li>
+                <li class="tab"><a href="#" onclick="showPage('divPartReplacer');">Part Replacer</a></li>
+                <li class="tab"><a href="#" onclick="showPage('divHistoryAndSaves');">History & Saves</a></li>
+            </ul>
         </div>
     </nav>
-    <div class="alert alert-info alert-dismissible fade show" role="alert">
-        <strong>Welcome to PCBSCalc Labs</strong></br>This place is for testing the new layouts and features. This version may contain bugs, so if you have any feedback or issue, let us know on our <a href="https://github.com/PCBSCalc/Issue-Tracker" target="_blank"
-            class="text-primary">issue tracker</a> or our <a href="https://discord.gg/mFZsKS2" target="_blank" class="text-primary">Discord server</a>.
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <center>
-        <button type="button" class="btn btn-purple" onclick="showPage('div3DMarkScoreCalculator');">3DMark Scores</button>
-        <button type="button" class="btn btn-purple" onclick="showPage('divBuildMaker');">Build Maker</button>
-        <button type="button" class="btn btn-purple" onclick="showPage('divBuildUpgrader');">Build Upgrader</button>
-        <button type="button" class="btn btn-purple" onclick="showPage('divPartReplacer');">Part Replacer</button>
-        <button type="button" class="btn btn-purple" onclick="showPage('divHistoryAndSaves');">History & Saves</button>
-    </center>
+    <ul class="sidenav" id="nav-mobile">
+        <li><a href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="material-icons left">book</i>  Changelog</a></li>
+        <li><a href="https://donorbox.org/PCBSCalc" target="_blank"><i class="material-icons left">attach_money</i>  Donate us</a></li>
+        <li><a href="https://github.com/PCBSCalc/Issue-Tracker/issues" target="_blank"><i class="material-icons left">warning</i>  Report Issue</a></li>
+    </ul>
     <div id="switcher" style="margin-top:20px;">
-
     </div>
     <div id="divOptions">
         <form id="formOptions">
@@ -312,14 +258,10 @@
                         Include Hardware Expansion Mod (HEM) parts?
                     </td>
                     <td class="tdOptionHemCheckbox">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="inputOptionHem" class="optionCheckbox form-control" onclick="
-                            includeHemParts = inputOptionHem.checked;
-                            setData();
-                            setListOptions();
-                            setSelectOptions();
-                        ">
-                        </div>
+                        <label>
+                            <input type="checkbox" class="filled-in" onclick="includeHemParts = inputOptionHem.checked; setData(); setListOptions(); setSelectOptions();"/>
+                            <span></span>
+                        </label>
                     </td>
                 </tr>
                 <tr>
@@ -327,14 +269,10 @@
                         Include parts not in the Shop?
                     </td>
                     <td class="tdOptionPartsNotInShopCheckbox">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" name="inputOptionPartsNotInShop" class="optionCheckbox form-control" onclick="
-                            includePartsNotInShop = inputOptionPartsNotInShop.checked;
-                            setData();
-                            setListOptions();
-                            setSelectOptions();
-                        ">
-                        </div>
+                        <label>
+                            <input type="checkbox" class="filled-in" onclick=" includePartsNotInShop = inputOptionPartsNotInShop.checked; setData(); setListOptions(); setSelectOptions();"/>
+                            <span></span>
+                        </label>
                     </td>
                 </tr>
             </table>
@@ -348,9 +286,7 @@
                         Level:
                     </td>
                     <td class="tdLevelValue">
-                        <input name="inputLevel" class="levelText form-control" onchange="
-                            updateLevel();
-                        ">
+                        <input name="inputLevel" type="text" class="validate" onchange="updateLevel();">
                     </td>
                 </tr>
             </table>
@@ -364,56 +300,60 @@
         <datalist id="listGpus3DMark"></datalist>
         <datalist id="listMobos"></datalist>
         <datalist id="listStorageM2s"></datalist>
-        <div id="div3DMarkScoreCalculator" class="my-2">
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('select');
+                var instances = M.FormSelect.init(elems, options);
+            });
+
+            $(document).ready(function() {
+                $('select').formSelect();
+            });
+        </script>
+        <div id="div3DMarkScoreCalculator">
             <div id="div3DMarkScoreCalculatorForm">
                 <form id="form3DMarkScoreCalculator">
+                    <h3>3DMark Score Calculator</h3>
                     <table>
-                        <caption>3DMark Score Calculator</caption>
                         <tr>
                             <td>CPU (Processor)</td>
                             <td>
-                                <input name="input3DMarkCpu" class="browser-default custom-select" list="listCpus3DMark" onchange="
-                            updateRamSpeedOptions3DMark();
-                            updateRamChannelOptions3DMark();
-                            ">
+                                <input name="input3DMarkCpu" list="listCpus3DMark" type="text" class="validate" onchange="updateRamSpeedOptions3DMark(); updateRamChannelOptions3DMark();">
                             </td>
                         </tr>
                         <tr>
                             <td>RAM Speed</td>
                             <td>
-                                <select name="select3DMarkRamSpeed" class="browser-default custom-select">
-                            </select>
+                                <select class="browser-default" name="select3DMarkRamSpeed"></select>
                             </td>
                         </tr>
                         <tr>
                             <td>RAM Channels</td>
                             <td>
-                                <select name="select3DMarkRamChannel" class="browser-default custom-select">
+                                <select name="select3DMarkRamChannel">
                                   <option value="1">1: Single-channel</option>
                                   <option value="2">2: Dual-channel</option>
                                   <option value="3">3: Triple-channel</option>
                                   <option value="4">4: Quad-channel</option>
-                              </select>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td>GPU (Graphics Card)</td>
-                            <td><input name="input3DMarkGpu" list="listGpus3DMark" class="form-control"></td>
+                            <td><input name="input3DMarkGpu" list="listGpus3DMark" type="text" class="validate"></td>
                         </tr>
                         <tr>
                             <td># GPUs</td>
                             <td>
-                                <select name="select3DMarkGpuCount" class="browser-default custom-select">
+                                <select name="select3DMarkGpuCount">
                                   <option value="1" selected>1: Single-GPU</option>
                                   <option value="2">2: Dual-GPUs</option>
-                              </select>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td align="center"><button type="button" class="btn btn-success my-2" onclick="
-                            CalculatorCalculate();
-                        ">Calculate</button></td>
+                            <td align="center"><a class="waves-effect waves-light green btn" onclick="CalculatorCalculate();">Calculate</a></td>
                         </tr>
                         <tr></tr>
                         <tr></tr>
@@ -499,9 +439,9 @@
         </div>
         <div id="divBuildMaker">
             <div id="divBuildMakerForm">
-                <form id="formBuildMaker">
+                <form id="formBuildMaker" action="#">
+                    <h3>Build Maker</h3>
                     <table>
-                        <caption>Build Maker</caption>
                         <tr>
                             <td><u>Requirements:</u></td>
                             <td></td>
@@ -511,7 +451,7 @@
                                 Budget
                             </td>
                             <td>
-                                <input name="inputBuildMakerBudget" class="form-control">
+                                <input name="inputBuildMakerBudget">
                             </td>
                         </tr>
                         <tr title="Amount you want to reserve for other parts, like: case, fans, storage, PSU, etc.">
@@ -519,7 +459,7 @@
                                 Reserved Budget
                             </td>
                             <td>
-                                <input name="inputBuildMakerReservedBudget" class="form-control" placeholder="400">
+                                <input name="inputBuildMakerReservedBudget" placeholder="400">
                             </td>
                         </tr>
                         <tr title="Target 3DMark score.">
@@ -527,7 +467,7 @@
                                 Target Score
                             </td>
                             <td>
-                                <input name="inputBuildMakerTarget3DMarkScore" class="form-control">
+                                <input name="inputBuildMakerTarget3DMarkScore">
                             </td>
                         </tr>
                         <tr title="3DMark score offset, to allow results that have higher 3DMark scores.">
@@ -535,7 +475,7 @@
                                 Score Offset
                             </td>
                             <td>
-                                <input name="inputBuildMakerTarget3DMarkScoreOffset" class="form-control" placeholder="400">
+                                <input name="inputBuildMakerTarget3DMarkScoreOffset" placeholder="400">
                             </td>
                         </tr>
                         <tr title="# of results to return.">
@@ -543,7 +483,7 @@
                                 # Results
                             </td>
                             <td>
-                                <input name="inputBuildMakerResultsRequested" class="form-control" placeholder="15">
+                                <input name="inputBuildMakerResultsRequested" placeholder="15">
                             </td>
                         </tr>
                         <tr></tr>
@@ -563,7 +503,7 @@
                                 CPU Socket
                             </td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildMakerCpuSocket">
+                                <select name="selectBuildMakerCpuSocket">
                               </select>
                             </td>
                         </tr>
@@ -572,7 +512,7 @@
                                 # GPUs
                             </td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildMakerGpuCount">
+                                <select name="selectBuildMakerGpuCount">
                                   <option selected>Any</option>
                                   <option value="1">1: Single-GPU</option>
                                   <option value="2">2: Dual-GPUs</option>
@@ -584,7 +524,7 @@
                                 GPU Type
                             </td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildMakerGpuType">
+                                <select name="selectBuildMakerGpuType">
                                   <option selected>Any</option>
                                   <option value="Air">Air</option>
                                   <option value="Water">Water</option>
@@ -596,7 +536,10 @@
                                 Include Motherboard
                             </td>
                             <td>
-                                <input type="checkbox" class="custom-checkbox mt-1" name="inputBuildMakerIncludeMotherboard" checked>
+                                <label>
+                                    <input type="checkbox" class="filled-in" name="inputBuildMakerIncludeMotherboard" checked />
+                                    <span></span>
+                                </label>
                             </td>
                         </tr>
                         <tr title="Include the Case in the result set.">
@@ -604,7 +547,10 @@
                                 Include Case
                             </td>
                             <td>
-                                <input type="checkbox" class="custom-checkbox mt-1" name="inputBuildMakerIncludeCase">
+                                <label>
+                                    <input type="checkbox" class="filled-in" name="inputBuildMakerIncludeCase" />
+                                    <span></span>
+                                </label>
                             </td>
                         </tr>
                         <tr title="Include the RAM part in the result set.">
@@ -612,7 +558,10 @@
                                 Include RAM Part
                             </td>
                             <td>
-                                <input type="checkbox" class="custom-checkbox mt-1" name="inputBuildMakerIncludeRamPart">
+                                <label>
+                                    <input type="checkbox" class="filled-in" name="inputBuildMakerIncludeRamPart" />
+                                    <span></span>
+                                </label>
                             </td>
                         </tr>
                         <tr title="Only list CPUs and Motherboards that can be used for overclocking.">
@@ -620,20 +569,21 @@
                                 Need CPU Overclock
                             </td>
                             <td>
-                                <input type="checkbox" class="custom-checkbox mt-1" name="inputBuildMakerNeedCpuOverclock">
+                                <label>
+                                    <input type="checkbox" class="filled-in" name="inputBuildMakerNeedCpuOverclock" />
+                                    <span></span>
+                                </label>
                             </td>
                         </tr>
                         <tr>
                             <td></td>
-                            <td align="center"><button type="button" class="btn btn-success my-2" onclick="
-                            BuildMakerGetBuilds();
-                        ">Get Builds</button></td>
+                            <td align="center"><a class="waves-effect waves-light green btn" onclick="BuildMakerGetBuilds();">Calculate</a></td>
                         </tr>
                     </table>
                 </form>
             </div>
             <div id="divBuildMakerResults">
-                <table class="table" id="tableBuildMakerResults">
+                <table id="tableBuildMakerResults">
                     <tr>
                         <td class="tdCase"><b>Case</b></td>
                         <td class="tdCpu"><b>CPU</b></td>
@@ -654,19 +604,17 @@
             </div>
             <div id="divBuildMakerSaveForm">
                 <form id="formBuildMakerSave">
-                    <input class="form-control mb-2" name="inputBuildMakerSaveFormComment" placeholder="Comment">
-                    <button type="button" class="btn btn-success" onclick="ProcessBuildMakerSave(true);">Save</button>
-                    <button type="button" class="btn btn-danger" onclick="ProcessBuildMakerSave(false);">Cancel</button>
+                    <input name="inputBuildMakerSaveFormComment" placeholder="Comment">
+                    <a class="waves-effect waves-light green btn" onclick="ProcessBuildMakerSave(true);">Save</a>
+                    <a class="waves-effect waves-light red btn" onclick="ProcessBuildMakerSave(false);">Cancel</a>
                 </form>
             </div>
         </div>
         <div id="divBuildUpgrader">
             <div id="divBuildUpgraderForm">
                 <form id="formBuildUpgrader" name="formBuildUpgrader">
+                    <h3>Build Upgrader</h3>
                     <table>
-                        <caption>
-                            Build Upgrader
-                        </caption>
                         <tr>
                             <td><u>Requirements:</u></td>
                             <td></td>
@@ -730,7 +678,7 @@
                         <tr>
                             <td>RAM Speed</td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildUpgraderOriginalSystemRamSpeed"></select>
+                                <select class="browser-default" name="selectBuildUpgraderOriginalSystemRamSpeed"></select>
                             </td>
                         </tr>
                         <tr>
@@ -746,17 +694,17 @@
                         <tr>
                             <td># GPUs</td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildUpgraderOriginalSystemGpuCount" onchange="
+                                <select name="selectBuildUpgraderOriginalSystemGpuCount" onchange="
                               updateMoboOptionsBuildUpgrader();">
                                   <option value="1" selected>1: Single-GPU</option>
                                   <option value="2">2: Dual-GPUs</option>
-                              </select>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Motherboard</td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildUpgraderOriginalSystemMobo">
+                                <select class="browser-default" name="selectBuildUpgraderOriginalSystemMobo">
                               </select>
                             </td>
                         </tr>
@@ -775,7 +723,7 @@
                         <tr title="# of GPUs allowed for each result.">
                             <td># GPUs</td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildUpgraderOptionsGpuCount">
+                                <select name="selectBuildUpgraderOptionsGpuCount">
                                   <option selected>Any</option>
                                   <option value="1">1: Single-GPU</option>
                                   <option value="2">2: Dual-GPUs</option>
@@ -787,7 +735,7 @@
                                 GPU Type
                             </td>
                             <td>
-                                <select class="browser-default custom-select" name="selectBuildUpgraderOptionsGpuType">
+                                <select name="selectBuildUpgraderOptionsGpuType">
                                   <option selected>Any</option>
                                   <option value="Air">Air</option>
                                   <option value="Water">Water</option>
@@ -796,7 +744,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td align="center"><button class="btn btn-success" onclick="BuildUpgraderGetUpgrades();" type="button">Get Upgrades</button></td>
+                            <td align="center"><a class="waves-effect waves-light green btn" onclick="BuildUpgraderGetUpgrades();">Get Upgrades</a>
                         </tr>
                     </table>
                 </form>
@@ -823,10 +771,8 @@
         <div id="divPartReplacer">
             <div id="divPartReplacerForm">
                 <form id="formPartReplacer" name="formPartReplacer">
+                    <h3>Part Replacer</h3>
                     <table>
-                        <caption>
-                            Part Replacer
-                        </caption>
                         <tr>
                             <td><u>Requirements:</u></td>
                             <td></td>
@@ -1046,96 +992,61 @@
     <script src="js/script_core.js"></script>
     </div>
     <!-- Load JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        (function($) {
+            $(function() {
+                // Plugin initialization
+                $('select').not('.disabled').formSelect();
+            });
+        })(jQuery); // end of jQuery name space
+
+        (function($) {
+            $(function() {
+                $('.sidenav').sidenav();
+            }); // end of document ready
+        })(jQuery); // end of jQuery name space
+    </script>
+
     <!-- Footer -->
-    <footer class="page-footer font-small purple pt-4">
-
-        <!-- Footer Links -->
-        <div class="container-fluid text-center text-md-left">
-
-            <!-- Grid row -->
+    <footer class="page-footer purple accent-4">
+        <div class="container">
             <div class="row">
-
-                <!-- Grid column -->
-                <div class="col-md-6 mt-md-0 mt-3">
-
-                    <!-- Content -->
-                    <h5><i class="fas fa-flask"></i> PCBSCalc Labs</h5>
-                    <p>Made with <i class="fas fa-heart"></i> by community!</p>
-                    <p>Irregular Corporation, the Irregular Corporation logo, PC Building Simulator, the PC Building Simulator logo are trademarks and/or registered trademarks of Irregular Corporation. PC Building Simulator Calculator is not sponsored, endorsed,
+                <div class="col l6 s12">
+                    <h5 class="white-text">PCBSCalc Labs 2</h5>
+                    <p class="grey-text text-lighten-4">Made with <i class="fas fa-heart"></i> by community!</p>
+                    <p class="grey-text text-lighten-4">Irregular Corporation, the Irregular Corporation logo, PC Building Simulator, the PC Building Simulator logo are trademarks and/or registered trademarks of Irregular Corporation. PC Building Simulator Calculator is not sponsored, endorsed,
                         licensed by, or affiliated with Irregular Corporation.</p>
-
                 </div>
-                <!-- Grid column -->
-
-                <hr class="clearfix w-100 d-md-none pb-3">
-
-                <!-- Grid column -->
-                <div class="col-md-3 mb-md-0 mb-3">
-
-                    <!-- Links -->
-                    <h5>Mystic Moonlight</h5>
-
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="https://mysticmoonlight.home.blog" target="_blank"><i class="fas fa-globe"></i> Website</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/MysticMoonlight" target="_blank"><i class="fab fa-github"></i> GitHub</a>
-                        </li>
-                        <li>
-                            <a href="https://twitter.com/StudioMMForever" target="_blank"><i class="fab fa-twitter"></i> Twitter</a>
-                        </li>
-                        <li>
-                            <a href="https://discord.gg/PdF9cQU" target="_blank"><i class="fab fa-discord"></i> Discord Server (PCBSCalc)</a>
-                        </li>
+                <div class="col l4 s12">
+                    <h5 class="white-text">Mystic Moonlight</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="https://mysticmoonlight.home.blog" target="_blank"><i class="fas fa-globe"></i> Blog</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://github.com/MysticMoonlight" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://twitter.com/StudioMMForever" target="_blank"><i class="fab fa-twitter"></i> Twitter</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://discord.gg/PdF9cQU" target="_blank"><i class="fab fa-discord"></i> Discord (PCBSCalc)</a></li>
                     </ul>
-
                 </div>
-                <!-- Grid column -->
-
-                <!-- Grid column -->
-                <div class="col-md-3 mb-md-0 mb-3">
-
-                    <!-- Links -->
-                    <h5>PCBSCalc</h5>
-
-                    <ul class="list-unstyled">
-                        <li>
-                            <a href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="fas fa-book"></i> Changelog</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/PCBSCalc/PCBSCalc.github.io" target="_blank"><i class="fas fa-archive"></i> Repository</a>
-                        </li>
-                        <li>
-                            <a href="https://github.com/PCBSCalc/Issue-Tracker/issues" target="_blank"><i class="fas fa-exclamation-triangle"></i> Issue Tracker</a>
-                        </li>
-                        <li>
-                            <a href="https://donorbox.org/pcbscalc" target="_blank"><i class="fas fa-money-bill-alt"></i> Donate us</a>
-                        </li>
-                        <li>
-                            <a href="https://pcbscalc.github.io"><i class="fas fa-arrow-left"></i> Return to PCBSCalc</a>
-                        </li>
+                <div class="col l2 s12">
+                    <h5 class="white-text">PCBSCalc</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="https://github.com/PCBSCalc/PCBSCalc.github.io/releases/latest" target="_blank"><i class="fas fa-book"></i> Changelog</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://github.com/PCBSCalc/PCBSCalc.github.io" target="_blank"><i class="fas fa-box"></i> Repository</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://github.com/PCBSCalc/Issue-Tracker/issues" target="_blank"><i class="fas fa-exclamation-triangle"></i> Issue Tracker</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://donorbox.org/pcbscalc" target="_blank"><i class="fas fa-donate"></i> Donate us</a></li>
+                        <li><a class="grey-text text-lighten-3" href="https://pcbscalc.github.io"><i class="fas fa-arrow-left"></i> Return to PCBSCalc</a></li>
                     </ul>
-
                 </div>
-                <!-- Grid column -->
-
             </div>
-            <!-- Grid row -->
-
         </div>
-        <!-- Footer Links -->
-
-        <!-- Copyright -->
-        <div class="footer-copyright text-center py-3">Copyright ©
-            <a href="https://mysticmoonlight.home.blog/"> Mystic Moonlight</a>
+        <div class="footer-copyright purple darken-2">
+            <div class="container">
+                Copyright ©
+                <a href="https://mysticmoonlight.home.blog/"> Mystic Moonlight</a>
+            </div>
         </div>
-        <!-- Copyright -->
-
     </footer>
-    <!-- Footer -->
 </body>
 
 </html>
