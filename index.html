@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Website Title -->
-    <title>PCBSCalc v1.10.0 b1 "Carnot"</title>
+    <title>PCBSCalc v1.10.0 b1_hotfix "Carnot"</title>
 
     <!-- Load CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
@@ -170,15 +170,14 @@
         }
         
         #tableBuildMakerResults {
-            border: none;
             padding: 8px;
-            border-collapse: collapse;
-            margin: auto;
-            font-size: 15px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 100px;
+            width: 1200px;
         }
         
         #tableBuildMakerResults td {
-            border: 1px solid;
             padding: 5px;
         }
         
@@ -206,16 +205,19 @@
             margin-bottom: 20px;
         }
         
+        #divBuildUpgraderResults {
+            margin-bottom: 100px;
+        }
+        
         #tableBuildUpgraderResults {
-            border: none;
             padding: 8px;
-            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
             margin: auto;
-            font-size: 15px;
         }
         
         #tableBuildUpgraderResults td {
-            border: 1px solid;
             padding: 5px;
         }
         
@@ -226,37 +228,52 @@
             margin-bottom: 20px;
         }
         
+        #divPartReplacerResults {
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
+        }
+        
         #tablePartReplacerResults {
-            border: none;
             padding: 8px;
-            border-collapse: collapse;
             margin: auto;
-            font-size: 15px;
+            margin-bottom: 100px;
         }
         
         #tablePartReplacerResults td {
-            border: 1px solid;
             padding: 5px;
+        }
+        
+        #div3DMarkScoreCalculatorHistory {
+            margin-bottom: 100px;
         }
         
         #table3DMarkScoreCalculatorHistory {
             border: none;
             padding: 8px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
             border-collapse: collapse;
             margin: auto;
-            font-size: 15px;
         }
         
         #table3DMarkScoreCalculatorHistory td {
             padding: 6px;
         }
         
+        #divBuildMakerSaves {
+            margin-bottom: 100px;
+        }
+        
         #tableBuildMakerSaves {
             border: none;
             padding: 8px;
+            margin-left: auto;
+            margin-right: auto;
+            width: 1200px;
             border-collapse: collapse;
             margin: auto;
-            font-size: 15px;
         }
         
         #tableBuildMakerSaves td {
@@ -632,22 +649,24 @@
             </div>
             <div id="divBuildMakerResults">
                 <table class="table" id="tableBuildMakerResults">
-                    <tr>
-                        <td class="tdCase"><b>Case</b></td>
-                        <td class="tdCpu"><b>CPU</b></td>
-                        <td class="tdramChannel"><b>#</b></td>
-                        <td class="tdRamSpeed"><b>Speed</b></td>
-                        <td class="tdRamPart"><b>RAM</b></td>
-                        <td class="tdGpuCount"><b>#</b></td>
-                        <td class="tdGpuType"><b>Type</b></td>
-                        <td class="tdGpuPart"><b>GPU</b></td>
-                        <td class="tdMobo"><b>Motherboard</b></td>
-                        <td class="tdPrice"><b>Price</b></td>
-                        <td class="tdPrice"><b>Remaining</b></td>
-                        <td class="tdScore"><b>Score</b></td>
-                        <td class="tdOther"><b>Watts</b></td>
-                        <td class="tdOther"><b>Save?</b></td>
-                    </tr>
+                    <tbody>
+                        <tr>
+                            <td class="tdCase"><b>Case</b></td>
+                            <td class="tdCpu"><b>CPU</b></td>
+                            <td class="tdramChannel"><b>#</b></td>
+                            <td class="tdRamSpeed"><b>Speed</b></td>
+                            <td class="tdRamPart"><b>RAM</b></td>
+                            <td class="tdGpuCount"><b>#</b></td>
+                            <td class="tdGpuType"><b>Type</b></td>
+                            <td class="tdGpuPart"><b>GPU</b></td>
+                            <td class="tdMobo"><b>Motherboard</b></td>
+                            <td class="tdPrice"><b>Price</b></td>
+                            <td class="tdPrice"><b>Remaining</b></td>
+                            <td class="tdScore"><b>Score</b></td>
+                            <td class="tdOther"><b>Watts</b></td>
+                            <td class="tdOther"><b>Save?</b></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div id="divBuildMakerSaveForm">
@@ -801,20 +820,22 @@
             </div>
             <div id="divBuildUpgraderResults">
                 <table class="table" id="tableBuildUpgraderResults">
-                    <tr>
-                        <td class="tdCpu"><b>CPU</b></td>
-                        <!--<td class="tdramChannel"><b>#</b></td>
+                    <tbody>
+                        <tr>
+                            <td class="tdCpu"><b>CPU</b></td>
+                            <!--<td class="tdramChannel"><b>#</b></td>
                         <td class="tdRamSpeed"><b>Speed</b></td>
                         <td class="tdRamPart"><b>RAM</b></td>-->
-                        <td class="tdGpuCount"><b>#</b></td>
-                        <td class="tdGpuType"><b>Type</b></td>
-                        <td class="tdGpuPart"><b>GPU</b></td>
-                        <td class="tdMobo"><b>Motherboard</b></td>
-                        <td class="tdPrice"><b>Price</b></td>
-                        <td class="tdPrice"><b>Remaining</b></td>
-                        <td class="tdScore"><b>Score</b></td>
-                        <td class="tdOther"><b>Watts</b></td>
-                    </tr>
+                            <td class="tdGpuCount"><b>#</b></td>
+                            <td class="tdGpuType"><b>Type</b></td>
+                            <td class="tdGpuPart"><b>GPU</b></td>
+                            <td class="tdMobo"><b>Motherboard</b></td>
+                            <td class="tdPrice"><b>Price</b></td>
+                            <td class="tdPrice"><b>Remaining</b></td>
+                            <td class="tdScore"><b>Score</b></td>
+                            <td class="tdOther"><b>Watts</b></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -986,57 +1007,63 @@
                 </form>
             </div>
             <div id="divPartReplacerResults">
-                <table id="tablePartReplacerResults">
-                    <tr>
-                        <td class="tdCpu"><b>CPU</b></td>
-                        <td class="tdGpu1Type"><b>Type</b></td>
-                        <td class="tdGpu1Part"><b>GPU 1</b></td>
-                        <td class="tdGpu2Type"><b>Type</b></td>
-                        <td class="tdGpu2Part"><b>GPU 2</b></td>
-                        <td class="tdMobo"><b>Motherboard</b></td>
-                        <td class="tdPrice"><b>Price</b></td>
-                        <td class="tdPrice"><b>Remaining</b></td>
-                        <td class="tdOther"><b>Watts</b></td>
-                    </tr>
+                <table class="table" id="tablePartReplacerResults">
+                    <tbody>
+                        <tr>
+                            <td class="tdCpu"><b>CPU</b></td>
+                            <td class="tdGpu1Type"><b>Type</b></td>
+                            <td class="tdGpu1Part"><b>GPU 1</b></td>
+                            <td class="tdGpu2Type"><b>Type</b></td>
+                            <td class="tdGpu2Part"><b>GPU 2</b></td>
+                            <td class="tdMobo"><b>Motherboard</b></td>
+                            <td class="tdPrice"><b>Price</b></td>
+                            <td class="tdPrice"><b>Remaining</b></td>
+                            <td class="tdOther"><b>Watts</b></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
         <div id="divHistoryAndSaves">
             <div id="div3DMarkScoreCalculatorHistory">
                 <h1>3DMark Score Calculator History</h1>
-                <table id="table3DMarkScoreCalculatorHistory">
-                    <tr>
-                        <td class="tdCpu"><b>CPU</b></td>
-                        <td class="tdramChannel"><b>#</b></td>
-                        <td class="tdRamSpeed"><b>RAM Speed</b></td>
-                        <td class="tdGpuCount"><b>#</b></td>
-                        <td class="tdGpuType"><b>Type</b></td>
-                        <td class="tdGpuPart"><b>GPU</b></td>
-                        <td class="tdPrice"><b>Price</b></td>
-                        <td class="tdScore"><b>Score</b></td>
-                        <td class="tdOther"><b>Watts</b></td>
-                    </tr>
+                <table class="table" id="table3DMarkScoreCalculatorHistory">
+                    <tbody>
+                        <tr>
+                            <td class="tdCpu"><b>CPU</b></td>
+                            <td class="tdramChannel"><b>#</b></td>
+                            <td class="tdRamSpeed"><b>RAM Speed</b></td>
+                            <td class="tdGpuCount"><b>#</b></td>
+                            <td class="tdGpuType"><b>Type</b></td>
+                            <td class="tdGpuPart"><b>GPU</b></td>
+                            <td class="tdPrice"><b>Price</b></td>
+                            <td class="tdScore"><b>Score</b></td>
+                            <td class="tdOther"><b>Watts</b></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
             <div id="divBuildMakerSaves">
                 <h1>Build Maker Saves</h1>
-                <table id="tableBuildMakerSaves">
-                    <tr>
-                        <td class="tdCase"><b>Case</b></td>
-                        <td class="tdCpu"><b>CPU</b></td>
-                        <td class="tdramChannel"><b>#</b></td>
-                        <td class="tdRamSpeed"><b>Speed</b></td>
-                        <td class="tdRamPart"><b>RAM</b></td>
-                        <td class="tdGpuCount"><b>#</b></td>
-                        <td class="tdGpuType"><b>Type</b></td>
-                        <td class="tdGpuPart"><b>GPU</b></td>
-                        <td class="tdMobo"><b>Motherboard</b></td>
-                        <td class="tdPrice"><b>Price</b></td>
-                        <td class="tdPrice"><b>Remaining</b></td>
-                        <td class="tdScore"><b>Score</b></td>
-                        <td class="tdOther"><b>Watts</b></td>
-                        <td class="tdOther"><b>Comment</b></td>
-                    </tr>
+                <table class="table" id="tableBuildMakerSaves">
+                    <tbody>
+                        <tr>
+                            <td class="tdCase"><b>Case</b></td>
+                            <td class="tdCpu"><b>CPU</b></td>
+                            <td class="tdramChannel"><b>#</b></td>
+                            <td class="tdRamSpeed"><b>Speed</b></td>
+                            <td class="tdRamPart"><b>RAM</b></td>
+                            <td class="tdGpuCount"><b>#</b></td>
+                            <td class="tdGpuType"><b>Type</b></td>
+                            <td class="tdGpuPart"><b>GPU</b></td>
+                            <td class="tdMobo"><b>Motherboard</b></td>
+                            <td class="tdPrice"><b>Price</b></td>
+                            <td class="tdPrice"><b>Remaining</b></td>
+                            <td class="tdScore"><b>Score</b></td>
+                            <td class="tdOther"><b>Watts</b></td>
+                            <td class="tdOther"><b>Comment</b></td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
