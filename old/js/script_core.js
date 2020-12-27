@@ -46940,7 +46940,7 @@ function BuildUpgraderGetUpgrades() {
     var originalSystemM2 = form.inputBuildUpgraderOriginalSystemM2.value
     var originalSystemCpu = form.inputBuildUpgraderOriginalSystemCpu.value
     var originalSystemRamSpeed = form.selectBuildUpgraderOriginalSystemRamSpeed.value
-    var originalSystemRamSticks = Number(form.inputBuildUpgraderRamSticks.value)
+    var originalSystemRamSticks = numberOrDefault(form.inputBuildUpgraderRamSticks.value, 1)
     var originalSystemGpu = form.inputBuildUpgraderOriginalSystemGpu.value
     var originalSystemGpuCount = form.selectBuildUpgraderOriginalSystemGpuCount.value
     var originalSystemMobo = form.selectBuildUpgraderOriginalSystemMobo.value
@@ -46957,6 +46957,8 @@ function BuildUpgraderGetUpgrades() {
         alertMessage = "Score is required."
     } else if (!data.cpus[originalSystemCpu]) {
         alertMessage = "CPU not found."
+    } else if (originalSystemRamSticks < 1) {
+        alertMessage = "RAM Sticks is required."
     } else if (!data.gpus[originalSystemGpu]) {
         alertMessage = "GPU not found."
     } else if (originalSystemGpuCount == "2" && data.gpus[originalSystemGpu].multiGPU == null) {
