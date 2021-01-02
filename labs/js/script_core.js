@@ -47299,16 +47299,16 @@ function PartReplacerGetParts() {
     var originalSystemM2 = form.inputPartReplacerOriginalSystemM2.value
 
     var originalSystemCpu = form.inputPartReplacerOriginalSystemCpu.value
-    var originalSystemCpuPartStatus = form.selectPartReplacerOriginalSystemCpuPartStatus.value
+    var originalSystemCpuRequest = form.selectPartReplacerOriginalSystemCpuRequest.value
 
     var originalSystemGpu1 = form.inputPartReplacerOriginalSystemGpu1.value
-    var originalSystemGpu1PartStatus = form.selectPartReplacerOriginalSystemGpu1PartStatus.value
+    var originalSystemGpu1Request = form.selectPartReplacerOriginalSystemGpu1Request.value
 
     var originalSystemGpu2 = form.inputPartReplacerOriginalSystemGpu2.value
-    var originalSystemGpu2PartStatus = form.selectPartReplacerOriginalSystemGpu2PartStatus.value
+    var originalSystemGpu2Request = form.selectPartReplacerOriginalSystemGpu2Request.value
 
     var originalSystemMobo = form.inputPartReplacerOriginalSystemMobo.value
-    var originalSystemMoboPartStatus = form.selectPartReplacerOriginalSystemMoboPartStatus.value
+    var originalSystemMoboRequest = form.selectPartReplacerOriginalSystemMoboRequest.value
 
     var alertMessage = ""
     if (!isLevelSet()) {
@@ -47329,6 +47329,8 @@ function PartReplacerGetParts() {
         alertMessage = "GPU 1 does not support Multi-GPU."
     } else if (originalSystemGpu1 != "" && originalSystemGpu2 != "" && data.gpus[originalSystemGpu2].multiGPU == null) {
         alertMessage = "GPU 2 does not support Multi-GPU."
+    } else if (originalSystemGpu2Request == "AddDual" && originalSystemGpu2 != "") {
+        alertMessage = "GPU 2 must be blank to use the request to Add Dual-GPU."
     } else if (!moboSupportsCpu(originalSystemMobo, originalSystemCpu)) {
         alertMessage = "Selected CPU and Motherboard are incompatible."
     } else if (originalSystemGpu1 != "" && originalSystemGpu2 != "" && !moboSupportsGpu(originalSystemMobo, originalSystemGpu1, 2)) {
@@ -47347,8 +47349,8 @@ function PartReplacerGetParts() {
         alertMessage = "M.2 not found."
     } else if (originalSystemM2 != "" && !moboSupportsM2(originalSystemMobo, originalSystemM2)) {
         alertMessage = "Motherboard does not support this M.2."
-    } else if (originalSystemCpuPartStatus == "" && originalSystemGpu1PartStatus == "" && originalSystemGpu2PartStatus == "" && originalSystemMoboPartStatus == "") {
-        alertMessage = "At least 1 part must have a status requiring replacing."
+    } else if (originalSystemCpuRequest == "" && originalSystemGpu1Request == "" && originalSystemGpu2Request == "" && originalSystemMoboRequest == "") {
+        alertMessage = "At least 1 part must have a request."
     }
     if (alertMessage != "") {
         if (showAlerts) {
@@ -47361,32 +47363,32 @@ function PartReplacerGetParts() {
     for (replaceCpu = 0; replaceCpu <= 1; replaceCpu++) {
 
         // Cpu: Skip scenarios when needing to replace but not replacing, or not needing to replace but replacing
-        if ((originalSystemCpuPartStatus != "" && !replaceCpu) ||
-            (originalSystemCpuPartStatus == "" && replaceCpu)) {
+        if ((originalSystemCpuRequest != "" && !replaceCpu) ||
+            (originalSystemCpuRequest == "" && replaceCpu)) {
             continue
         }
 
         for (replaceGpu1 = 0; replaceGpu1 <= 1; replaceGpu1++) {
 
             // Gpu1: Skip scenarios when needing to replace but not replacing, or not needing to replace but replacing
-            if ((originalSystemGpu1PartStatus != "" && !replaceGpu1) ||
-                (originalSystemGpu1PartStatus == "" && replaceGpu1)) {
+            if ((originalSystemGpu1Request != "" && !replaceGpu1) ||
+                (originalSystemGpu1Request == "" && replaceGpu1)) {
                 continue
             }
 
             for (replaceGpu2 = 0; replaceGpu2 <= 1; replaceGpu2++) {
 
                 // Gpu2: Skip scenarios when needing to replace but not replacing, or not needing to replace but replacing
-                if ((originalSystemGpu2PartStatus != "" && !replaceGpu2) ||
-                    (originalSystemGpu2PartStatus == "" && replaceGpu2)) {
+                if ((originalSystemGpu2Request != "" && !replaceGpu2) ||
+                    (originalSystemGpu2Request == "" && replaceGpu2)) {
                     continue
                 }
 
                 for (replaceMobo = 0; replaceMobo <= 1; replaceMobo++) {
 
                     // Mobo: Skip scenarios when needing to replace but not replacing, or cannot replace but replacing
-                    if ((originalSystemMoboPartStatus != "" && !replaceMobo) ||
-                        (originalSystemCpuPartStatus == "" && originalSystemMoboPartStatus == "" && replaceMobo)) {
+                    if ((originalSystemMoboRequest != "" && !replaceMobo) ||
+                        (originalSystemCpuRequest == "" && originalSystemMoboRequest == "" && replaceMobo)) {
                         continue
                     }
 
@@ -47400,13 +47402,13 @@ function PartReplacerGetParts() {
                                                 for (newMobo in data.mobos) {
                                                     pushPartReplacerSolutionIfValid(
                                                         budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                        originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                        originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                         originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                                 }
                                             } else {
                                                 pushPartReplacerSolutionIfValid(
                                                     budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                    originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                    originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                     originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                             }
                                         }
@@ -47415,13 +47417,13 @@ function PartReplacerGetParts() {
                                             for (newMobo in data.mobos) {
                                                 pushPartReplacerSolutionIfValid(
                                                     budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                    originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                    originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                     originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, newMobo)
                                             }
                                         } else {
                                             pushPartReplacerSolutionIfValid(
                                                 budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                 originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, "")
                                         }
                                     }
@@ -47433,13 +47435,13 @@ function PartReplacerGetParts() {
                                             for (newMobo in data.mobos) {
                                                 pushPartReplacerSolutionIfValid(
                                                     budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                    originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                    originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                     originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                             }
                                         } else {
                                             pushPartReplacerSolutionIfValid(
                                                 budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                 originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                         }
                                     }
@@ -47448,13 +47450,13 @@ function PartReplacerGetParts() {
                                         for (newMobo in data.mobos) {
                                             pushPartReplacerSolutionIfValid(
                                                 budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                 originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, newMobo)
                                         }
                                     } else {
                                         pushPartReplacerSolutionIfValid(
                                             budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                            originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                            originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                             originalSystemCpu, newCpu, originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, "")
                                     }
                                 }
@@ -47469,13 +47471,13 @@ function PartReplacerGetParts() {
                                             for (newMobo in data.mobos) {
                                                 pushPartReplacerSolutionIfValid(
                                                     budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                    originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                    originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                     originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                             }
                                         } else {
                                             pushPartReplacerSolutionIfValid(
                                                 budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                 originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                         }
                                     }
@@ -47484,13 +47486,13 @@ function PartReplacerGetParts() {
                                         for (newMobo in data.mobos) {
                                             pushPartReplacerSolutionIfValid(
                                                 budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                 originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, newMobo)
                                         }
                                     } else {
                                         pushPartReplacerSolutionIfValid(
                                             budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                            originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                            originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                             originalSystemCpu, "", originalSystemGpu1, newGpu1, originalSystemGpu2, "", originalSystemMobo, "")
                                     }
                                 }
@@ -47502,13 +47504,13 @@ function PartReplacerGetParts() {
                                         for (newMobo in data.mobos) {
                                             pushPartReplacerSolutionIfValid(
                                                 budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                                originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                                originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                                 originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, newMobo)
                                         }
                                     } else {
                                         pushPartReplacerSolutionIfValid(
                                             budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                            originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                            originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                             originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, newGpu2, originalSystemMobo, "")
                                     }
                                 }
@@ -47517,13 +47519,13 @@ function PartReplacerGetParts() {
                                     for (newMobo in data.mobos) {
                                         pushPartReplacerSolutionIfValid(
                                             budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                            originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                            originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                             originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, newMobo)
                                     }
                                 } else {
                                     pushPartReplacerSolutionIfValid(
                                         budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-                                        originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+                                        originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
                                         originalSystemCpu, "", originalSystemGpu1, "", originalSystemGpu2, "", originalSystemMobo, "")
                                 }
                             }
@@ -47581,7 +47583,7 @@ function PartReplacerGetParts() {
 
 function pushPartReplacerSolutionIfValid(
     budgetTotal, budgetReserved, originalSystemCase, originalSystemM2,
-    originalSystemCpuPartStatus, originalSystemGpu1PartStatus, originalSystemGpu2PartStatus, originalSystemMoboPartStatus,
+    originalSystemCpuRequest, originalSystemGpu1Request, originalSystemGpu2Request, originalSystemMoboRequest,
     originalSystemCpu, newCpu, originalSystemGpu1, newGpu1, originalSystemGpu2, newGpu2, originalSystemMobo, newMobo
 ) {
     var budgetForParts = budgetTotal - budgetReserved
@@ -47589,13 +47591,13 @@ function pushPartReplacerSolutionIfValid(
     var newGpu1Type = ""
     var newGpu2Type = ""
     if (newCpu != "") {
-        if (originalSystemCpuPartStatus == "Broken" &&
+        if (originalSystemCpuRequest == "Fix" &&
             originalSystemCpu != newCpu &&
             data.cpus[newCpu].partRankingScore <= data.cpus[originalSystemCpu].partRankingScore
         ) {
             return false
         }
-        if (originalSystemCpuPartStatus == "Upgrade" &&
+        if (originalSystemCpuRequest == "Upgrade" &&
             data.cpus[newCpu].partRankingScore <= data.cpus[originalSystemCpu].partRankingScore
         ) {
             return false
@@ -47604,13 +47606,13 @@ function pushPartReplacerSolutionIfValid(
         partsPrice += data.cpus[newCpu].price
     }
     if (newGpu1 != "") {
-        if (originalSystemGpu1PartStatus == "Broken" &&
+        if (originalSystemGpu1Request == "Fix" &&
             originalSystemGpu1 != newGpu1 &&
             data.gpus[newGpu1].partRankingScore <= data.gpus[originalSystemGpu1].partRankingScore
         ) {
             return false
         }
-        if (originalSystemGpu1PartStatus == "Upgrade" &&
+        if (originalSystemGpu1Request == "Upgrade" &&
             data.gpus[newGpu1].partRankingScore <= data.gpus[originalSystemGpu1].partRankingScore
         ) {
             return false
@@ -47623,14 +47625,20 @@ function pushPartReplacerSolutionIfValid(
         newGpu1Type = data.gpus[newGpu1].gpuType
     }
     if (newGpu2 != "") {
-        if (originalSystemGpu2PartStatus == "Broken" &&
+        if (originalSystemGpu2Request == "Fix" &&
             originalSystemGpu2 != newGpu2 &&
             data.gpus[newGpu2].partRankingScore <= data.gpus[originalSystemGpu2].partRankingScore
         ) {
             return false
         }
-        if (originalSystemGpu2PartStatus == "Upgrade" &&
+        if (originalSystemGpu2Request == "Upgrade" &&
             data.gpus[newGpu2].partRankingScore <= data.gpus[originalSystemGpu2].partRankingScore
+        ) {
+            return false
+        }
+        if (originalSystemGpu2Request == "AddDual" &&
+            originalSystemGpu1Request == "Upgrade" &&
+            data.gpus[newGpu2].partRankingScore <= data.gpus[originalSystemGpu1].partRankingScore
         ) {
             return false
         }
@@ -47642,13 +47650,13 @@ function pushPartReplacerSolutionIfValid(
         newGpu2Type = data.gpus[newGpu2].gpuType
     }
     if (newMobo != "") {
-        if (originalSystemMoboPartStatus == "Broken" &&
+        if (originalSystemMoboRequest == "Fix" &&
             originalSystemMobo != newMobo &&
             data.mobos[newMobo].price < data.mobos[originalSystemMobo].price
         ) {
             return false
         }
-        if (originalSystemMoboPartStatus == "Upgrade" &&
+        if (originalSystemMoboRequest == "Upgrade" &&
             data.mobos[newMobo].price <= data.mobos[originalSystemMobo].price
         ) {
             return false
@@ -47681,8 +47689,10 @@ function pushPartReplacerSolutionIfValid(
     if (evalGpu1 != "" && evalGpu2 != "") {
         if ((data.gpus[evalGpu1].multiGPU == "" || data.gpus[evalGpu2].multiGPU == "") ||
             (data.gpus[evalGpu1].multiGPU != data.gpus[evalGpu2].multiGPU) ||
+            (data.gpus[evalGpu1].chipset != data.gpus[evalGpu2].chipset) ||
             (!moboSupportsGpu(evalMobo, evalGpu1, evalGpuCount)) ||
-            (originalSystemCase != "" && !caseSupportsGpu(originalSystemCase, evalGpu1, 2))) {
+            (originalSystemCase != "" && !caseSupportsGpu(originalSystemCase, evalGpu1, 2)) ||
+            (originalSystemCase != "" && !caseSupportsGpu(originalSystemCase, evalGpu2, 2))) {
             return false
         }
     }
