@@ -47010,7 +47010,7 @@ function BuildUpgraderGetUpgrades() {
     var score
     var price
 
-    /* CPU-only upgrade */
+    /* CPU upgrade */
     mobo = originalSystemMobo
     gpu = originalSystemGpu
     gpuCount = originalSystemGpuCount
@@ -47033,7 +47033,7 @@ function BuildUpgraderGetUpgrades() {
         }
     }
 
-    /* GPU-only upgrade */
+    /* GPU upgrade */
     mobo = originalSystemMobo
     cpu = originalSystemCpu
     ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
@@ -47068,7 +47068,7 @@ function BuildUpgraderGetUpgrades() {
         }
     }
 
-    /* CPU and GPU upgrade */
+    /* CPU+GPU upgrade */
     mobo = originalSystemMobo
     ramSpeed = Math.min(originalSystemRamSpeed, data.mobos[mobo].maxMemorySpeed)
     for (cpu in data.cpus) {
@@ -47109,12 +47109,13 @@ function BuildUpgraderGetUpgrades() {
         }
     }
 
-    /* motherboard change - CPU-only upgrade */
+    /* CPU upgrade, motherboard change */
     gpu = originalSystemGpu
     gpuCount = originalSystemGpuCount
     for (mobo in data.mobos) {
         if ((pcCase != "" && !caseSupportsMobo(pcCase, mobo)) ||
-            (m2 != "" && !moboSupportsM2(mobo, m2))) {
+            (m2 != "" && !moboSupportsM2(mobo, m2)) ||
+            (!moboSupportsGpu(mobo, gpu, gpuCount))) {
             continue
         }
 
@@ -47139,7 +47140,7 @@ function BuildUpgraderGetUpgrades() {
         }
     }
 
-    /* motherboard change - GPU-only upgrade */
+    /* GPU upgrade, motherboard change */
     cpu = originalSystemCpu
     ramChannel = Math.min(originalSystemRamSticks, data.cpus[cpu].maxMemoryChannels)
     for (mobo in data.mobos) {
@@ -47182,7 +47183,7 @@ function BuildUpgraderGetUpgrades() {
         }
     }
 
-    /* motherboard change - CPU and GPU upgrade */
+    /* CPU+GPU upgrade, motherboard change */
     for (mobo in data.mobos) {
         if ((pcCase != "" && !caseSupportsMobo(pcCase, mobo)) ||
             (m2 != "" && !moboSupportsM2(mobo, m2))) {
