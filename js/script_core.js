@@ -46087,7 +46087,8 @@ function loadData(loadingFor3DMark) {
         "rams": {},
         "ramSpeeds": {},
         "pcCases": {},
-        "storages": {}
+        "storages": {},
+        "games": {}
     }
     for (cpu in sourceData.cpus) {
         if ((includeHemParts || !sourceData.cpus[cpu].isHEMPart) &&
@@ -46137,6 +46138,11 @@ function loadData(loadingFor3DMark) {
             (loadingFor3DMark || (level == 0 || sourceData.storages[storage].level <= level))) {
             myData.storages[storage] = sourceData.storages[storage]
         }
+    }
+
+    //Load Will it Run data for games.
+    for (game in sourceData.games){
+      myData.games[game] = sourceData.games[game]
     }
 
     if (loadingFor3DMark) {
