@@ -45596,378 +45596,441 @@ var sourceData = {
     //adding game specifications
     "games": {
       "Adobe Photoshop CC (Minimum Spec)": {
+        "gameName": "Adobe Photoshop CC (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 2,
         "CPU": "Intel Celeron G3900",
         "GPU": "NVIDIA GeForce GTX 750 Ti"
       },
       "Adobe Photoshop CC (Recommended Spec)":{
+        "gameName": "Adobe Photoshop CC (Recommended Spec)",
         "ramGB": 9,
         "vramGB": 2,
         "CPU": "Intel Pentium G4500",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "Adobe Photoshop Pro CC (Minimum Spec)": {
+        "gameName": "Adobe Photoshop Pro CC (Minimum Spec)",
         "ramGB": 12,
         "vramGB": 2,
         "CPU": "Intel Core i3-6100",
         "GPU": "NVIDIA GeForce GTX 1050"
       },
       "Adobe Photoshop Pro CC (Recommended Spec)": {
+        "gameName": "Adobe Photoshop Pro CC (Recommended Spec)",
         "ramGB": 16,
         "vramGB": 4,
         "CPU": "Intel Core i5-6400",
         "GPU": "NVIDIA GeForce GTX 970"
       },
       "Battlefield 1 (Minimum Spec)": {
+        "gameName": "Battlefield 1 (Minimum Spec)",
         "ramGB": 16,
         "vramGB": 6,
         "CPU": "Intel Core i5-7600",
         "GPU": "NVIDIA GeForce GTX 1060-6GB"
       },
       "Battlefield 1 (Recommended Spec)": {
+        "gameName": "Battlefield 1 (Recommended Spec)",
         "ramGB": 16,
         "vramGB": 8,
         "CPU": "Intel Core i7-7700",
         "GPU": "NVIDIA GeForce GTX 1070"
       },
       "Counter Strike: Source (Minimum Spec)": {
+        "gameName": "Counter Strike: Source (Minimum Spec)",
         "ramGB": 1,
         "vramGB": 3,
         "CPU": "AMD Ryzen 5 Quad Core 1400",
         "GPU": "AMD Radeon R9 280 3G"
       },
       "Counter Strike: Source (Recommended Spec)": {
+        "gameName": "Counter Strike: Source (Recommended Spec)",
         "ramGB": 2,
         "vramGB": 8,
         "CPU": "AMD Ryzen 5 Six Core 1600",
         "GPU": "AMD Radeon R9 390 8G"
       },
       "Deadstick - Bush Flight Simulator (Minimum Spec)": {
+        "gameName": "Deadstick - Bush Flight Simulator (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 4,
         "CPU": "AMD Ryzen 5 Quad Core 1500X",
         "GPU": "AMD Radeon RX 470 4G"
       },
       "Deadstick - Bush Flight Simulator (Recommended Spec)": {
+        "gameName": "Deadstick - Bush Flight Simulator (Recommended Spec)",
         "ramGB": 16,
         "vramGB": 8,
         "CPU": "Intel Core i7-7700K",
         "GPU": "NVIDIA GeForce GTX 1070"
       },
       "Deer Hunting Simulator (Recommended Spec)": {
+        "gameName": "Deer Hunting Simulator (Recommended Spec)",
         "ramGB": 16,
         "vramGB": 8,
         "CPU": "Intel Core i7-8700",
         "GPU": "NVIDIA GeForce GTX 1080"
       },
       "Doom (Minimum Spec)": {
+        "gameName": "Doom (Minimum Spec)",
         "ramGB": 6,
         "vramGB": 6,
         "CPU": "Intel Core i5-8600K",
         "GPU": "NVIDIA GeForce GTX 1060-6GB"
       },
       "Doom (Recommended Spec)": {
+        "gameName": "Doom (Recommended Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "Intel Core i5-9600K",
         "GPU": "NVIDIA GeForce GTX 1080"
       },
       "Doom (Recommended 4k Spec)": {
+        "gameName": "Doom (Recommended 4k Spec)",
         "ramGB": 8,
         "vramGB": 11,
         "CPU": "Intel Core i7-9700K",
         "GPU": "NVIDIA GeForce GTX 1080 Ti"
       },
       "DOTA 2 (Minimum Spec)": {
+        "gameName": "DOTA 2 (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "Intel Core i5-6600",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "DOTA 2 (Recommended Spec)": {
+        "gameName": "DOTA 2 (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 6,
         "CPU": "Intel Core i5-7500",
         "GPU": "NVIDIA GeForce GTX 1060-6GB"
       },
       "Euro Truck Simulator 2 (Minimum Spec)": {
+        "gameName": "Euro Truck Simulator 2 (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "AMD Ryzen 3 Quad Core 1200",
         "GPU": "AMD Radeon R9 370 2G"
       },
       "Euro Truck Simulator 2 (Recommended Spec)": {
+        "gameName": "Euro Truck Simulator 2 (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 3,
         "CPU": "AMD Ryzen 5 Quad Core 1400",
         "GPU": "AMD Radeon R9 280 3G"
       },
       "F1 2017 (Minimum Spec)": {
+        "gameName": "F1 2017 (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 4,
         "CPU": "Intel Core i5-6600K",
         "GPU": "NVIDIA GeForce GTX 980"
       },
       "F1 2017 (Minimum Spec)": {
+        "gameName": "F1 2017 (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "AMD Ryzen 5 Six Core 1600",
         "GPU": "NVIDIA GeForce GTX 1070"
       },
       "Fable Fortune (Minimum Spec)": {
+        "gameName": "Fable Fortune (Minimum Spec)",
         "ramGB": 2,
         "vramGB": 2,
         "CPU": "AMD Ryzen 3 Quad Core 1300X",
         "GPU": "NVIDIA GeForce GTX 1050"
       },
       "Fable Fortune (Recommended Spec)": {
+        "gameName": "Fable Fortune (Recommended Spec)",
         "ramGB": 2,
         "vramGB": 4,
         "CPU": "AMD Ryzen 3 Quad Core 1300X",
         "GPU": "NVIDIA GeForce GTX 1050 Ti"
       },
       "Far Cry 5 (Minimum Spec)": {
+        "gameName": "Far Cry 5 (Minimum Spec)",
         "ramGB": 2,
         "vramGB": 8,
         "CPU": "Intel Core i5-8600K",
         "GPU": "NVIDIA GeForce GTX 1080"
       },
       "Far Cry 5 (Recommended Spec)": {
+        "gameName": "Far Cry 5 (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 11,
         "CPU": "Intel Core i7-9700K",
         "GPU": "NVIDIA GeForce GTX 1080 Ti"
       },
       "Far Cry 5 (Recommended 4k Spec)": {
+        "gameName": "Far Cry 5 (Recommended 4k Spec)",
         "ramGB": 8,
         "vramGB": 11,
         "CPU": "Intel Core i9-9900K",
         "GPU": "NVIDIA GeForce RTX 2080 Ti"
       },
       "Farming Simulator 17 (Minimum Spec)": {
+        "gameName": "Farming Simulator 17 (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "AMD Ryzen 3 Quad Core 1200",
         "GPU": "AMD Radeon R9 370 2G"
       },
       "Farming Simulator 17 (Recommended Spec)": {
+        "gameName": "Farming Simulator 17 (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 3,
         "CPU": "AMD Ryzen 3 Quad Core 1400",
         "GPU": "AMD Radeon R9 280 3G"
       },
       "Feudal Fantasy XIII (Minimum Spec)": {
+        "gameName": "Feudal Fantasy XIII (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 3,
         "CPU": "AMD Ryzen 5 Six Core 1600",
         "GPU": "AMD Radeon R9 280 3G"
       },
       "Feudal Fantasy XIII (Recommended Spec)": {
+        "gameName": "Feudal Fantasy XIII (Recommended Spec)",
         "ramGB": 16,
         "vramGB": 4,
         "CPU": "AMD Ryzen 7 Eight Core 1700",
         "GPU": "AMD Radeon RX570"
       },
       "Flight Simulator (Minimum Spec)": {
+        "gameName": "Flight Simulator (Minimum Spec)",
         "ramGB": 2,
         "vramGB": 3,
         "CPU": "Intel Pentium G4500",
         "GPU": "AMD Radeon R9 280 3G"
       },
       "Flight Simulator (Recommended Spec)": {
+        "gameName": "Flight Simulator (Recommended Spec)",
         "ramGB": 8,
         "vramGB": 4,
         "CPU": "Intel Core i5-6600K",
         "GPU": "NVIDIA GeForce GTX 980"
       },
       "Football Manager 2017 (Minimum Spec)": {
+        "gameName": "Football Manager 2017 (Minimum Spec)",
         "ramGB": 2,
         "vramGB": 2,
         "CPU": "Intel Pentium G4400",
         "GPU": "NVIDIA GeForce GTX 750 Ti"
       },
       "Football Manager 2017 (Recommended Spec)": {
+        "gameName": "Football Manager 2017 (Recommended Spec)",
         "ramGB": 2,
         "vramGB": 2,
         "CPU": "Intel Core i3-6320",
         "GPU": "NVIDIA GeForce GTX 1050"
       },
       "Grand Theft Auto V (Minimum Spec)": {
+        "gameName": "Grand Theft Auto V (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "AMD Ryzen 5 Six Core 1600X",
         "GPU": "AMD Radeon R9 390 8G"
       },
       "Grand Theft Auto V (Recommended Spec)": {
+        "gameName": "Grand Theft Auto V (Recommended Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "AMD Ryzen 7 Eight Core 1700X",
         "GPU": "AMD Radeon RX Vega 56"
       },
       "Hatoful Boyfriend: A School of Hope and White Wings (Minimum Spec)": {
+        "gameName": "Hatoful Boyfriend: A School of Hope and White Wings (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "Intel Pentium G4400",
         "GPU": "NVIDIA GeForce GTX 750 Ti"
       },
       "Hatoful Boyfriend: A School of Hope and White Wings (Recommended Spec)": {
+        "gameName": "Hatoful Boyfriend: A School of Hope and White Wings (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "Intel Pentium G4520",
         "GPU": "NVIDIA GeForce GTX 1050"
       },
       "Hearthstone: Heroes of Warcraft (Minimum Spec)": {
+        "gameName": "Hearthstone: Heroes of Warcraft (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "Ryzen 3 Quad Core 1200",
         "GPU": "AMD Radeon R9 370 2G"
       },
       "Hearthstone: Heroes of Warcraft (Recommended Spec)": {
+        "gameName": "Hearthstone: Heroes of Warcraft (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "Ryzen 5 Quad Core 1400",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "League of Legends (Minimum Spec)": {
+        "gameName": "League of Legends (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 4,
         "CPU": "Intel Core i5-6600",
         "GPU": "AMD Radeon RX570"
       },
       "League of Legends (Recommended Spec)": {
+        "gameName": "League of Legends (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 6,
         "CPU": "Intel Core i5-7600",
         "GPU": "NVIDIA GeForce GTX 1060-6GB"
       },
       "League of Legends (Recommended 4k Spec)": {
+        "gameName": "League of Legends (Recommended 4k Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "Intel Core i7-7700K",
         "GPU": "AMD Radeon RX580 8G"
       },
       "Minecraft (Minimum Spec)": {
+        "gameName": "Minecraft (Minimum Spec)",
         "ramGB": 1,
         "vramGB": 2,
         "CPU": "Intel Core i3-6100",
         "GPU": "NVIDIA GeForce GTX 750 Ti"
       },
       "Minecraft (Recommended Spec)": {
+        "gameName": "Minecraft (Recommended Spec)",
         "ramGB": 1,
         "vramGB": 2,
         "CPU": "Intel Core i5-6400",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "Overwatch (Minimum Spec)": {
+        "gameName": "Overwatch (Minimum Spec)",
         "ramGB": 6,
         "vramGB": 6,
         "CPU": "Intel Core i5-7400",
         "GPU": "NVIDIA GeForce GTX 1060-6GB"
       },
       "Overwatch (Recommended Spec)": {
+        "gameName": "Overwatch (Recommended Spec)",
         "ramGB": 6,
         "vramGB": 8,
         "CPU": "Intel Core i7-7700",
         "GPU": "NVIDIA GeForce GTX 1070"
       },
       "PlayerUnknown's Battlegrounds (Minimum Spec)": {
+        "gameName": "PlayerUnknown's Battlegrounds (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 6,
         "CPU": "Intel Core i3-7300",
         "GPU": "NVIDIA GeForce GTX 1060-6GB"
       },
       "PlayerUnknown's Battlegrounds (Recommended Spec)": {
+        "gameName": "PlayerUnknown's Battlegrounds (Recommended Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "Intel Core i5-6500",
         "GPU": "NVIDIA GeForce GTX 1070"
       },
       "PlayerUnknown's Battlegrounds (Recommended 4k Spec)": {
+        "gameName": "PlayerUnknown's Battlegrounds (Recommended 4k Spec)",
         "ramGB": 8,
         "vramGB": 8,
         "CPU": "Intel Core i7-7700",
         "GPU": "NVIDIA GeForce GTX 1080"
       },
       "Rocket League (Minimum Spec)": {
+        "gameName": "Rocket League (Minimum Spec)",
         "ramGB": 5,
         "vramGB": 4,
         "CPU": "AMD Ryzen 5 Quad Core 1500X",
         "GPU": "AMD Radeon Rx 470 4G"
       },
       "Rocket League (Recommended Spec)": {
+        "gameName": "Rocket League (Recommended Spec)",
         "ramGB": 5,
         "vramGB": 8,
         "CPU": "AMD Ryzen 5 Six Core 1600X",
         "GPU": "AMD Radeon Rx 480 8G"
       },
       "Sailaway - The Sailing Simulator (Minimum Spec)": {
+        "gameName": "Sailaway - The Sailing Simulator (Minimum Spec)",
         "ramGB": 2,
         "vramGB": 2,
         "CPU": "Intel Core i5-6500",
         "GPU": "NVIDIA GeForce GTX 1050"
       },
       "Sailaway - The Sailing Simulator (Recommended Spec)": {
+        "gameName": "Sailaway - The Sailing Simulator (Recommended Spec)",
         "ramGB": 2,
         "vramGB": 4,
         "CPU": "Intel Core i7-6700",
         "GPU": "NVIDIA GeForce GTX 1050 Ti"
       },
       "Sid Meier's Civilization VI (Minimum Spec)": {
+        "gameName": "Sid Meier's Civilization VI (Minimum Spec)",
         "ramGB": 8,
         "vramGB": 2,
         "CPU": "Intel Core i5-6400",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "Sid Meier's Civilization VI (Recommended Spec)": {
+        "gameName": "Sid Meier's Civilization VI (Recommended Spec)",
         "ramGB": 8,
         "vramGB": 6,
         "CPU": "Intel Core i7-6700",
         "GPU": "NVIDIA GeForce GTX 980 Ti"
       },
       "Sublevel Zero Redux (Minimum Spec)": {
+        "gameName": "Sublevel Zero Redux (Minimum Spec)",
         "ramGB": 2,
         "vramGB": 2,
         "CPU": "Intel Core i5-6500",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "Sublevel Zero Redux (Recommended Spec)": {
+        "gameName": "Sublevel Zero Redux (Recommended Spec)",
         "ramGB": 2,
         "vramGB": 4,
         "CPU": "AMD Ryzen 5 Quad Core 1400",
         "GPU": "AMD Radeon R9 380 4G"
       },
       "SubSim X (Minimum Spec)": {
+        "gameName": "SubSim X (Minimum Spec)",
         "ramGB": 32,
         "vramGB": 8,
         "CPU": "Intel Core i7-7740X",
         "GPU": "NVIDIA GeForce RTX 2070"
       },
       "SubSim X (Recommended Spec)": {
+        "gameName": "SubSim X (Recommended Spec)",
         "ramGB": 64,
         "vramGB": 8,
         "CPU": "Intel Core i7-7800X",
         "GPU": "NVIDIA GeForce RTX 2080"
       },
       "World of Tanks (Minimum Spec)": {
+        "gameName": "World of Tanks (Minimum Spec)",
         "ramGB": 4,
         "vramGB": 2,
         "CPU": "AMD RYzen 3 Quad Core 1300X",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "World of Tanks (Recommended Spec)": {
+        "gameName": "World of Tanks (Recommended Spec)",
         "ramGB": 4,
         "vramGB": 4,
         "CPU": "Intel Core i7-6700",
         "GPU": "NVIDIA GeForce GTX 970"
       },
       "World of Warcraft (Minimum Spec)": {
+        "gameName": "World of Warcraft (Minimum Spec)",
         "ramGB": 1,
         "vramGB": 2,
         "CPU": "Intel Core i3-6320",
         "GPU": "NVIDIA GeForce GTX 960"
       },
       "World of Warcraft (Recommended Spec)": {
+        "gameName": "World of Warcraft (Recommended Spec)",
         "ramGB": 2,
         "vramGB": 4,
         "CPU": "Intel Core i5-6500",
@@ -46475,6 +46538,19 @@ function getCpuSocketOptions(includeAnyOption) {
     return options
 }
 
+//function to get Will it Run values
+function getWillItRun(){
+  var games = new Array()
+  for (game in sourceData.games){
+    games.push(sourceData.games[game].gameName)
+  }
+  var listOfGames = ''
+  for(var i = 0; i < games.length; i++){
+    listOfGames += '<option value="' + games[i]
+  }
+  return listOfGames
+}
+
 function getGpuOptions(myData) {
     var gpus = new Array()
     for (gpu in myData.gpus) {
@@ -46646,6 +46722,7 @@ function setListOptions() {
     document.getElementById('listGpus3DMark').innerHTML = getGpuOptions(data3DMark)
     document.getElementById('listMobos').innerHTML = getMoboOptions("")
     document.getElementById('listStorageM2s').innerHTML = getStorageM2Options()
+    document.getElementById('')
 }
 
 function setSelectOptions() {
@@ -46677,6 +46754,13 @@ function setSelectOptions() {
     document.getElementById('formPartReplacer').inputPartReplacerOriginalSystemMobo.innerHTML = getMoboOptions("")
     if (!settingOptionsOnLoad) {
         document.getElementById('formPartReplacer').inputPartReplacerOriginalSystemMobo.value = x5
+    }
+
+    //get the game titles for Will It run
+    x6 = document.getElementById('formBuildMaker').selectBuildMakerGame.value
+    document.getElementById('formBuildMaker').selectBuildMakerGame.innerHTML = getWillItRun()
+    if (!settingOptionsOnLoad) {
+        document.getElementById('formBuildMaker').selectBuildMakerGame.value = x6
     }
 }
 
