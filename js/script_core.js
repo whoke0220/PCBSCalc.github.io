@@ -46433,6 +46433,19 @@ function getCpuOptions(myData) {
     return options
 }
 
+//function to get Will it Run values
+function getWillItRunOptions(){
+  var games = new Array()
+  for (game in myData.games){
+    games.push(myData.games[game].gameName)
+  }
+  var listOfGames = ''
+  for(var i = 0; i < games.length; i++){
+    listOfGames += '<option value="' + games[i] + '" />'
+  }
+  return listOfGames
+}
+
 function getCpuSocketSortValue(cpuSocket) {
     var value
     switch (cpuSocket) {
@@ -46542,19 +46555,6 @@ function getCpuSocketOptions(includeAnyOption) {
     }
 
     return options
-}
-
-//function to get Will it Run values
-function getWillItRun(){
-  var games = new Array()
-  for (game in sourceData.games){
-    games.push(sourceData.games[game].gameName)
-  }
-  var listOfGames = ''
-  for(var i = 0; i < games.length; i++){
-    listOfGames += '<option value="' + games[i]
-  }
-  return listOfGames
 }
 
 function getGpuOptions(myData) {
@@ -46728,7 +46728,7 @@ function setListOptions() {
     document.getElementById('listGpus3DMark').innerHTML = getGpuOptions(data3DMark)
     document.getElementById('listMobos').innerHTML = getMoboOptions("")
     document.getElementById('listStorageM2s').innerHTML = getStorageM2Options()
-    document.getElementById('')
+    document.getElementById('listWillItRunGames').innerHTML = getWillItRunOptions(data)
 }
 
 function setSelectOptions() {
@@ -46764,7 +46764,7 @@ function setSelectOptions() {
 
     //get the game titles for Will It run
     x6 = document.getElementById('formBuildMaker').selectBuildMakerGame.value
-    document.getElementById('formBuildMaker').selectBuildMakerGame.innerHTML = getWillItRun()
+    document.getElementById('formBuildMaker').selectBuildMakerGame.innerHTML = getWillItRunOptions()
     if (!settingOptionsOnLoad) {
         document.getElementById('formBuildMaker').selectBuildMakerGame.value = x6
     }
